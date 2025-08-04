@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -15,8 +16,6 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
-
-
 
 @layer base {
   :root {
@@ -74,8 +73,6 @@ code {
     }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -83,4 +80,94 @@ code {
   body {
     @apply bg-background text-foreground;
     }
+}
+
+/* NEUMORPHIC DESIGN SYSTEM COMPONENTS */
+@layer components {
+  /* Base Neumorphic Effect */
+  .neumorphic {
+    @apply shadow-neumorphic-light dark:shadow-neumorphic-dark;
+  }
+  
+  /* Inset Neumorphic Effect (for inputs, pressed states) */
+  .neumorphic-inset {
+    @apply shadow-neumorphic-inset-light dark:shadow-neumorphic-inset-dark;
+  }
+  
+  /* Interactive Neumorphic Button */
+  .neumorphic-button {
+    @apply neumorphic hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
+  }
+  
+  /* Neumorphic Input Fields */
+  .neumorphic-input {
+    @apply neumorphic-inset focus:shadow-neumorphic-light dark:focus:shadow-neumorphic-dark transition-all duration-300;
+  }
+  
+  /* Glass Morphism Effect */
+  .glass-morphism {
+    @apply bg-white/80 dark:bg-neutral-800/50 backdrop-blur-sm;
+  }
+  
+  /* Floating Card - Primary Component */
+  .floating-card {
+    @apply neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50;
+  }
+  
+  /* Scrollbar Hide Utility */
+  .scrollbar-hide {
+    &::-webkit-scrollbar { display: none; }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Mobile Touch Scrolling Optimization */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
+
+  /* Enhanced Notification Dropdown - No Blur Artifacts */
+  .notification-enhanced {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Mobile-First Button Styling */
+  .mobile-button {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* GRADIENT TEXT UTILITY - Adapted for ADYC colors */
+.gradient-text {
+  background: linear-gradient(135deg, var(--tw-gradient-stops));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SMOOTH DARK MODE TRANSITIONS */
+* {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* CUSTOM SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-800 rounded-lg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 dark:bg-neutral-600 rounded-lg hover:bg-neutral-400 dark:hover:bg-neutral-500;
 }
