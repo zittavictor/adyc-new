@@ -4,6 +4,9 @@ import { Toaster } from './components/ui/toaster';
 import SplashScreen from './components/SplashScreen';
 import Home from './components/Home';
 import Blog from './components/Blog';
+import Register from './components/Register';
+import Executives from './components/Executives';
+import About from './components/About';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -24,11 +27,11 @@ function App() {
       case 'blog':
         return <Blog onNavigate={handleNavigation} />;
       case 'executives':
-        return <div>Executives page coming soon...</div>;
+        return <Executives onNavigate={handleNavigation} />;
       case 'register':
-        return <div>Registration page coming soon...</div>;
+        return <Register onNavigate={handleNavigation} />;
       case 'about':
-        return <div>About page coming soon...</div>;
+        return <About onNavigate={handleNavigation} />;
       case 'contact':
         return <div>Contact page coming soon...</div>;
       case 'social':
