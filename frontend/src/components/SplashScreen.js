@@ -6,29 +6,37 @@ const SplashScreen = ({ onComplete }) => {
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [logoError, setLogoError] = useState(false);
 
+  // Debug state
+  const [debugInfo, setDebugInfo] = useState({});
+
   // Preload the logo image
   useEffect(() => {
+    setDebugInfo(prev => ({...prev, imageLoadStart: Date.now()}));
+    
     const preloadLogo = new Image();
     preloadLogo.src = "https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg";
     preloadLogo.onload = () => {
+      setDebugInfo(prev => ({...prev, imageLoaded: true, imageLoadTime: Date.now()}));
       setLogoLoaded(true);
       setShowContent(true);
     };
-    preloadLogo.onerror = () => {
+    preloadLogo.onerror = (error) => {
+      setDebugInfo(prev => ({...prev, imageError: true, error: error.toString()}));
       setLogoError(true);
       setShowContent(true);
     };
     
     // Fallback timeout to show content even if image fails
     const fallbackTimer = setTimeout(() => {
+      setDebugInfo(prev => ({...prev, fallbackTriggered: true}));
       if (!logoLoaded && !logoError) {
         setLogoError(true);
         setShowContent(true);
       }
-    }, 2000);
+    }, 1000); // Reduced to 1 second
     
     return () => clearTimeout(fallbackTimer);
-  }, []);
+  }, [logoLoaded, logoError]);
 
   useEffect(() => {
     // Only start completion timer after content is shown
