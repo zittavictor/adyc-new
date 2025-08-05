@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field, EmailStr
 from typing import List
 import uuid
 from datetime import datetime
-from email_service import email_service
+from email_service import get_email_service
 
 
 ROOT_DIR = Path(__file__).parent
@@ -106,7 +106,7 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
     await db.members.insert_one(member_obj.dict())
     
     # Send registration email with ID card PDF in background
-    background_tasks.add_task(email_service.send_registration_email, member_obj.dict())
+    background_tasks.add_task(get_email_service().send_registration_email, member_obj.dict())
     
     return member_obj
 
@@ -135,7 +135,7 @@ async def download_id_card(member_id: str):
     
     try:
         # Generate PDF
-        pdf_data = email_service.generate_id_card_pdf(member)
+        pdf_data = get_email_service().generate_id_card_pdf(member)
         
         # Return PDF as response
         return Response(
@@ -157,7 +157,7 @@ async def send_test_email(member_id: str):
         raise HTTPException(status_code=404, detail="Member not found")
     
     try:
-        success = email_service.send_registration_email(member)
+        success = get_email_service().send_registration_email(member)
         if success:
             return {"message": "Test email sent successfully", "member_id": member_id}
         else:
