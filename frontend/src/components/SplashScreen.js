@@ -23,7 +23,7 @@ const SplashScreen = ({ onComplete }) => {
   useEffect(() => {
     // Only start completion timer after content is shown
     if (showContent) {
-      const timer = setTimeout(() => onComplete(), 3000);
+      const timer = setTimeout(() => onComplete(), 2000); // Reduced to 2 seconds
       return () => clearTimeout(timer);
     }
   }, [onComplete, showContent]);
