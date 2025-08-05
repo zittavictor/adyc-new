@@ -171,6 +171,26 @@ async def send_test_email(member_id: str):
         from fastapi import HTTPException
         raise HTTPException(status_code=500, detail="Error sending test email")
 
+@api_router.post("/send-admin-notification")
+async def send_admin_notification(member_id: str):
+    """Send test admin notification email for a specific member"""
+    member = await db.members.find_one({"member_id": member_id})
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    try:
+        success = get_email_service().send_admin_notification_email(member)
+        if success:
+            return {"message": "Admin notification email sent successfully", "member_id": member_id}
+        else:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=500, detail="Failed to send admin notification email")
+    except Exception as e:
+        logger.error(f"Error sending admin notification email: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Error sending admin notification email")
+
 # Include the router in the main app
 app.include_router(api_router)
 
