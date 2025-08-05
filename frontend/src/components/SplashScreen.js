@@ -65,12 +65,12 @@ const SplashScreen = ({ onComplete }) => {
 
   if (!showContent) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-neutral-50 via-primary-50 to-secondary-50 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-gradient-to-br from-neutral-50 via-primary-50 to-secondary-50 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 flex items-center justify-center z-50">
         <div className="flex flex-col items-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full"
+            className="w-12 h-12 border-4 border-primary-500 dark:border-primary-400 border-t-transparent rounded-full"
           />
         </div>
       </div>
