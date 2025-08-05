@@ -150,12 +150,12 @@ const Home = ({ onNavigate }) => {
                 color: 'secondary'
               }
             ].map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -2 }}
-                className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-6 text-center group cursor-pointer"
-              >
+              <CardHover3D key={feature.title} intensity={0.15}>
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-6 text-center group cursor-pointer h-full"
+                >
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center ${
                   feature.color === 'primary' 
                     ? 'bg-gradient-to-br from-primary-100 to-primary-200 text-primary-600 dark:from-primary-900/30 dark:to-primary-800/30 dark:text-primary-400' 
