@@ -33,11 +33,14 @@ const Home = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="home" onNavigate={onNavigate}>
+      {/* Three.js Background Effects */}
+      <ThreeJSBackground />
+      
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="space-y-8 h-full overflow-y-auto mobile-scroll"
+        className="space-y-8 h-full overflow-y-auto mobile-scroll relative z-10"
       >
         {/* HERO SECTION */}
         <motion.div 
