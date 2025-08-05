@@ -83,7 +83,7 @@ const SplashScreen = ({ onComplete }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
-      className="fixed inset-0 bg-gradient-to-br from-neutral-50 via-primary-50 to-secondary-50 flex items-center justify-center z-50 overflow-hidden"
+      className="fixed inset-0 bg-gradient-to-br from-neutral-50 via-primary-50 to-secondary-50 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 flex items-center justify-center z-50 overflow-hidden"
     >
       {/* DYNAMIC FLOATING BACKGROUND CIRCLES - Optimized for performance */}
       <div className="absolute inset-0">
