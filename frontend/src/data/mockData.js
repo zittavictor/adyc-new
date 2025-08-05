@@ -29,7 +29,7 @@ export const blogPosts = [
     content: 'ADYC stands as a beacon of unity, bringing together young Nigerians from all walks of life, regardless of their religious beliefs or tribal affiliations. Our mission is to foster collaboration and understanding across all divides.',
     image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/bmpewkg3_BEYOND%20ok.jpg',
     date: 'July 30, 2025',
-    author: 'Hon. Murtala Dan Toro',
+    author: 'Honourable Murtala Dantoro',
     category: 'Unity',
     slug: 'adyc-unity-beyond-religion-tribe'
   },
