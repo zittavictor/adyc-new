@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 
@@ -6,6 +6,24 @@ const SpinningLogo = ({ size = 80 }) => {
   const [spinDirection, setSpinDirection] = useState(1);
   const [isSpinning, setIsSpinning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasAutoSpun, setHasAutoSpun] = useState(false);
+
+  // Auto-spin on component mount (page load)
+  useEffect(() => {
+    if (!hasAutoSpun) {
+      const timer = setTimeout(() => {
+        setIsSpinning(true);
+        setHasAutoSpun(true);
+        
+        // Stop spinning after one full rotation
+        setTimeout(() => {
+          setIsSpinning(false);
+        }, 2000); // 2 seconds for smooth rotation
+      }, 1000); // Start after 1 second of page load
+
+      return () => clearTimeout(timer);
+    }
+  }, [hasAutoSpun]);
 
   const handleClick = () => {
     if (!isSpinning) {
@@ -85,20 +103,6 @@ const SpinningLogo = ({ size = 80 }) => {
             : 'border-primary-200/30 group-hover:border-primary-300/50'
         }`} />
         
-        {/* Interactive instruction text */}
-        <motion.div
-          className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium transition-all duration-300 ${
-            isHovered 
-              ? 'text-primary-600 opacity-100' 
-              : 'text-neutral-500 opacity-0 group-hover:opacity-100'
-          }`}
-          animate={{
-            y: isHovered ? -2 : 0,
-          }}
-        >
-          {isHovered ? 'Spinning...' : 'Click to change direction'}
-        </motion.div>
-
         {/* Sparkle effects on hover */}
         {isHovered && (
           <>
