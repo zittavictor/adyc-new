@@ -221,26 +221,30 @@ const Register = ({ onNavigate }) => {
               <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg border-l-4 border-primary-500">
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="w-16 h-16 rounded-full neumorphic-inset flex items-center justify-center overflow-hidden bg-neutral-100 dark:bg-neutral-700">
-                    {formData.passportPreview ? (
-                      <img src={formData.passportPreview} alt="Passport" className="w-full h-full object-cover" />
+                    {registrationData?.passport ? (
+                      <img src={registrationData.passport} alt="Passport" className="w-full h-full object-cover" />
                     ) : (
                       <User className="w-8 h-8 text-neutral-500" />
                     )}
                   </div>
                   <div className="text-left">
-                    <h4 className="font-bold text-neutral-800 dark:text-white text-lg">{formData.fullName}</h4>
-                    <p className="text-primary-600 dark:text-primary-400 font-semibold">{generatedId}</p>
+                    <h4 className="font-bold text-neutral-800 dark:text-white text-lg">{registrationData?.full_name}</h4>
+                    <p className="text-primary-600 dark:text-primary-400 font-semibold">{registrationData?.member_id}</p>
                   </div>
                 </div>
                 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center text-neutral-600 dark:text-neutral-400">
+                    <Mail className="w-4 h-4 mr-2" />
+                    <span>{registrationData?.email}</span>
+                  </div>
+                  <div className="flex items-center text-neutral-600 dark:text-neutral-400">
                     <MapPin className="w-4 h-4 mr-2" />
-                    <span>{formData.state}, {formData.lga}</span>
+                    <span>{registrationData?.state}, {registrationData?.lga}</span>
                   </div>
                   <div className="flex items-center text-neutral-600 dark:text-neutral-400">
                     <Calendar className="w-4 h-4 mr-2" />
-                    <span>Issued: {new Date().getFullYear()}</span>
+                    <span>Issued: {registrationData ? new Date(registrationData.registration_date).getFullYear() : new Date().getFullYear()}</span>
                   </div>
                   <div className="flex items-center text-neutral-600 dark:text-neutral-400">
                     <Globe className="w-4 h-4 mr-2" />
