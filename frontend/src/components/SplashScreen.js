@@ -36,7 +36,7 @@ const SplashScreen = ({ onComplete }) => {
       const timer = setTimeout(() => onComplete(), 1500); // Reduced to 1.5 seconds for faster transition
       return () => clearTimeout(timer);
     }
-  }, [onComplete, showContent]);
+  }, [showContent]); // Removed onComplete from dependencies to prevent infinite loop
 
   // FLOATING CIRCLES ANIMATION SYSTEM - Adapted for ADYC colors with smoother performance
   const circleVariants = {
