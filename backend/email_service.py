@@ -118,7 +118,9 @@ class EmailService:
                     c.rect(photo_x, photo_y, photo_width, photo_height, fill=1)
                     c.setFillColor(colors.black)
                     c.setFont("Helvetica", 6)
-                    c.drawCentredText(photo_x + photo_width/2, photo_y + photo_height/2, "PHOTO")
+                    photo_text = "PHOTO"
+                    text_width = c.stringWidth(photo_text, "Helvetica", 6)
+                    c.drawString(photo_x + (photo_width - text_width) / 2, photo_y + photo_height/2, photo_text)
             else:
                 # Draw placeholder
                 c.setFillColor(colors.lightgrey)
