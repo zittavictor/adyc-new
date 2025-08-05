@@ -682,10 +682,18 @@ def run_all_tests():
     test_get_all_members()
     test_get_specific_member()
     
-    # Test new email and ID card functionality
+    # Test email and ID card functionality
     test_registration_with_email_background_task()
     test_id_card_pdf_generation()
     test_send_test_email()
+    
+    # Test NEW admin notification functionality
+    print("\n" + "=" * 60)
+    print("🔔 TESTING NEW ADMIN NOTIFICATION FUNCTIONALITY")
+    print("=" * 60)
+    test_admin_notification_endpoint()
+    test_registration_with_dual_email_tasks()
+    test_admin_notification_email_content()
     
     print("\n" + "=" * 60)
     print("🏁 Backend API Testing Complete")
@@ -693,6 +701,8 @@ def run_all_tests():
     print("- Email delivery testing should be done manually by user")
     print("- Background email tasks are triggered but not verified in automated tests")
     print("- PDF generation and download functionality has been verified")
+    print("- Admin notification system tested for endpoint functionality and content requirements")
+    print("- Both user confirmation and admin notification emails are triggered during registration")
 
 if __name__ == "__main__":
     run_all_tests()
