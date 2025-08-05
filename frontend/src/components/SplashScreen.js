@@ -18,6 +18,16 @@ const SplashScreen = ({ onComplete }) => {
       setLogoError(true);
       setShowContent(true);
     };
+    
+    // Fallback timeout to show content even if image fails
+    const fallbackTimer = setTimeout(() => {
+      if (!logoLoaded && !logoError) {
+        setLogoError(true);
+        setShowContent(true);
+      }
+    }, 2000);
+    
+    return () => clearTimeout(fallbackTimer);
   }, []);
 
   useEffect(() => {
