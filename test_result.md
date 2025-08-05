@@ -101,3 +101,87 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Improve ADYC platform with: 1) Smoother shade effects and fix splash screen logo loading, 2) Add email field to registration with enhanced ID card generation (format ADYC-YYYY-XXXXXX) including all user details and ADYC logo, 3) Add spinning logo on homepage with Three.js, 4) Update content references to 'African Democratic Youth Congress' and 'Honourable Murtala Dantoro'"
+
+backend:
+  - task: "Add email field to registration model and endpoint"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "Need to add email field to registration model and API endpoint"
+
+frontend:
+  - task: "Fix splash screen logo loading performance"
+    implemented: false
+    working: "NA" 
+    file: "SplashScreen.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "Current splash screen has loading issues with logo display"
+
+  - task: "Add Three.js framework and spinning logo to homepage"
+    implemented: false
+    working: "NA"
+    file: "Home.js, package.json"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "Need to add Three.js and implement click-based spinning logo with direction changes"
+
+  - task: "Enhanced registration with email and improved ID card"
+    implemented: false
+    working: "NA"
+    file: "Register.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "Need to add email field and improve ID card with format ADYC-YYYY-XXXXXX and all required details"
+
+  - task: "Update content references across application"
+    implemented: false
+    working: "NA"
+    file: "multiple files"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "Replace 'all democratic youth congress' with 'African Democratic Youth Congress'"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Fix splash screen logo loading performance"
+    - "Add Three.js framework and spinning logo to homepage"
+    - "Enhanced registration with email and improved ID card"
+    - "Add email field to registration model and endpoint"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+    - message: "Starting implementation of ADYC platform improvements focusing on performance, registration enhancements, and Three.js integration"
