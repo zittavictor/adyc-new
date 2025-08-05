@@ -35,6 +35,38 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Member Registration Models
+class MemberRegistration(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    member_id: str
+    email: str
+    passport: str  # base64 encoded image
+    full_name: str
+    dob: str
+    ward: str
+    lga: str
+    state: str
+    country: str = "Nigeria"
+    address: str
+    language: str = ""
+    marital_status: str = ""
+    gender: str
+    registration_date: datetime = Field(default_factory=datetime.utcnow)
+
+class MemberRegistrationCreate(BaseModel):
+    email: str
+    passport: str  # base64 encoded image
+    full_name: str
+    dob: str
+    ward: str
+    lga: str
+    state: str
+    country: str = "Nigeria"
+    address: str
+    language: str = ""
+    marital_status: str = ""
+    gender: str
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
