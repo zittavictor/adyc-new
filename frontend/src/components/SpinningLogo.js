@@ -60,18 +60,18 @@ const SpinningLogo = ({ size = 80 }) => {
         style={{ width: size, height: size }}
       >
         {/* Enhanced glow effect that responds to hover */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-full blur-lg scale-110 -z-10 transition-all duration-300 ${
-          isHovered ? 'scale-125 from-primary-600/30 to-secondary-600/30 blur-xl' : 'group-hover:scale-125'
+        <div className={`absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 dark:from-primary-400/30 dark:to-secondary-400/30 rounded-full blur-lg scale-110 -z-10 transition-all duration-300 ${
+          isHovered ? 'scale-125 from-primary-600/30 to-secondary-600/30 dark:from-primary-400/40 dark:to-secondary-400/40 blur-xl' : 'group-hover:scale-125'
         }`} />
         
         {/* Pulsing ring effect on hover */}
         {isHovered && (
-          <div className="absolute inset-0 rounded-full border-2 border-primary-400/50 animate-ping" />
+          <div className="absolute inset-0 rounded-full border-2 border-primary-400/50 dark:border-primary-300/60 animate-ping" />
         )}
         
         {/* Main logo container */}
         <motion.div
-          className="w-full h-full bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 shadow-lg overflow-hidden relative"
+          className="w-full h-full bg-white/95 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 dark:border-neutral-600/50 shadow-lg overflow-hidden relative"
           animate={shouldSpin ? { 
             rotate: isSpinning ? 360 * spinDirection : 360,
           } : {}}
