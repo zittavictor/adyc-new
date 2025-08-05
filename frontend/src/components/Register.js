@@ -209,9 +209,15 @@ const Register = ({ onNavigate }) => {
             <h2 className="text-3xl font-bold text-neutral-800 dark:text-white mb-4">
               Registration Successful!
             </h2>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-8 text-lg">
+            <p className="text-neutral-600 dark:text-neutral-400 mb-4 text-lg">
               Welcome to the African Democratic Youth Congress! Your membership has been confirmed.
             </p>
+            <div className="bg-secondary-100 dark:bg-secondary-900/20 border border-secondary-200 dark:border-secondary-700 rounded-xl p-4 mb-8">
+              <p className="text-secondary-700 dark:text-secondary-300 text-center flex items-center justify-center space-x-2">
+                <Mail className="w-5 h-5" />
+                <span>📧 A confirmation email with your official ID card PDF has been sent to your email address!</span>
+              </p>
+            </div>
 
             {/* ID Card Preview */}
             <div className="neumorphic bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-8 rounded-2xl mb-8 mx-auto max-w-md">
