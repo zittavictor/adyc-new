@@ -329,6 +329,149 @@ class EmailService:
             logger.error(f"Error sending registration email: {e}")
             return False
 
+    def send_admin_notification_email(self, member_data: Dict[str, Any]) -> bool:
+        """Send admin notification email when a new member registers"""
+        try:
+            # Generate ID card PDF for admin notification
+            pdf_data = self.generate_id_card_pdf(member_data)
+            
+            # Create email message
+            msg = MIMEMultipart()
+            msg['From'] = self.username
+            msg['To'] = self.username  # Send to ADYC admin email
+            msg['Subject'] = f"🔔 New ADYC Member Registration - {member_data['full_name']}"
+            
+            # Email body - HTML format
+            html_body = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <img src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqczelzo_ADYC%20LOGO%202-1.jpg" 
+                                 alt="ADYC Logo" style="width: 80px; height: 80px; margin-bottom: 15px;">
+                            <h1 style="color: #f97316; margin: 0;">New Member Registration</h1>
+                            <p style="font-size: 16px; color: #22c55e; font-weight: bold;">African Democratic Youth Congress</p>
+                        </div>
+                        
+                        <div style="background-color: #fef3c7; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+                            <h2 style="color: #92400e; margin-top: 0;">🎉 New Member Alert!</h2>
+                            <p style="color: #92400e; font-size: 16px;">A new member has successfully registered with ADYC. Please find their details below:</p>
+                        </div>
+                        
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h3 style="color: #f97316; margin-top: 0;">Member Information:</h3>
+                            
+                            <div style="background-color: white; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Full Name:</strong> <span style="color: #1f2937;">{member_data['full_name']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Member ID:</strong> <span style="color: #f97316; font-weight: bold;">{member_data['member_id']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Email:</strong> <span style="color: #1f2937;">{member_data['email']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Gender:</strong> <span style="color: #1f2937;">{member_data['gender']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Date of Birth:</strong> <span style="color: #1f2937;">{member_data['dob']}</span></p>
+                            </div>
+                            
+                            <div style="background-color: white; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                                <h4 style="color: #22c55e; margin-top: 0;">📍 Location Details:</h4>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">State:</strong> <span style="color: #1f2937;">{member_data['state']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Local Government Area (LGA):</strong> <span style="color: #1f2937;">{member_data['lga']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Ward:</strong> <span style="color: #1f2937;">{member_data['ward']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Country:</strong> <span style="color: #1f2937;">{member_data['country']}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #374151;">Address:</strong> <span style="color: #1f2937;">{member_data['address']}</span></p>
+                            </div>
+                            
+                            <div style="background-color: #e0f2fe; padding: 15px; border-radius: 5px; border-left: 4px solid #0277bd;">
+                                <p style="margin: 5px 0;"><strong style="color: #01579b;">Registration Date:</strong> <span style="color: #01579b;">{datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y at %I:%M %p') if isinstance(member_data['registration_date'], str) else member_data['registration_date'].strftime('%B %d, %Y at %I:%M %p')}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #01579b;">Marital Status:</strong> <span style="color: #01579b;">{member_data.get('marital_status', 'Not specified')}</span></p>
+                                <p style="margin: 5px 0;"><strong style="color: #01579b;">Language:</strong> <span style="color: #01579b;">{member_data.get('language', 'Not specified')}</span></p>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #22c55e; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+                            <h3 style="margin-top: 0;">📎 ID Card Attached</h3>
+                            <p>The member's official ADYC ID card has been generated and attached to this email for your records.</p>
+                            <p style="font-size: 14px; font-weight: bold;">ADYC_ID_Card_{member_data['member_id']}.pdf</p>
+                        </div>
+                        
+                        <div style="background-color: #f3f4f6; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="color: #374151; margin-top: 0;">📧 Next Steps:</h4>
+                            <ul style="color: #4b5563; margin: 0; padding-left: 20px;">
+                                <li>Member has been automatically sent their registration confirmation email</li>
+                                <li>Their ID card PDF has been attached to their confirmation email</li>
+                                <li>Member information has been stored in the database</li>
+                                <li>You may want to follow up with a welcome call or additional orientation materials</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 30px 0;">
+                            <h2 style="color: #f97316; font-style: italic;">"Arise, It's Youth O'Clock!"</h2>
+                        </div>
+                        
+                        <div style="border-top: 2px solid #f97316; padding-top: 20px; text-align: center; color: #666;">
+                            <p><strong>ADYC Admin Notification System</strong></p>
+                            <p>This is an automated notification. Please do not reply to this email.</p>
+                            <p style="font-size: 12px;">African Democratic Youth Congress - Building a better Nigeria through youth empowerment.</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+            """
+            
+            # Plain text version for fallback
+            text_body = f"""
+            NEW ADYC MEMBER REGISTRATION NOTIFICATION
+            
+            A new member has registered with the African Democratic Youth Congress.
+            
+            MEMBER INFORMATION:
+            - Full Name: {member_data['full_name']}
+            - Member ID: {member_data['member_id']}
+            - Email: {member_data['email']}
+            - Gender: {member_data['gender']}
+            - Date of Birth: {member_data['dob']}
+            
+            LOCATION DETAILS:
+            - State: {member_data['state']}
+            - LGA: {member_data['lga']}
+            - Ward: {member_data['ward']}
+            - Country: {member_data['country']}
+            - Address: {member_data['address']}
+            
+            REGISTRATION DETAILS:
+            - Registration Date: {datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y at %I:%M %p') if isinstance(member_data['registration_date'], str) else member_data['registration_date'].strftime('%B %d, %Y at %I:%M %p')}
+            - Marital Status: {member_data.get('marital_status', 'Not specified')}
+            - Language: {member_data.get('language', 'Not specified')}
+            
+            The member's ID card PDF has been attached to this email for your records.
+            The member has also been sent their registration confirmation email automatically.
+            
+            "Arise, It's Youth O'Clock!"
+            
+            ADYC Admin Notification System
+            """
+            
+            # Attach HTML and text versions
+            msg.attach(MIMEText(text_body, 'plain'))
+            msg.attach(MIMEText(html_body, 'html'))
+            
+            # Attach PDF
+            pdf_attachment = MIMEApplication(pdf_data, _subtype="pdf")
+            pdf_attachment.add_header('Content-Disposition', 'attachment', 
+                                    filename=f"ADYC_ID_Card_{member_data['member_id']}.pdf")
+            msg.attach(pdf_attachment)
+            
+            # Send email
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                if self.use_tls:
+                    server.starttls()
+                server.login(self.username, self.password)
+                server.send_message(msg)
+            
+            logger.info(f"Admin notification email sent successfully for new member: {member_data['full_name']} ({member_data['member_id']})")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error sending admin notification email: {e}")
+            return False
+
     def send_contact_notification(self, contact_data: Dict[str, Any]) -> bool:
         """Send notification email for contact form submissions"""
         try:
