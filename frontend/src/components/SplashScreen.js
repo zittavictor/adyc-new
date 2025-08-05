@@ -137,38 +137,19 @@ const SplashScreen = ({ onComplete }) => {
         <div className="mb-4">
           <div className="text-5xl md:text-6xl font-bold mb-2 tracking-wider">
             {['A', 'D', 'Y', 'C'].map((letter, i) => (
-              <motion.span
+              <span
                 key={i}
-                custom={i}
-                variants={letterVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-block bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 bg-clip-text text-transparent mr-1 will-change-transform"
+                className="inline-block bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 bg-clip-text text-transparent mr-1"
                 style={{ textShadow: '0 2px 4px rgba(249, 115, 22, 0.2)' }}
               >
                 {letter}
-              </motion.span>
+              </span>
             ))}
           </div>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.6 }}
-            className="text-lg text-neutral-600 font-medium tracking-wide"
-          >
+          <p className="text-lg text-neutral-600 font-medium tracking-wide">
             African Democratic Youth Congress
-          </motion.p>
+          </p>
         </div>
-
-        {/* DEBUG INFO - Remove after fixing */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="absolute bottom-4 left-4 text-xs text-gray-600 bg-white p-2 rounded">
-            <div>logoLoaded: {logoLoaded.toString()}</div>
-            <div>logoError: {logoError.toString()}</div>
-            <div>showContent: {showContent.toString()}</div>
-            <div>Debug: {JSON.stringify(debugInfo)}</div>
-          </div>
-        )}
         
         {/* LOADING PROGRESS INDICATOR */}
         <motion.div
