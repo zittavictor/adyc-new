@@ -163,7 +163,7 @@ const SplashScreen = ({ onComplete }) => {
               </span>
             ))}
           </div>
-          <p className="text-lg text-neutral-600 font-medium tracking-wide">
+          <p className="text-lg text-neutral-600 dark:text-neutral-400 font-medium tracking-wide">
             African Democratic Youth Congress
           </p>
         </div>
