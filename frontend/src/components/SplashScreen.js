@@ -145,8 +145,8 @@ const SplashScreen = ({ onComplete }) => {
             </motion.div>
 
             {/* DECORATIVE PULSING RINGS - Optimized */}
-            <div className="absolute inset-0 rounded-full border border-primary-200/30 animate-ping" style={{ animationDuration: '2s' }}></div>
-            <div className="absolute inset-0 rounded-full border border-secondary-200/20 animate-ping" style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
+            <div className="absolute inset-0 rounded-full border border-primary-200/30 dark:border-primary-400/40 animate-ping" style={{ animationDuration: '2s' }}></div>
+            <div className="absolute inset-0 rounded-full border border-secondary-200/20 dark:border-secondary-400/30 animate-ping" style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
           </div>
         </div>
 
