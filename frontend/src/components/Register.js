@@ -498,15 +498,30 @@ const Register = ({ onNavigate }) => {
               />
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-600 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl text-center"
+              >
+                {error}
+              </motion.div>
+            )}
+
             {/* Submit Button */}
             <div className="text-center pt-6">
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
                 type="submit"
-                className="neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 px-12 rounded-xl shadow-lg hover:shadow-xl transition-all text-lg mobile-button"
+                disabled={isLoading}
+                className={`neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 px-12 rounded-xl shadow-lg hover:shadow-xl transition-all text-lg mobile-button flex items-center justify-center space-x-2 ${
+                  isLoading ? 'opacity-75 cursor-not-allowed' : ''
+                }`}
               >
-                Complete Registration
+                {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
+                <span>{isLoading ? 'Processing...' : 'Complete Registration'}</span>
               </motion.button>
             </div>
           </form>
