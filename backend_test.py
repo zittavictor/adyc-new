@@ -12,7 +12,7 @@ from datetime import datetime
 import re
 
 # Configuration
-BACKEND_URL = "https://92b1e3a2-850a-45f6-8c67-a86144383590.preview.emergentagent.com/api"
+BACKEND_URL = "https://4c5278c8-f762-438c-bf41-847d79176ae7.preview.emergentagent.com/api"
 
 def create_test_passport_image():
     """Create a simple base64 encoded test image"""
