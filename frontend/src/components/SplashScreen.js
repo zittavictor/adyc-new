@@ -116,12 +116,12 @@ const SplashScreen = ({ onComplete }) => {
         <div className="mb-8">
           <div className="relative mx-auto w-36 h-36 mb-6">
             {/* MULTI-LAYER GLOW SYSTEM - Optimized */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-full blur-xl scale-125 -z-10"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/15 to-secondary-500/15 rounded-full blur-2xl scale-150 -z-20 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 dark:from-primary-400/30 dark:to-secondary-400/30 rounded-full blur-xl scale-125 -z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/15 to-secondary-500/15 dark:from-primary-300/25 dark:to-secondary-300/25 rounded-full blur-2xl scale-150 -z-20 animate-pulse"></div>
             
             {/* LOGO CONTAINER WITH NEUMORPHIC DESIGN */}
             <motion.div 
-              className="relative w-36 h-36 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 shadow-lg overflow-hidden"
+              className="relative w-36 h-36 bg-white/95 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 dark:border-neutral-600/50 shadow-lg overflow-hidden"
               animate={{ rotate: 360 }}
               transition={{ 
                 duration: 3, 
