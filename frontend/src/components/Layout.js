@@ -60,17 +60,33 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               
               {/* LOGO SECTION */}
               <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <img 
+                <motion.div 
+                  className="relative"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    rotateY: 15,
+                    rotateX: 5 
+                  }}
+                  transition={{ duration: 0.3 }}
+                  style={{ perspective: '1000px' }}
+                >
+                  <motion.img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
                     alt="ADYC Logo" 
-                    className="w-10 h-10 lg:w-12 lg:h-12 object-contain rounded-lg"
+                    className="w-10 h-10 lg:w-12 lg:h-12 object-contain rounded-lg shadow-lg cursor-pointer"
+                    whileHover={{ 
+                      boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" 
+                    }}
                   />
-                </div>
-                <div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-secondary-400/20 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 3 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <h1 className="text-lg lg:text-xl font-bold text-neutral-800 dark:text-white">ADYC</h1>
                   <p className="text-xs lg:text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block">African Democratic Youth Congress</p>
-                </div>
+                </motion.div>
               </div>
 
               {/* DESKTOP NAVIGATION */}
