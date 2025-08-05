@@ -39,9 +39,14 @@ const SplashScreen = ({ onComplete }) => {
   }, [logoLoaded, logoError]);
 
   useEffect(() => {
+    setDebugInfo(prev => ({...prev, showContent, contentShownAt: Date.now()}));
+    
     // Only start completion timer after content is shown
     if (showContent) {
-      const timer = setTimeout(() => onComplete(), 1500); // Reduced to 1.5 seconds for faster transition
+      const timer = setTimeout(() => {
+        setDebugInfo(prev => ({...prev, completionTriggered: true, completionTime: Date.now()}));
+        onComplete();
+      }, 500); // Reduced to 500ms for immediate testing
       return () => clearTimeout(timer);
     }
   }, [showContent]); // Removed onComplete from dependencies to prevent infinite loop
