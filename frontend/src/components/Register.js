@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Layout from './Layout';
-import { Camera, Download, CheckCircle, User, MapPin, Calendar, Globe } from 'lucide-react';
+import { Camera, Download, CheckCircle, User, MapPin, Calendar, Globe, Mail, Loader2 } from 'lucide-react';
 import jsPDF from 'jspdf';
+import axios from 'axios';
 
 const Register = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
     passport: null,
     passportPreview: null,
+    email: '',
     fullName: '',
     dob: '',
     ward: '',
@@ -20,8 +22,9 @@ const Register = ({ onNavigate }) => {
     gender: '',
   });
   const [isRegistered, setIsRegistered] = useState(false);
-  const [generatedId, setGeneratedId] = useState('');
-  const [currentStep, setCurrentStep] = useState(1);
+  const [registrationData, setRegistrationData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -41,14 +44,50 @@ const Register = ({ onNavigate }) => {
         ...prev,
         [name]: value,
       }));
+      // Clear error when user starts typing
+      if (error) setError('');
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newId = `ADYC-${Date.now().toString().slice(-6)}`;
-    setGeneratedId(newId);
-    setIsRegistered(true);
+    setIsLoading(true);
+    setError('');
+
+    try {
+      // Prepare data for API
+      const registrationPayload = {
+        email: formData.email,
+        passport: formData.passportPreview || '',
+        full_name: formData.fullName,
+        dob: formData.dob,
+        ward: formData.ward,
+        lga: formData.lga,
+        state: formData.state,
+        country: formData.country,
+        address: formData.address,
+        language: formData.language,
+        marital_status: formData.maritalStatus,
+        gender: formData.gender,
+      };
+
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/register`, registrationPayload);
+      
+      setRegistrationData(response.data);
+      setIsRegistered(true);
+    } catch (error) {
+      console.error('Registration error:', error);
+      if (error.response?.data?.detail) {
+        setError(error.response.data.detail);
+      } else if (error.response?.status === 400) {
+        setError('Email already registered. Please use a different email.');
+      } else {
+        setError('Registration failed. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const generateIDCardPDF = () => {
