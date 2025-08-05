@@ -221,17 +221,15 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Create email service module with Gmail SMTP integration"
+    - "Generate ID card PDF with ADYC logo and member details"
+    - "Auto-send registration emails with PDF attachment"
+    - "Add manual ID card download and test email endpoints"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-    - message: "🎯 SPLASH SCREEN UPDATE IN PROGRESS: Successfully updated splash screen component with actual ADYC logo image and spinning animation. Removed 'Loading ADYC...' text while keeping spinner animation. Ready for testing to verify changes work correctly on frontend."
-    - agent: "testing"
-    - message: "🎉 SPLASH SCREEN TESTING COMPLETE - ALL REQUIREMENTS MET: ✅ ADYC logo image displays correctly with spinning animation ✅ No 'Loading ADYC...' text found ✅ Proper 2.4s duration ✅ Smooth transition to home page ✅ Visual effects working (blur, gradients, pulsing rings, floating circles) ✅ Fallback text logo works when image fails ✅ All splash screen functionality verified and working as expected"
-    - agent: "main"
-    - message: "🌙 DARK MODE SUPPORT ADDED: Updated both SplashScreen and SpinningLogo components with comprehensive dark mode support. Added dark: classes for backgrounds (dark:bg-neutral-800/90), borders (dark:border-neutral-600/50), glow effects, and pulsing rings. Both logos now adapt properly to dark mode theme. Ready for testing to verify dark mode functionality."
-    - agent: "testing"
-    - message: "🎉 DARK MODE TESTING COMPLETE - ALL REQUIREMENTS FULLY SATISFIED: ✅ Dark mode toggle button working perfectly (Sun/Moon icons) ✅ Splash screen dark mode verified with proper styling ✅ Home page spinning logo dark mode verified ✅ localStorage persistence working ✅ Multiple toggles tested successfully ✅ Visual consistency confirmed between both logos ✅ Hover effects working in dark mode ✅ All screenshots captured as requested ✅ Dark mode implementation is comprehensive and working flawlessly. Task ready for completion."
+    - message: "🚀 ID CARD & EMAIL SYSTEM IMPLEMENTATION COMPLETE: Successfully implemented comprehensive email automation system with Gmail SMTP integration. Key features: 1) Email service module with secure Gmail app password authentication 2) Professional ID card PDF generation with ADYC logo and all member details 3) Automated registration confirmation emails with PDF attachments 4) Manual ID card download endpoints for testing 5) Contact Us page with ADYC information. Backend ready for testing - user will test email functionality manually as requested."
