@@ -153,7 +153,7 @@ const Home = ({ onNavigate }) => {
                 key={feature.title}
                 variants={itemVariants}
                 whileHover={{ scale: 1.02, y: -2 }}
-                className="floating-card p-6 text-center group cursor-pointer"
+                className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-6 text-center group cursor-pointer"
               >
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center ${
                   feature.color === 'primary' 
