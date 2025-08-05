@@ -148,6 +148,18 @@ frontend:
         - agent: "testing"
         - comment: "✅ VERIFIED: No 'Loading ADYC...' text found in splash screen. Only spinner animation displays during loading state. Splash screen duration is approximately 2.4 seconds, then smoothly transitions to home page with proper navigation and ADYC branding."
 
+  - task: "Implement dark mode support for both splash screen and home page logos"
+    implemented: true
+    working: false
+    file: "SplashScreen.js, SpinningLogo.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Added dark mode classes for logo containers, glow effects, borders, and backgrounds. Both splash screen and spinning logo now adapt to dark mode with appropriate styling changes."
+
 metadata:
   created_by: "main_agent"
   version: "3.0"
