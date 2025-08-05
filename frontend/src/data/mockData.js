@@ -49,7 +49,7 @@ export const blogPosts = [
 export const executiveMembers = [
   {
     id: 1,
-    name: 'Hon. Murtala Dan Toro',
+    name: 'Honourable Murtala Dantoro',
     role: 'Director General ADYC',
     description: 'Coordinates community outreach and strategic initiatives across all six geopolitical zones.',
     image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/gowo8xm6_WhatsApp%20Image%202025-08-04%20at%2021.43.29_54d3bbdc.jpg',
