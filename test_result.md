@@ -223,18 +223,18 @@ frontend:
 
 metadata:
   created_by: "main_agent"
-  version: "2.0"
-  test_sequence: 1
+  version: "3.0"
+  test_sequence: 0
   run_ui: false
 
 test_plan:
   current_focus:
-    - "All Three.js animations successfully integrated and working"
-    - "Homepage fully functional with all animations and interactions"
+    - "Replace text-based ADYC logo with actual image in splash screen"
+    - "Remove 'Loading ADYC...' text from splash screen spinner"
   stuck_tasks: []
   test_all: false
-  test_priority: "complete"
+  test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-    - message: "🎉 THREE.JS INTEGRATION COMPLETE! Successfully resolved critical React version compatibility issue and integrated all Three.js animations. Key achievements: 1) Fixed React 19→18.3.1 compatibility for Three.js libraries, 2) Integrated ThreeJSBackground with subtle floating particles and geometric shapes, 3) SpinningLogo working with auto-spin and user interaction, 4) Enhanced 'Welcome to ADYC' with ThreeJSTextBackground, 5) CardHover3D effects on interactive elements, 6) Fixed splash screen transition issues. Website is now beautifully animated and fully functional with lightweight, device-friendly Three.js effects."
+    - message: "🎯 SPLASH SCREEN UPDATE IN PROGRESS: Successfully updated splash screen component with actual ADYC logo image and spinning animation. Removed 'Loading ADYC...' text while keeping spinner animation. Ready for testing to verify changes work correctly on frontend."
