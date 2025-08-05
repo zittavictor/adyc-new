@@ -48,7 +48,10 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
-      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 transition-all duration-500">
+      {/* Global 3D Interactive Elements */}
+      <Interactive3DElements />
+      
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 transition-all duration-500 relative z-10">
         
         {/* BLOG-STYLE TOP NAVIGATION */}
         <header className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-50">
