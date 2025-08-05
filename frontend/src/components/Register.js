@@ -91,6 +91,8 @@ const Register = ({ onNavigate }) => {
   };
 
   const generateIDCardPDF = () => {
+    if (!registrationData) return;
+
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
@@ -113,7 +115,7 @@ const Register = ({ onNavigate }) => {
     doc.setFontSize(6);
     doc.text('MEMBERSHIP ID CARD', 42.8, 9, { align: 'center' });
 
-    // Member photo placeholder (if photo exists, we'd process it here)
+    // Member photo placeholder
     doc.setFillColor(240, 240, 240);
     doc.rect(5, 15, 20, 25, 'F');
     doc.setTextColor(100, 100, 100);
@@ -126,32 +128,48 @@ const Register = ({ onNavigate }) => {
     doc.setFont('helvetica', 'bold');
     doc.text('NAME:', 28, 18);
     doc.setFont('helvetica', 'normal');
-    doc.text(formData.fullName.toUpperCase(), 28, 22);
+    doc.text(registrationData.full_name.toUpperCase(), 28, 22);
 
     doc.setFont('helvetica', 'bold');
     doc.text('ID:', 28, 26);
     doc.setFont('helvetica', 'normal');
-    doc.text(generatedId, 28, 30);
+    doc.text(registrationData.member_id, 28, 30);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('STATE:', 28, 34);
+    doc.text('EMAIL:', 28, 34);
     doc.setFont('helvetica', 'normal');
-    doc.text(formData.state.toUpperCase(), 28, 38);
+    doc.text(registrationData.email, 28, 38);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('LGA:', 55, 34);
+    doc.text('STATE:', 55, 18);
     doc.setFont('helvetica', 'normal');
-    doc.text(formData.lga.toUpperCase(), 55, 38);
+    doc.text(registrationData.state.toUpperCase(), 55, 22);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('LGA:', 55, 26);
+    doc.setFont('helvetica', 'normal');
+    doc.text(registrationData.lga.toUpperCase(), 55, 30);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('WARD:', 55, 34);
+    doc.setFont('helvetica', 'normal');
+    doc.text(registrationData.ward.toUpperCase(), 55, 38);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('GENDER:', 28, 42);
+    doc.setFont('helvetica', 'normal');
+    doc.text(registrationData.gender.toUpperCase(), 28, 46);
 
     // Footer
     doc.setFillColor(34, 197, 94); // Secondary green
-    doc.rect(0, 45, 85.6, 9, 'F');
+    doc.rect(0, 47, 85.6, 7, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(5);
-    doc.text('VALID NATIONWIDE • ISSUED: ' + new Date().getFullYear(), 42.8, 50, { align: 'center' });
+    const issueDate = new Date(registrationData.registration_date).getFullYear();
+    doc.text(`VALID NATIONWIDE • ISSUED: ${issueDate}`, 42.8, 51, { align: 'center' });
 
     // Save the PDF
-    doc.save(`ADYC_ID_Card_${generatedId}.pdf`);
+    doc.save(`ADYC_ID_Card_${registrationData.member_id}.pdf`);
   };
 
   const containerVariants = {
