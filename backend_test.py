@@ -494,10 +494,13 @@ def run_all_tests():
     print(f"Backend URL: {BACKEND_URL}")
     print("=" * 60)
     
-    # Test existing functionality first
+    # Test email dependencies first
+    test_email_dependencies()
+    
+    # Test existing functionality
     test_status_endpoints()
     
-    # Test new member registration functionality
+    # Test member registration functionality
     test_member_registration_valid()
     test_duplicate_email()
     test_missing_required_fields()
@@ -507,8 +510,17 @@ def run_all_tests():
     test_get_all_members()
     test_get_specific_member()
     
+    # Test new email and ID card functionality
+    test_registration_with_email_background_task()
+    test_id_card_pdf_generation()
+    test_send_test_email()
+    
     print("\n" + "=" * 60)
     print("🏁 Backend API Testing Complete")
+    print("\nℹ️ IMPORTANT NOTES:")
+    print("- Email delivery testing should be done manually by user")
+    print("- Background email tasks are triggered but not verified in automated tests")
+    print("- PDF generation and download functionality has been verified")
 
 if __name__ == "__main__":
     run_all_tests()
