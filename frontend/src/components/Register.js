@@ -345,6 +345,21 @@ const Register = ({ onNavigate }) => {
 
               <div>
                 <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full neumorphic-input px-4 py-3 rounded-xl text-neutral-800 dark:text-white bg-neutral-50 dark:bg-neutral-700/50 focus:ring-2 focus:ring-primary-500"
+                  placeholder="Enter your email address"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                   Date of Birth *
                 </label>
                 <input
