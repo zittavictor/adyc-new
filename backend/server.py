@@ -84,6 +84,40 @@ async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
+# Member Registration Endpoints
+@api_router.post("/register", response_model=MemberRegistration)
+async def register_member(input: MemberRegistrationCreate):
+    # Generate member ID in format ADYC-YYYY-XXXXXX
+    current_year = datetime.now().year
+    random_id = f"{uuid.uuid4().hex[:6].upper()}"
+    member_id = f"ADYC-{current_year}-{random_id}"
+    
+    member_dict = input.dict()
+    member_obj = MemberRegistration(member_id=member_id, **member_dict)
+    
+    # Check if email already exists
+    existing_member = await db.members.find_one({"email": input.email})
+    if existing_member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Insert into database
+    await db.members.insert_one(member_obj.dict())
+    return member_obj
+
+@api_router.get("/members", response_model=List[MemberRegistration])
+async def get_members():
+    members = await db.members.find().to_list(1000)
+    return [MemberRegistration(**member) for member in members]
+
+@api_router.get("/members/{member_id}", response_model=MemberRegistration)
+async def get_member(member_id: str):
+    member = await db.members.find_one({"member_id": member_id})
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    return MemberRegistration(**member)
+
 # Include the router in the main app
 app.include_router(api_router)
 
