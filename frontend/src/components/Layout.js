@@ -16,6 +16,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // DARK MODE PERSISTENCE SYSTEM
   useEffect(() => {
@@ -27,6 +28,15 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
         document.documentElement.classList.add('dark');
       }
     }
+  }, []);
+
+  // SCROLL DETECTION FOR HEADER STYLING
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const toggleDarkMode = () => {
