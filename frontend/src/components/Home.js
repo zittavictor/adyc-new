@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from './Layout';
 import SpinningLogo from './SpinningLogo';
+import ThreeJSBackground from './ThreeJSBackground';
+import { ThreeJSTextBackground } from './ThreeJSText';
 import { ArrowRight, Users, Target, BookOpen, Award, Lightbulb, TrendingUp } from 'lucide-react';
 import { blogPosts, events, executiveMembers } from '../data/mockData';
 
