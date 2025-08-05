@@ -114,9 +114,13 @@ def test_duplicate_email():
     print("\n=== Testing Duplicate Email Handling ===")
     
     try:
+        # Generate a unique email for this test
+        unique_id = uuid.uuid4().hex[:8]
+        test_email = f"duplicate.test.{unique_id}@adyc.org"
+        
         # First register a member with a specific email
         first_member = {
-            "email": "duplicate.test@adyc.org",
+            "email": test_email,
             "passport": create_test_passport_image(),
             "full_name": "First User",
             "dob": "1990-01-01",
@@ -138,7 +142,7 @@ def test_duplicate_email():
         
         # Now try to register with the same email
         duplicate_member = {
-            "email": "duplicate.test@adyc.org",  # Same email
+            "email": test_email,  # Same email
             "passport": create_test_passport_image(),
             "full_name": "Another Person",
             "dob": "1990-01-01",
