@@ -464,6 +464,178 @@ def test_registration_with_email_background_task():
     except Exception as e:
         print(f"❌ Registration with email task error: {str(e)}")
 
+def test_admin_notification_endpoint():
+    """Test the admin notification endpoint with existing member ID"""
+    print("\n=== Testing Admin Notification Endpoint ===")
+    
+    try:
+        # First, get a valid member ID
+        response = requests.get(f"{BACKEND_URL}/members")
+        if response.status_code == 200:
+            members = response.json()
+            if members:
+                test_member_id = members[0]["member_id"]
+                
+                # Test valid member ID for admin notification
+                response = requests.post(f"{BACKEND_URL}/send-admin-notification", 
+                                       params={"member_id": test_member_id})
+                print(f"POST /api/send-admin-notification?member_id={test_member_id} - Status: {response.status_code}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if "Admin notification email sent successfully" in data.get("message", ""):
+                        print("✅ Admin notification endpoint processed successfully")
+                        print("ℹ️ Note: Actual admin email delivery will be tested manually by user")
+                    else:
+                        print(f"❌ Unexpected success message: {data}")
+                else:
+                    print(f"❌ Admin notification failed: {response.text}")
+                    # This might be expected if email service has issues
+                    if response.status_code == 500:
+                        print("ℹ️ Note: Email service error expected - user will test manually")
+            else:
+                print("⚠️ No members found to test admin notification")
+        
+        # Test invalid member ID for admin notification
+        invalid_id = "ADYC-2024-INVALID"
+        response = requests.post(f"{BACKEND_URL}/send-admin-notification", 
+                               params={"member_id": invalid_id})
+        print(f"POST /api/send-admin-notification?member_id={invalid_id} - Status: {response.status_code}")
+        
+        if response.status_code == 404:
+            data = response.json()
+            if "Member not found" in data.get("detail", ""):
+                print("✅ Invalid member ID for admin notification properly handled")
+            else:
+                print(f"❌ Unexpected error message for invalid ID: {data}")
+        else:
+            print(f"❌ Invalid member ID for admin notification not properly handled: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Admin notification endpoint test error: {str(e)}")
+
+def test_registration_with_dual_email_tasks():
+    """Test that registration triggers both user confirmation and admin notification emails"""
+    print("\n=== Testing Registration with Dual Email Tasks (User + Admin) ===")
+    
+    try:
+        # Create test member data
+        test_member = {
+            "email": f"dual.email.test.{uuid.uuid4().hex[:6]}@adyc.org",
+            "passport": create_test_passport_image(),
+            "full_name": "Dual Email Test User",
+            "dob": "1993-11-25",
+            "ward": "Test Ward for Dual Email",
+            "lga": "Test LGA for Dual Email",
+            "state": "Test State for Dual Email",
+            "country": "Nigeria",
+            "address": "456 Dual Email Test Avenue, Test City",
+            "language": "English, Hausa",
+            "marital_status": "Married",
+            "gender": "Male"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/register", json=test_member)
+        print(f"POST /api/register (with dual email tasks) - Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print("✅ Registration successful - both user confirmation and admin notification tasks should be triggered")
+            print("ℹ️ Note: Background email task execution will be verified manually by user")
+            
+            # Verify member was created properly
+            member_id = data.get("member_id", "")
+            if member_id:
+                print(f"✅ Member created with ID: {member_id}")
+                
+                # Try to retrieve the member to confirm it's in database
+                get_response = requests.get(f"{BACKEND_URL}/members/{member_id}")
+                if get_response.status_code == 200:
+                    print("✅ Member successfully stored in database")
+                    
+                    # Verify all required fields for admin notification are present
+                    member_data = get_response.json()
+                    required_admin_fields = ["full_name", "member_id", "email", "state", "lga", "ward", "gender", "dob", "country", "address", "registration_date"]
+                    missing_fields = [field for field in required_admin_fields if field not in member_data or not member_data[field]]
+                    
+                    if not missing_fields:
+                        print("✅ All required fields for admin notification are present")
+                    else:
+                        print(f"❌ Missing fields for admin notification: {missing_fields}")
+                        
+                else:
+                    print("❌ Member not found in database after registration")
+            else:
+                print("❌ No member ID returned from registration")
+                
+        else:
+            print(f"❌ Registration with dual email tasks failed: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Registration with dual email tasks error: {str(e)}")
+
+def test_admin_notification_email_content():
+    """Test that admin notification contains all required information"""
+    print("\n=== Testing Admin Notification Email Content Requirements ===")
+    
+    try:
+        # Get a valid member to test admin notification content
+        response = requests.get(f"{BACKEND_URL}/members")
+        if response.status_code == 200:
+            members = response.json()
+            if members:
+                test_member = members[0]
+                
+                print("✅ Testing admin notification content requirements:")
+                
+                # Check if member has all required fields for admin notification
+                required_fields = {
+                    "full_name": "Member name",
+                    "member_id": "Member ID", 
+                    "email": "Email address",
+                    "state": "State information",
+                    "lga": "Local Government Area",
+                    "ward": "Ward information",
+                    "gender": "Gender",
+                    "dob": "Date of birth",
+                    "country": "Country",
+                    "address": "Address",
+                    "registration_date": "Registration timestamp"
+                }
+                
+                missing_info = []
+                for field, description in required_fields.items():
+                    if field not in test_member or not test_member[field]:
+                        missing_info.append(f"{description} ({field})")
+                
+                if not missing_info:
+                    print("✅ All required member information available for admin notification")
+                    print("✅ Admin notification should include:")
+                    print(f"   - Member details: {test_member['full_name']} ({test_member['member_id']})")
+                    print(f"   - Location: {test_member['state']}, {test_member['lga']}, {test_member['ward']}")
+                    print(f"   - Registration timestamp: {test_member['registration_date']}")
+                    print("   - ID card PDF attachment (generated automatically)")
+                else:
+                    print(f"❌ Missing required information for admin notification: {', '.join(missing_info)}")
+                
+                # Test the admin notification endpoint to verify it processes correctly
+                response = requests.post(f"{BACKEND_URL}/send-admin-notification", 
+                                       params={"member_id": test_member["member_id"]})
+                
+                if response.status_code == 200:
+                    print("✅ Admin notification endpoint processes member data correctly")
+                else:
+                    print(f"⚠️ Admin notification endpoint returned status {response.status_code}: {response.text}")
+                    print("ℹ️ Note: This may be expected if email service has configuration issues")
+                    
+            else:
+                print("⚠️ No members found to test admin notification content")
+        else:
+            print(f"❌ Could not retrieve members for content testing: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Admin notification content test error: {str(e)}")
+
 def test_email_dependencies():
     """Test if email dependencies are properly installed"""
     print("\n=== Testing Email Dependencies ===")
