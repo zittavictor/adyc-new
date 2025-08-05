@@ -195,7 +195,7 @@ const Home = ({ onNavigate }) => {
                 key={post.id}
                 variants={itemVariants}
                 whileHover={{ scale: 1.02 }}
-                className="floating-card p-4 group cursor-pointer"
+                className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 group cursor-pointer"
                 onClick={() => onNavigate('blog')}
               >
                 <img 
