@@ -65,7 +65,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                 </div>
                 <div>
                   <h1 className="text-lg lg:text-xl font-bold text-neutral-800 dark:text-white">ADYC</h1>
-                  <p className="text-xs lg:text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block">All Democratic Youth Congress</p>
+                  <p className="text-xs lg:text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block">African Democratic Youth Congress</p>
                 </div>
               </div>
 
