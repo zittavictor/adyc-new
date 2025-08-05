@@ -74,7 +74,7 @@ const Home = ({ onNavigate }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl text-neutral-600 dark:text-neutral-400 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl text-neutral-600 dark:text-neutral-400 mb-8 max-w-3xl mx-auto leading-relaxed relative z-10"
           >
             Empowering Nigerian youth to become active, responsible, and impactful citizens. 
             Join the movement for democratic participation and national development.
@@ -83,7 +83,7 @@ const Home = ({ onNavigate }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center relative z-10"
           >
             <motion.button
               whileHover={{ scale: 1.05 }}
