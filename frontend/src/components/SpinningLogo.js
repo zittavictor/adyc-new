@@ -99,8 +99,8 @@ const SpinningLogo = ({ size = 80 }) => {
         {/* Decorative ring with hover effects */}
         <div className={`absolute inset-0 rounded-full border transition-all duration-300 ${
           isHovered 
-            ? 'border-primary-400/60 shadow-md' 
-            : 'border-primary-200/30 group-hover:border-primary-300/50'
+            ? 'border-primary-400/60 dark:border-primary-300/70 shadow-md' 
+            : 'border-primary-200/30 dark:border-neutral-600/40 group-hover:border-primary-300/50 dark:group-hover:border-primary-400/60'
         }`} />
         
         {/* Sparkle effects on hover */}
