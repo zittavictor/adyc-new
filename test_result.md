@@ -142,31 +142,6 @@ frontend:
         - agent: "main"
         - comment: "Removed 'Loading ADYC...' text from loading state while keeping the spinner animation"
 
-frontend:
-  - task: "Replace text-based ADYC logo with actual image in splash screen"
-    implemented: true
-    working: false
-    file: "SplashScreen.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: true
-    status_history:
-        - working: false
-        - agent: "main"
-        - comment: "Updated splash screen to use actual ADYC logo image instead of text, added spinning animation similar to SpinningLogo component"
-
-  - task: "Remove 'Loading ADYC...' text from splash screen spinner"
-    implemented: true
-    working: false
-    file: "SplashScreen.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: true
-    status_history:
-        - working: false
-        - agent: "main"
-        - comment: "Removed 'Loading ADYC...' text from loading state while keeping the spinner animation"
-
 metadata:
   created_by: "main_agent"
   version: "3.0"
