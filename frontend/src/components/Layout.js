@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BookOpen, Users, UserPlus, Info, Phone, Share2, Sun, Moon, Bell, Search, Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Home, BookOpen, Users, UserPlus, Info, Phone, Share2, Sun, Moon, Search, Menu, X } from 'lucide-react';
 
 const navigation = [
   { id: 'home', name: 'Home', icon: Home },
@@ -14,7 +14,6 @@ const navigation = [
 
 const Layout = ({ children, currentPage = 'home', onNavigate }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [notificationOpen, setNotificationOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -46,231 +45,182 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
     setMobileMenuOpen(false);
   };
 
-  // Close notifications when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setNotificationOpen(false);
-    };
-    if (notificationOpen) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
-    }
-  }, [notificationOpen]);
-
   return (
-    <div className={`h-screen ${darkMode ? 'dark' : ''}`}>
-      <div className="h-screen bg-gradient-to-br from-neutral-50 via-primary-50 to-secondary-50 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 flex overflow-hidden transition-all duration-500">
+    <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 transition-all duration-500">
         
-        {/* DESKTOP SIDEBAR WITH NEUMORPHIC DESIGN */}
-        <div className="hidden lg:flex lg:flex-shrink-0">
-          <div className="w-64 floating-card m-4 mr-0">
-            {/* LOGO SECTION */}
-            <div className="flex items-center justify-between h-16 px-6 border-b border-neutral-200 dark:border-neutral-700">
+        {/* BLOG-STYLE TOP NAVIGATION */}
+        <header className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16 lg:h-20">
+              
+              {/* LOGO SECTION */}
               <div className="flex items-center space-x-3">
-                <div className={`relative neumorphic p-2 rounded-xl ${
-                  darkMode ? 'bg-neutral-700' : 'bg-white'
-                }`}>
+                <div className="relative">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
                     alt="ADYC Logo" 
-                    className="w-10 h-10 object-contain rounded-lg"
+                    className="w-10 h-10 lg:w-12 lg:h-12 object-contain rounded-lg"
                   />
                 </div>
                 <div>
-                  <h1 className="text-sm font-bold text-neutral-800 dark:text-white">ADYC</h1>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">Youth Congress</p>
+                  <h1 className="text-lg lg:text-xl font-bold text-neutral-800 dark:text-white">ADYC</h1>
+                  <p className="text-xs lg:text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block">All Democratic Youth Congress</p>
                 </div>
               </div>
-            </div>
 
-            {/* NAVIGATION MENU */}
-            <nav className="flex-1 px-4 py-6 space-y-2">
-              {navigation.map((item) => {
-                const isActive = currentPage === item.id;
-                return (
-                  <motion.button
-                    key={item.name}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleNavigation(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl transition-all mobile-button ${
-                      isActive
-                        ? 'neumorphic-inset bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
-                        : 'neumorphic text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white bg-white/50 dark:bg-neutral-800/30'
-                    }`}
-                  >
-                    <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
-                    <span className="font-medium">{item.name}</span>
-                  </motion.button>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
+              {/* DESKTOP NAVIGATION */}
+              <nav className="hidden lg:flex items-center space-x-1">
+                {navigation.map((item) => {
+                  const isActive = currentPage === item.id;
+                  return (
+                    <motion.button
+                      key={item.name}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handleNavigation(item.id)}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                        isActive
+                          ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
+                          : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/50'
+                      }`}
+                    >
+                      <item.icon className={`w-4 h-4 ${isActive ? 'text-white' : ''}`} />
+                      <span>{item.name}</span>
+                    </motion.button>
+                  );
+                })}
+              </nav>
 
-        {/* MAIN CONTENT AREA */}
-        <div className="flex-1 flex flex-col overflow-hidden lg:ml-4">
-          {/* TOP HEADER WITH ADVANCED FEATURES */}
-          <header className="floating-card h-16 flex items-center justify-between px-6 m-4 mb-0">
-            {/* MOBILE MENU BUTTON */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden neumorphic p-3 rounded-xl text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 bg-white/50 dark:bg-neutral-800/30 transition-all mobile-button"
-            >
-              <Menu className="w-5 h-5" />
-            </motion.button>
+              {/* RIGHT SIDE CONTROLS */}
+              <div className="flex items-center space-x-3">
+                {/* SEARCH BAR */}
+                <div className="hidden md:flex relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                  <input
+                    type="text"
+                    placeholder="Search posts..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 pr-4 py-2 w-64 bg-neutral-100/50 dark:bg-neutral-800/50 rounded-lg border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm"
+                  />
+                </div>
 
-            {/* SEARCH BAR FOR BLOG CONTENT */}
-            <div className="hidden md:flex relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search blog posts..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-3 w-80 neumorphic-inset bg-neutral-50/50 dark:bg-neutral-700/50 rounded-xl border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none text-sm"
-              />
-            </div>
-
-            <div className="flex items-center space-x-3">
-              {/* DARK MODE TOGGLE */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleDarkMode}
-                className="neumorphic p-3 rounded-xl text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 bg-white/50 dark:bg-neutral-800/30 transition-all mobile-button"
-              >
-                {darkMode ? (
-                  <Sun className="w-5 h-5 text-yellow-500" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </motion.button>
-
-              {/* NOTIFICATIONS DROPDOWN */}
-              <div className="relative notification-dropdown">
+                {/* DARK MODE TOGGLE */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setNotificationOpen(!notificationOpen);
-                  }}
-                  className="neumorphic p-3 rounded-xl text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 bg-white/50 dark:bg-neutral-800/30 transition-all relative mobile-button"
+                  onClick={toggleDarkMode}
+                  className="p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all"
                 >
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full border-2 border-white dark:border-neutral-800 flex items-center justify-center">
-                    <span className="text-xs text-white font-bold">3</span>
-                  </span>
+                  {darkMode ? (
+                    <Sun className="w-5 h-5 text-yellow-500" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
                 </motion.button>
 
-                {/* NOTIFICATION DROPDOWN CONTENT */}
-                <AnimatePresence>
-                  {notificationOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-80 sm:w-96 bg-white/95 dark:bg-neutral-800/95 backdrop-blur-md rounded-2xl border border-neutral-200/60 dark:border-neutral-700/60 shadow-2xl z-[9999] notification-enhanced"
-                    >
-                      <div className="p-4">
-                        <h4 className="font-semibold text-lg text-neutral-800 dark:text-white mb-3">Notifications</h4>
-                        <ul className="space-y-3">
-                          <li className="text-sm text-neutral-600 dark:text-neutral-400 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/50">
-                            <strong>New blog post:</strong> "Youth in Leadership"
-                          </li>
-                          <li className="text-sm text-neutral-600 dark:text-neutral-400 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/50">
-                            <strong>Upcoming event:</strong> Youth Summit on Aug 20th
-                          </li>
-                          <li className="text-sm text-neutral-600 dark:text-neutral-400 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/50">
-                            <strong>Membership:</strong> Your application is being reviewed
-                          </li>
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* MOBILE MENU BUTTON - Only for smaller screens */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="lg:hidden p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all"
+                >
+                  <Menu className="w-5 h-5" />
+                </motion.button>
               </div>
             </div>
-          </header>
+          </div>
 
-          {/* PAGE CONTENT */}
-          <main className="flex-1 overflow-auto p-4 pt-0 mobile-scroll">
-            <div className="floating-card p-6 h-full">
-              {children}
+          {/* MOBILE SEARCH BAR - Below main header on mobile */}
+          <div className="md:hidden px-4 pb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 bg-neutral-100/50 dark:bg-neutral-800/50 rounded-lg border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm"
+              />
             </div>
-          </main>
-        </div>
+          </div>
+        </header>
 
-        {/* MOBILE NAVIGATION OVERLAY */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
+        {/* MOBILE NAVIGATION OVERLAY - Only for very small screens */}
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
-              onClick={() => setMobileMenuOpen(false)}
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ type: "spring", damping: 25, stiffness: 500 }}
+              className="w-80 h-full bg-white/95 dark:bg-neutral-800/95 backdrop-blur-md border-r border-neutral-200/60 dark:border-neutral-700/60"
+              onClick={(e) => e.stopPropagation()}
             >
-              <motion.div
-                initial={{ x: -320 }}
-                animate={{ x: 0 }}
-                exit={{ x: -320 }}
-                transition={{ type: "spring", damping: 25, stiffness: 500 }}
-                className="w-80 h-full bg-white/95 dark:bg-neutral-800/95 backdrop-blur-md border-r border-neutral-200/60 dark:border-neutral-700/60"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* MOBILE HEADER */}
-                <div className="flex items-center justify-between h-16 px-6 border-b border-neutral-200 dark:border-neutral-700">
-                  <div className="flex items-center space-x-3">
-                    <img 
-                      src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
-                      alt="ADYC Logo" 
-                      className="w-10 h-10 object-contain rounded-lg"
-                    />
-                    <div>
-                      <h1 className="text-sm font-bold text-neutral-800 dark:text-white">ADYC</h1>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">Youth Congress</p>
-                    </div>
+              {/* MOBILE HEADER */}
+              <div className="flex items-center justify-between h-16 px-6 border-b border-neutral-200 dark:border-neutral-700">
+                <div className="flex items-center space-x-3">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
+                    alt="ADYC Logo" 
+                    className="w-8 h-8 object-contain rounded-lg"
+                  />
+                  <div>
+                    <h1 className="text-sm font-bold text-neutral-800 dark:text-white">ADYC</h1>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400">Youth Congress</p>
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 mobile-button"
-                  >
-                    <X className="w-5 h-5" />
-                  </motion.button>
                 </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+                >
+                  <X className="w-5 h-5" />
+                </motion.button>
+              </div>
 
-                {/* MOBILE NAVIGATION */}
-                <nav className="px-4 py-6 space-y-2">
-                  {navigation.map((item) => {
-                    const isActive = currentPage === item.id;
-                    return (
-                      <motion.button
-                        key={item.name}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleNavigation(item.id)}
-                        className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-xl transition-all mobile-button ${
-                          isActive
-                            ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
-                            : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700/50'
-                        }`}
-                      >
-                        <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
-                        <span className="font-medium">{item.name}</span>
-                      </motion.button>
-                    );
-                  })}
-                </nav>
-              </motion.div>
+              {/* MOBILE NAVIGATION */}
+              <nav className="px-4 py-6 space-y-2">
+                {navigation.map((item) => {
+                  const isActive = currentPage === item.id;
+                  return (
+                    <motion.button
+                      key={item.name}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handleNavigation(item.id)}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-all ${
+                        isActive
+                          ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
+                          : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700/50'
+                      }`}
+                    >
+                      <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
+                      <span className="font-medium">{item.name}</span>
+                    </motion.button>
+                  );
+                })}
+              </nav>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </motion.div>
+        )}
+
+        {/* MAIN CONTENT AREA */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm rounded-2xl border border-neutral-200/50 dark:border-neutral-700/50 p-6 lg:p-8 min-h-[calc(100vh-12rem)]">
+            {children}
+          </div>
+        </main>
+
       </div>
     </div>
   );
