@@ -87,7 +87,7 @@ async def get_status_checks():
 
 # Member Registration Endpoints
 @api_router.post("/register", response_model=MemberRegistration)
-async def register_member(input: MemberRegistrationCreate):
+async def register_member(input: MemberRegistrationCreate, background_tasks: BackgroundTasks):
     # Generate member ID in format ADYC-YYYY-XXXXXX
     current_year = datetime.now().year
     random_id = f"{uuid.uuid4().hex[:6].upper()}"
@@ -104,6 +104,10 @@ async def register_member(input: MemberRegistrationCreate):
     
     # Insert into database
     await db.members.insert_one(member_obj.dict())
+    
+    # Send registration email with ID card PDF in background
+    background_tasks.add_task(email_service.send_registration_email, member_obj.dict())
+    
     return member_obj
 
 @api_router.get("/members", response_model=List[MemberRegistration])
