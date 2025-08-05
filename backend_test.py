@@ -114,9 +114,31 @@ def test_duplicate_email():
     print("\n=== Testing Duplicate Email Handling ===")
     
     try:
-        # Use the same email as previous test
+        # First register a member with a specific email
+        first_member = {
+            "email": "duplicate.test@adyc.org",
+            "passport": create_test_passport_image(),
+            "full_name": "First User",
+            "dob": "1990-01-01",
+            "ward": "Test Ward",
+            "lga": "Test LGA",
+            "state": "Test State",
+            "country": "Nigeria",
+            "address": "Test Address",
+            "language": "English",
+            "marital_status": "Single",
+            "gender": "Male"
+        }
+        
+        # Register first member
+        response = requests.post(f"{BACKEND_URL}/register", json=first_member)
+        if response.status_code != 200:
+            print(f"❌ Failed to register first member: {response.text}")
+            return
+        
+        # Now try to register with the same email
         duplicate_member = {
-            "email": "adeyemi.ogundimu@adyc.org",  # Duplicate email
+            "email": "duplicate.test@adyc.org",  # Same email
             "passport": create_test_passport_image(),
             "full_name": "Another Person",
             "dob": "1990-01-01",
