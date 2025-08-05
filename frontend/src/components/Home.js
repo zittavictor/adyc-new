@@ -193,13 +193,13 @@ const Home = ({ onNavigate }) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {blogPosts.slice(0, 2).map((post, index) => (
-              <motion.div
-                key={post.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 group cursor-pointer"
-                onClick={() => onNavigate('blog')}
-              >
+              <CardHover3D key={post.id} intensity={0.12}>
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 group cursor-pointer h-full"
+                  onClick={() => onNavigate('blog')}
+                >
                 <img 
                   src={post.image} 
                   alt={post.title} 
