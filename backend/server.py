@@ -108,6 +108,9 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
     # Send registration email with ID card PDF in background
     background_tasks.add_task(get_email_service().send_registration_email, member_obj.dict())
     
+    # Send admin notification email in background
+    background_tasks.add_task(get_email_service().send_admin_notification_email, member_obj.dict())
+    
     return member_obj
 
 @api_router.get("/members", response_model=List[MemberRegistration])
