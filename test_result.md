@@ -195,6 +195,18 @@ backend:
         - agent: "testing"
         - comment: "✅ TESTED: Both endpoints working correctly. GET /api/members/{member_id}/id-card returns proper PDF with correct headers (application/pdf, attachment filename). POST /api/send-test-email processes successfully for valid member IDs. Both endpoints properly handle invalid member IDs with 404 responses."
 
+  - task: "Implement admin notification emails for new registrations"
+    implemented: true
+    working: "unknown"
+    file: "email_service.py, server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "unknown"
+        - agent: "main"
+        - comment: "Added send_admin_notification_email method to EmailService class with formatted HTML email template including all member details, location info, and ID card PDF attachment. Updated registration endpoint to send admin notifications in background. Added test endpoint for admin notifications."
+
 frontend:
   - task: "Create Contact Us page with ADYC information"
     implemented: true
