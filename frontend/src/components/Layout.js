@@ -57,49 +57,39 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
-      {/* Global 3D Interactive Elements */}
-      <Interactive3DElements />
-      
-      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100 dark:bg-gradient-to-br dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800 transition-all duration-500 relative z-10">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 transition-all duration-500 relative">
         
-        {/* BLOG-STYLE TOP NAVIGATION */}
-        <header className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16 lg:h-20">
+        {/* SOPHISTICATED HEADER */}
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled 
+            ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-soft'
+            : 'bg-transparent'
+        }`}>
+          <div className="container-custom">
+            <div className="flex justify-between items-center h-20">
               
-              {/* LOGO SECTION */}
-              <div className="flex items-center space-x-3">
+              {/* REFINED LOGO SECTION */}
+              <div className="flex items-center space-x-4">
                 <motion.div 
-                  className="relative"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotateY: 15,
-                    rotateX: 5 
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{ perspective: '1000px' }}
+                  className="relative cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => onNavigate('home')}
                 >
-                  <motion.img 
+                  <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
                     alt="ADYC Logo" 
-                    className="w-10 h-10 lg:w-12 lg:h-12 object-contain rounded-lg shadow-lg cursor-pointer"
-                    whileHover={{ 
-                      boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" 
-                    }}
+                    className="w-12 h-12 object-contain rounded-xl shadow-moderate"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-secondary-400/20 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
-                <motion.div
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h1 className="text-lg lg:text-xl font-bold text-neutral-800 dark:text-white">ADYC</h1>
-                  <p className="text-xs lg:text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block">African Democratic Youth Congress</p>
-                </motion.div>
+                <div className="hidden sm:block">
+                  <h1 className="text-xl font-bold text-primary">ADYC</h1>
+                  <p className="text-sm text-secondary leading-tight">African Democratic Youth Congress</p>
+                </div>
               </div>
 
-              {/* DESKTOP NAVIGATION */}
-              <nav className="hidden lg:flex items-center space-x-1">
+              {/* DESKTOP NAVIGATION - Sophisticated Design */}
+              <nav className="hidden lg:flex items-center space-x-2">
                 {navigation.map((item) => {
                   const isActive = currentPage === item.id;
                   return (
@@ -108,10 +98,10 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleNavigation(item.id)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      className={`flex items-center space-x-2 px-4 py-3 rounded-xl font-medium transition-all duration-200 mobile-touch ${
                         isActive
-                          ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
-                          : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/50'
+                          ? 'bg-orange-600 text-white shadow-accent'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/60'
                       }`}
                     >
                       <item.icon className={`w-4 h-4 ${isActive ? 'text-white' : ''}`} />
@@ -121,17 +111,17 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                 })}
               </nav>
 
-              {/* RIGHT SIDE CONTROLS */}
+              {/* RIGHT SIDE CONTROLS - Clean Design */}
               <div className="flex items-center space-x-3">
-                {/* SEARCH BAR */}
-                <div className="hidden md:flex relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                {/* SEARCH BAR - Hidden on mobile to reduce clutter */}
+                <div className="hidden xl:flex relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="text"
-                    placeholder="Search posts..."
+                    placeholder="Search..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-64 bg-neutral-100/50 dark:bg-neutral-800/50 rounded-lg border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm"
+                    className="input-field pl-11 pr-4 py-3 w-64 text-sm"
                   />
                 </div>
 
@@ -140,81 +130,81 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={toggleDarkMode}
-                  className="p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all"
+                  className="p-3 rounded-xl bg-slate-100/60 dark:bg-slate-800/60 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-all mobile-touch"
                 >
                   {darkMode ? (
-                    <Sun className="w-5 h-5 text-yellow-500" />
+                    <Sun className="w-5 h-5 text-amber-500" />
                   ) : (
-                    <Moon className="w-5 h-5" />
+                    <Moon className="w-5 h-5 text-slate-600" />
                   )}
                 </motion.button>
 
-                {/* MOBILE MENU BUTTON - Only for smaller screens */}
+                {/* MOBILE MENU BUTTON */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(true)}
-                  className="lg:hidden p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all"
+                  className="lg:hidden p-3 rounded-xl bg-slate-100/60 dark:bg-slate-800/60 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-all mobile-touch"
                 >
-                  <Menu className="w-5 h-5" />
+                  <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </motion.button>
               </div>
             </div>
           </div>
-
-          {/* MOBILE SEARCH BAR - Below main header on mobile */}
-          <div className="md:hidden px-4 pb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search posts..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-neutral-100/50 dark:bg-neutral-800/50 rounded-lg border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm"
-              />
-            </div>
-          </div>
         </header>
 
-        {/* MOBILE NAVIGATION OVERLAY - Only for very small screens */}
+        {/* MOBILE NAVIGATION - Premium Design */}
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
-              initial={{ x: -300 }}
+              initial={{ x: -320 }}
               animate={{ x: 0 }}
-              exit={{ x: -300 }}
+              exit={{ x: -320 }}
               transition={{ type: "spring", damping: 25, stiffness: 500 }}
-              className="w-80 h-full bg-white/95 dark:bg-neutral-800/95 backdrop-blur-md border-r border-neutral-200/60 dark:border-neutral-700/60"
+              className="w-80 h-full bg-white dark:bg-slate-900 shadow-strong"
               onClick={(e) => e.stopPropagation()}
             >
               {/* MOBILE HEADER */}
-              <div className="flex items-center justify-between h-16 px-6 border-b border-neutral-200 dark:border-neutral-700">
+              <div className="flex items-center justify-between h-20 px-6 border-b border-slate-200 dark:border-slate-700">
                 <div className="flex items-center space-x-3">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
                     alt="ADYC Logo" 
-                    className="w-8 h-8 object-contain rounded-lg"
+                    className="w-10 h-10 object-contain rounded-lg"
                   />
                   <div>
-                    <h1 className="text-sm font-bold text-neutral-800 dark:text-white">ADYC</h1>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">Youth Congress</p>
+                    <h1 className="font-bold text-primary">ADYC</h1>
+                    <p className="text-xs text-secondary">Youth Congress</p>
                   </div>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-lg text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+                  className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </motion.button>
+              </div>
+
+              {/* MOBILE SEARCH */}
+              <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="input-field pl-11 pr-4 py-3 w-full text-sm"
+                  />
+                </div>
               </div>
 
               {/* MOBILE NAVIGATION */}
@@ -224,13 +214,13 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   return (
                     <motion.button
                       key={item.name}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, x: 5 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleNavigation(item.id)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-all ${
+                      className={`w-full flex items-center space-x-4 px-4 py-4 text-left rounded-xl transition-all ${
                         isActive
-                          ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-lg'
-                          : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700/50'
+                          ? 'bg-orange-600 text-white shadow-accent'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
                       <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
@@ -243,9 +233,9 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
           </motion.div>
         )}
 
-        {/* MAIN CONTENT AREA */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm rounded-2xl border border-neutral-200/50 dark:border-neutral-700/50 p-6 lg:p-8 min-h-[calc(100vh-12rem)]">
+        {/* MAIN CONTENT AREA - Clean, Spacious Design */}
+        <main className="pt-20">
+          <div className="min-h-screen">
             {children}
           </div>
         </main>
