@@ -113,12 +113,8 @@ const SplashScreen = ({ onComplete }) => {
 
       {/* MAIN LOGO CONTAINER WITH ADVANCED EFFECTS */}
       <div className="relative z-10 text-center">
-        <motion.div
-          variants={logoSpinVariants}
-          initial="initial"
-          animate="animate"
-          className="mb-8"
-        >
+        {/* LOGO CONTAINER WITH ADVANCED EFFECTS */}
+        <div className="mb-8">
           <div className="relative mx-auto w-36 h-36 mb-6">
             {/* MULTI-LAYER GLOW SYSTEM - Optimized */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-full blur-xl scale-125 -z-10"></div>
@@ -126,24 +122,16 @@ const SplashScreen = ({ onComplete }) => {
             
             {/* LOGO CONTAINER WITH NEUMORPHIC DESIGN */}
             <div className="relative w-36 h-36 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 shadow-lg">
-              {logoLoaded && !logoError ? (
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
-                  alt="ADYC Logo" 
-                  className="w-full h-full object-contain p-2 rounded-full"
-                />
-              ) : (
-                <div className="w-32 h-32 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-full flex items-center justify-center shadow-inner">
-                  <span className="text-white font-bold text-3xl tracking-wider">ADYC</span>
-                </div>
-              )}
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-full flex items-center justify-center shadow-inner">
+                <span className="text-white font-bold text-3xl tracking-wider">ADYC</span>
+              </div>
             </div>
 
             {/* DECORATIVE PULSING RINGS - Optimized */}
             <div className="absolute inset-0 rounded-full border border-primary-200/30 animate-ping" style={{ animationDuration: '2s' }}></div>
             <div className="absolute inset-0 rounded-full border border-secondary-200/20 animate-ping" style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ANIMATED TITLE WITH LETTER STAGGER */}
         <div className="mb-4">
