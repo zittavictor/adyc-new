@@ -2,10 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from './Layout';
 import SpinningLogo from './SpinningLogo';
-import ThreeJSBackground from './ThreeJSBackground';
-import { ThreeJSTextBackground } from './ThreeJSText';
-import { CardHover3D } from './Interactive3DElements';
-import { ArrowRight, Users, Target, BookOpen, Award, Lightbulb, TrendingUp } from 'lucide-react';
+import { ArrowRight, Users, Target, BookOpen, Award, Lightbulb, TrendingUp, Star, Heart, Zap } from 'lucide-react';
 import { blogPosts, events, executiveMembers } from '../data/mockData';
 
 const Home = ({ onNavigate }) => {
@@ -14,284 +11,493 @@ const Home = ({ onNavigate }) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
         delayChildren: 0.2
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.7,
+        ease: [0.25, 0.25, 0.25, 0.75]
       }
     }
   };
 
+  // Human-designed feature set with varied visual treatment
+  const features = [
+    {
+      icon: Users,
+      title: 'Youth Leadership Development',
+      description: 'Comprehensive programs designed to nurture the next generation of ethical leaders who will drive Nigeria\'s democratic progress.',
+      accent: 'orange',
+      size: 'large' // Featured card
+    },
+    {
+      icon: Target,
+      title: 'Democratic Participation',
+      description: 'Active engagement across all six geopolitical zones, ensuring every voice contributes to national development.',
+      accent: 'green',
+      size: 'medium'
+    },
+    {
+      icon: Lightbulb,
+      title: 'Innovation Hub',
+      description: 'Collaborative spaces where young minds solve Nigeria\'s most pressing challenges through creative solutions.',
+      accent: 'blue',
+      size: 'medium'
+    },
+    {
+      icon: BookOpen,
+      title: 'Political Education',
+      description: 'Comprehensive training programs on governance, policy-making, and civic responsibility.',
+      accent: 'purple',
+      size: 'small'
+    },
+    {
+      icon: Award,
+      title: 'Recognition Programs',
+      description: 'Celebrating outstanding contributions to community development and youth empowerment initiatives.',
+      accent: 'amber',
+      size: 'small'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Future Pathways',
+      description: 'Clear roadmaps to leadership roles in politics, business, and social impact sectors.',
+      accent: 'teal',
+      size: 'small'
+    }
+  ];
+
   return (
     <Layout currentPage="home" onNavigate={onNavigate}>
-      {/* Three.js Background Effects */}
-      <ThreeJSBackground />
-      
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="space-y-8 h-full overflow-y-auto mobile-scroll relative z-10"
+        className="space-y-24 h-full overflow-y-auto smooth-scroll relative"
       >
-        {/* HERO SECTION */}
-        <motion.div 
+        {/* HERO SECTION - Asymmetric, Human-Designed Layout */}
+        <motion.section 
           variants={itemVariants}
-          className="text-center py-12 px-6 relative"
+          className="relative py-20 px-6"
         >
-          {/* Three.js Text Background */}
-          <ThreeJSTextBackground className="absolute inset-0 opacity-20" />
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 right-10 w-64 h-64 bg-gradient-to-br from-orange-500/10 to-green-500/10 rounded-full blur-3xl animate-float-gentle"></div>
+            <div className="absolute bottom-20 left-10 w-48 h-48 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-full blur-3xl animate-float-gentle" style={{animationDelay: '2s'}}></div>
+          </div>
           
-          {/* Spinning Logo */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10"
-          >
-            <SpinningLogo size={120} />
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold mb-6 leading-tight relative z-10"
-          >
-            <span className="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 bg-clip-text text-transparent">
-              Welcome to ADYC
-            </span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl text-neutral-600 dark:text-neutral-400 mb-8 max-w-3xl mx-auto leading-relaxed relative z-10"
-          >
-            Empowering Nigerian youth to become active, responsible, and impactful citizens. 
-            Join the movement for democratic participation and national development.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center relative z-10"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('register')}
-              className="neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 mobile-button"
-            >
-              <span>Join ADYC Today</span>
-              <ArrowRight className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('about')}
-              className="neumorphic-button bg-white/50 dark:bg-neutral-800/30 text-neutral-700 dark:text-neutral-300 font-semibold py-4 px-8 rounded-xl border border-neutral-200/50 dark:border-neutral-600/50 hover:border-primary-300 dark:hover:border-primary-600 transition-all mobile-button"
-            >
-              Learn More
-            </motion.button>
-          </motion.div>
-        </motion.div>
-
-        {/* KEY FEATURES GRID */}
-        <motion.div variants={itemVariants}>
-          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-            Why Join ADYC?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Users,
-                title: 'Youth Leadership',
-                description: 'Develop leadership skills and participate actively in governance and community development.',
-                color: 'primary'
-              },
-              {
-                icon: Target,
-                title: 'Clear Mission',
-                description: 'Unite youth across all six geopolitical zones for national progress and democratic participation.',
-                color: 'secondary'
-              },
-              {
-                icon: Lightbulb,
-                title: 'Innovation & Collaboration',
-                description: 'Foster innovation through collaborative approaches to solving national challenges.',
-                color: 'primary'
-              },
-              {
-                icon: BookOpen,
-                title: 'Educational Programs',
-                description: 'Access comprehensive leadership training and political education initiatives.',
-                color: 'secondary'
-              },
-              {
-                icon: Award,
-                title: 'Recognition',
-                description: 'Get recognized for your contributions to community development and youth empowerment.',
-                color: 'primary'
-              },
-              {
-                icon: TrendingUp,
-                title: 'Future Opportunities',
-                description: 'Build a pathway to future leadership roles and political participation.',
-                color: 'secondary'
-              }
-            ].map((feature, index) => (
-              <CardHover3D key={feature.title} intensity={0.15}>
+          <div className="container-custom relative z-10">
+            <div className="asymmetric-grid items-center">
+              {/* Text Content - Spans 7 columns */}
+              <div className="col-span-12 lg:col-span-7 space-y-8">
                 <motion.div
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-6 text-center group cursor-pointer h-full"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                 >
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center ${
-                  feature.color === 'primary' 
-                    ? 'bg-gradient-to-br from-primary-100 to-primary-200 text-primary-600 dark:from-primary-900/30 dark:to-primary-800/30 dark:text-primary-400' 
-                    : 'bg-gradient-to-br from-secondary-100 to-secondary-200 text-secondary-600 dark:from-secondary-900/30 dark:to-secondary-800/30 dark:text-secondary-400'
-                } group-hover:scale-110 transition-transform`}>
-                  <feature.icon className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                  {feature.description}
-                </p>
+                  <h1 className="display-text text-primary">
+                    Welcome to{' '}
+                    <span className="text-accent hand-drawn-accent">ADYC</span>
+                  </h1>
                 </motion.div>
-              </CardHover3D>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* LATEST BLOG POSTS PREVIEW */}
-        <motion.div variants={itemVariants}>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Latest Updates
-            </h2>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('blog')}
-              className="text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300 transition-colors flex items-center space-x-1"
-            >
-              <span>View All</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {blogPosts.slice(0, 2).map((post, index) => (
-              <CardHover3D key={post.id} intensity={0.12}>
+                
+                <motion.p
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="body-large text-secondary max-w-2xl"
+                >
+                  Empowering Nigerian youth to become active, responsible, and impactful citizens. 
+                  Join the movement for democratic participation and national development.
+                </motion.p>
+                
                 <motion.div
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 group cursor-pointer h-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9, duration: 0.8 }}
+                  className="flex flex-col sm:flex-row gap-4"
+                >
+                  <button
+                    onClick={() => onNavigate('register')}
+                    className="btn-primary mobile-touch group"
+                  >
+                    <span>Join ADYC Today</span>
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                  <button
+                    onClick={() => onNavigate('about')}
+                    className="btn-secondary mobile-touch"
+                  >
+                    Learn More
+                  </button>
+                </motion.div>
+                
+                {/* Trust indicators */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2, duration: 0.6 }}
+                  className="flex items-center space-x-6 text-sm text-secondary pt-6"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Star className="w-5 h-5 text-amber-500 fill-current" />
+                    <span>Nationwide Coverage</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Users className="w-5 h-5 text-green-500" />
+                    <span>1000+ Active Members</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Heart className="w-5 h-5 text-red-500" />
+                    <span>Community Focused</span>
+                  </div>
+                </motion.div>
+              </div>
+              
+              {/* Logo Section - Spans 5 columns, offset */}
+              <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+                  className="relative"
+                >
+                  <SpinningLogo size={200} />
+                  {/* Decorative ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-orange-500/20 animate-pulse" style={{transform: 'scale(1.2)'}}></div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* FEATURES SECTION - Masonry-style Layout */}
+        <motion.section variants={itemVariants} className="section-spacing">
+          <div className="container-custom">
+            <div className="text-center mb-16">
+              <motion.h2 
+                className="heading-primary text-primary mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                Why Join <span className="text-accent">ADYC?</span>
+              </motion.h2>
+              <motion.p 
+                className="body-large text-secondary max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                Discover the opportunities that await you as part of Nigeria's most dynamic youth political movement.
+              </motion.p>
+            </div>
+
+            {/* Sophisticated Feature Grid - Human Layout */}
+            <div className="grid grid-cols-12 gap-6 lg:gap-8">
+              {/* Featured large card */}
+              <motion.div
+                className="col-span-12 lg:col-span-8"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="featured-card group cursor-pointer" onClick={() => onNavigate('about')}>
+                  <div className="flex items-start space-x-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent">
+                        <Users className="w-8 h-8" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                        Youth Leadership Development
+                      </h3>
+                      <p className="body-text text-secondary mb-6">
+                        Comprehensive programs designed to nurture the next generation of ethical leaders who will drive Nigeria's democratic progress through innovation, collaboration, and community engagement.
+                      </p>
+                      <div className="flex items-center text-accent font-semibold group-hover:translate-x-2 transition-transform">
+                        <span>Learn More</span>
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Side feature */}
+              <motion.div
+                className="col-span-12 lg:col-span-4"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                <div className="modern-card h-full group cursor-pointer" onClick={() => onNavigate('register')}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white mb-6">
+                    <Target className="w-6 h-6" />
+                  </div>
+                  <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                    Democratic Participation
+                  </h3>
+                  <p className="body-text text-secondary">
+                    Active engagement across all six geopolitical zones, ensuring every voice contributes to national development.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Bottom row - varied sizes */}
+              <motion.div
+                className="col-span-12 lg:col-span-5"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="accent-card group cursor-pointer" onClick={() => onNavigate('blog')}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
+                    <Lightbulb className="w-6 h-6" />
+                  </div>
+                  <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors">
+                    Innovation Hub
+                  </h3>
+                  <p className="body-text text-secondary">
+                    Collaborative spaces where young minds solve Nigeria's most pressing challenges through creative solutions.
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="col-span-12 lg:col-span-3"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <div className="modern-card text-center group cursor-pointer" onClick={() => onNavigate('about')}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 mx-auto">
+                    <BookOpen className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-primary mb-3 group-hover:text-accent transition-colors">
+                    Political Education
+                  </h3>
+                  <p className="caption-text text-secondary">
+                    Comprehensive training on governance and civic responsibility.
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="col-span-12 lg:col-span-4"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <div className="modern-card group cursor-pointer" onClick={() => onNavigate('executives')}>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white">
+                      <Award className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-primary group-hover:text-accent transition-colors">
+                        Recognition Programs
+                      </h3>
+                    </div>
+                  </div>
+                  <p className="caption-text text-secondary">
+                    Celebrating outstanding contributions to community development and youth empowerment.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* BLOG PREVIEW SECTION - Asymmetric Layout */}
+        <motion.section variants={itemVariants} className="bg-accent-subtle">
+          <div className="container-custom section-spacing">
+            <div className="asymmetric-grid items-center mb-12">
+              <div className="col-span-12 lg:col-span-8">
+                <h2 className="heading-primary text-primary mb-4">
+                  Latest <span className="text-accent">Updates</span>
+                </h2>
+                <p className="body-large text-secondary">
+                  Stay informed with our latest insights, news, and community stories that matter to Nigerian youth.
+                </p>
+              </div>
+              <div className="col-span-12 lg:col-span-4 flex justify-start lg:justify-end">
+                <button
                   onClick={() => onNavigate('blog')}
+                  className="btn-text flex items-center space-x-2 group"
                 >
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
-                  className="w-full h-48 object-cover rounded-lg mb-4 neumorphic" 
-                />
-                <div className="flex items-center text-xs text-neutral-500 dark:text-neutral-400 mb-2">
-                  <span>{post.date}</span>
-                  <span className="mx-2">•</span>
-                  <span>{post.author}</span>
-                </div>
-                <h3 className="font-semibold text-lg text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3 line-clamp-3">
-                  {post.summary}
-                </p>
-                <div className="flex items-center text-primary-600 dark:text-primary-400 text-sm font-medium group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
-                  <span>Read More</span>
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-                </motion.div>
-              </CardHover3D>
-            ))}
-          </div>
-        </motion.div>
+                  <span>View All Posts</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
 
-        {/* EXECUTIVE TEAM PREVIEW */}
-        <motion.div variants={itemVariants}>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              Our Leadership
-            </h2>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('executives')}
-              className="text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300 transition-colors flex items-center space-x-1"
-            >
-              <span>Meet the Team</span>
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {executiveMembers.map((member, index) => (
-              <CardHover3D key={member.id} intensity={0.1}>
+            <div className="grid grid-cols-12 gap-6 lg:gap-8">
+              {blogPosts.slice(0, 2).map((post, index) => (
                 <motion.div
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 text-center group cursor-pointer h-full"
+                  key={post.id}
+                  className={`col-span-12 ${index === 0 ? 'lg:col-span-7' : 'lg:col-span-5'}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <article 
+                    className="modern-card group cursor-pointer h-full overflow-hidden"
+                    onClick={() => onNavigate('blog')}
+                  >
+                    <div className="aspect-video bg-slate-200 dark:bg-slate-700 rounded-xl mb-6 overflow-hidden">
+                      <img 
+                        src={post.image} 
+                        alt={post.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                    </div>
+                    <div className="flex items-center text-sm text-secondary mb-3">
+                      <time>{post.date}</time>
+                      <span className="mx-2">•</span>
+                      <span>{post.author}</span>
+                    </div>
+                    <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="body-text text-secondary mb-6 line-clamp-3">
+                      {post.summary}
+                    </p>
+                    <div className="flex items-center text-accent font-semibold group-hover:translate-x-2 transition-transform">
+                      <span>Read Article</span>
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </div>
+                  </article>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* LEADERSHIP PREVIEW - Minimal, Clean Design */}
+        <motion.section variants={itemVariants} className="section-spacing">
+          <div className="container-custom">
+            <div className="text-center mb-16">
+              <motion.h2 
+                className="heading-primary text-primary mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                Our <span className="text-accent">Leadership</span>
+              </motion.h2>
+              <motion.p 
+                className="body-large text-secondary max-w-2xl mx-auto mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                Meet the dedicated individuals driving positive change across Nigeria's six geopolitical zones.
+              </motion.p>
+              <motion.button
+                onClick={() => onNavigate('executives')}
+                className="btn-secondary mobile-touch"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                Meet the Team
+              </motion.button>
+            </div>
+
+            {/* Clean leadership grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {executiveMembers.slice(0, 4).map((member, index) => (
+                <motion.div
+                  key={member.id}
+                  className="text-center group cursor-pointer"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                   onClick={() => onNavigate('executives')}
                 >
-                <div className="w-20 h-20 rounded-full mx-auto mb-3 neumorphic-inset flex items-center justify-center overflow-hidden">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-600 dark:to-neutral-700 flex items-center justify-center">
-                      <Users className="w-8 h-8 text-neutral-500 dark:text-neutral-400" />
+                  <div className="relative mb-4">
+                    <div className="w-24 h-24 mx-auto rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-700 shadow-moderate group-hover:shadow-strong transition-all duration-300">
+                      {member.image ? (
+                        <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Users className="w-8 h-8 text-slate-400" />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <h3 className="font-semibold text-sm text-neutral-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {member.name}
-                </h3>
-                <p className="text-xs text-primary-600 dark:text-primary-400 font-medium">
-                  {member.role}
-                </p>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <h3 className="font-semibold text-primary mb-1 group-hover:text-accent transition-colors">
+                    {member.name}
+                  </h3>
+                  <p className="caption-text text-accent font-medium">
+                    {member.role}
+                  </p>
                 </motion.div>
-              </CardHover3D>
-            ))}
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* CALL TO ACTION */}
-        <motion.div 
+        {/* FINAL CTA - Premium Design */}
+        <motion.section 
           variants={itemVariants}
-          className="text-center py-12 px-6 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-2xl border border-primary-100/50 dark:border-primary-800/50"
+          className="relative overflow-hidden"
         >
-          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6 max-w-2xl mx-auto">
-            Join thousands of young Nigerians who are actively shaping the future of our nation through democratic participation and community development.
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onNavigate('register')}
-            className="neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all mobile-button"
-          >
-            Start Your Journey Today
-          </motion.button>
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-green-500/5"></div>
+          <div className="container-custom section-spacing relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <Zap className="w-16 h-16 text-accent mx-auto mb-8 animate-bounce-subtle" />
+                <h2 className="display-text text-primary mb-8">
+                  Ready to Make a <span className="text-accent hand-drawn-accent">Difference?</span>
+                </h2>
+                <p className="body-large text-secondary mb-12 max-w-2xl mx-auto">
+                  Join thousands of young Nigerians who are actively shaping the future of our nation through democratic participation and community development.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <button
+                    onClick={() => onNavigate('register')}
+                    className="btn-primary mobile-touch text-lg px-12 py-5"
+                  >
+                    Start Your Journey Today
+                  </button>
+                  <button
+                    onClick={() => onNavigate('contact')}
+                    className="btn-secondary mobile-touch text-lg px-12 py-5"
+                  >
+                    Get in Touch
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
       </motion.div>
     </Layout>
   );
