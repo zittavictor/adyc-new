@@ -6,50 +6,18 @@ const SplashScreen = ({ onComplete }) => {
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [logoError, setLogoError] = useState(false);
 
-  // Debug state
-  const [debugInfo, setDebugInfo] = useState({});
-
-  // Preload the logo image
+  // Simplify - just show content immediately and complete after a short delay
   useEffect(() => {
-    setDebugInfo(prev => ({...prev, imageLoadStart: Date.now()}));
+    console.log('SplashScreen mounted, setting showContent to true');
+    setShowContent(true);
     
-    const preloadLogo = new Image();
-    preloadLogo.src = "https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg";
-    preloadLogo.onload = () => {
-      setDebugInfo(prev => ({...prev, imageLoaded: true, imageLoadTime: Date.now()}));
-      setLogoLoaded(true);
-      setShowContent(true);
-    };
-    preloadLogo.onerror = (error) => {
-      setDebugInfo(prev => ({...prev, imageError: true, error: error.toString()}));
-      setLogoError(true);
-      setShowContent(true);
-    };
+    const timer = setTimeout(() => {
+      console.log('SplashScreen completing');
+      onComplete();
+    }, 2000); // 2 second delay
     
-    // Fallback timeout to show content even if image fails
-    const fallbackTimer = setTimeout(() => {
-      setDebugInfo(prev => ({...prev, fallbackTriggered: true}));
-      if (!logoLoaded && !logoError) {
-        setLogoError(true);
-        setShowContent(true);
-      }
-    }, 1000); // Reduced to 1 second
-    
-    return () => clearTimeout(fallbackTimer);
-  }, [logoLoaded, logoError]);
-
-  useEffect(() => {
-    setDebugInfo(prev => ({...prev, showContent, contentShownAt: Date.now()}));
-    
-    // Only start completion timer after content is shown
-    if (showContent) {
-      const timer = setTimeout(() => {
-        setDebugInfo(prev => ({...prev, completionTriggered: true, completionTime: Date.now()}));
-        onComplete();
-      }, 500); // Reduced to 500ms for immediate testing
-      return () => clearTimeout(timer);
-    }
-  }, [showContent]); // Removed onComplete from dependencies to prevent infinite loop
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array - run once on mount
 
   // FLOATING CIRCLES ANIMATION SYSTEM - Adapted for ADYC colors with smoother performance
   const circleVariants = {
