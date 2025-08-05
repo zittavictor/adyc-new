@@ -192,7 +192,11 @@ class EmailService:
             # Footer text
             c.setFillColor(colors.white)
             c.setFont("Helvetica", 5)
-            reg_date = datetime.fromisoformat(member_data.get('registration_date', datetime.now().isoformat()))
+            reg_date_raw = member_data.get('registration_date', datetime.now())
+            if isinstance(reg_date_raw, str):
+                reg_date = datetime.fromisoformat(reg_date_raw)
+            else:
+                reg_date = reg_date_raw
             footer_text = f"VALID NATIONWIDE • ISSUED: {reg_date.year}"
             text_width = c.stringWidth(footer_text, "Helvetica", 5)
             c.drawString((page_width - text_width) / 2, 3*mm, footer_text)
