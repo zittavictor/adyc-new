@@ -120,11 +120,29 @@ const SplashScreen = ({ onComplete }) => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/15 to-secondary-500/15 rounded-full blur-2xl scale-150 -z-20 animate-pulse"></div>
             
             {/* LOGO CONTAINER WITH NEUMORPHIC DESIGN */}
-            <div className="relative w-36 h-36 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 shadow-lg">
-              <div className="w-32 h-32 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-full flex items-center justify-center shadow-inner">
+            <motion.div 
+              className="relative w-36 h-36 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 shadow-lg overflow-hidden"
+              animate={{ rotate: 360 }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity, 
+                ease: "linear" 
+              }}
+            >
+              <img 
+                src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
+                alt="ADYC Logo" 
+                className="w-full h-full object-contain p-2 rounded-full"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              {/* Fallback text logo */}
+              <div className="hidden w-full h-full bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-full items-center justify-center">
                 <span className="text-white font-bold text-3xl tracking-wider">ADYC</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* DECORATIVE PULSING RINGS - Optimized */}
             <div className="absolute inset-0 rounded-full border border-primary-200/30 animate-ping" style={{ animationDuration: '2s' }}></div>
