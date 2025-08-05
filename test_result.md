@@ -167,7 +167,8 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Implement dark mode support for both splash screen and home page logos"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -177,3 +178,5 @@ agent_communication:
     - message: "🎯 SPLASH SCREEN UPDATE IN PROGRESS: Successfully updated splash screen component with actual ADYC logo image and spinning animation. Removed 'Loading ADYC...' text while keeping spinner animation. Ready for testing to verify changes work correctly on frontend."
     - agent: "testing"
     - message: "🎉 SPLASH SCREEN TESTING COMPLETE - ALL REQUIREMENTS MET: ✅ ADYC logo image displays correctly with spinning animation ✅ No 'Loading ADYC...' text found ✅ Proper 2.4s duration ✅ Smooth transition to home page ✅ Visual effects working (blur, gradients, pulsing rings, floating circles) ✅ Fallback text logo works when image fails ✅ All splash screen functionality verified and working as expected"
+    - agent: "main"
+    - message: "🌙 DARK MODE SUPPORT ADDED: Updated both SplashScreen and SpinningLogo components with comprehensive dark mode support. Added dark: classes for backgrounds (dark:bg-neutral-800/90), borders (dark:border-neutral-600/50), glow effects, and pulsing rings. Both logos now adapt properly to dark mode theme. Ready for testing to verify dark mode functionality."
