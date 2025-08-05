@@ -102,10 +102,10 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Beautify the application's website using Three.js animations including spinning logo, custom elements, enhanced 'Welcome to ADYC' text, and subtle background animations"
+user_problem_statement: "Include the ADYC logo at the splash screen in the introduction of the website before the home page. Remove any 'spinning' text when something is spinning but keep the spinning animations."
 
 backend:
-  - task: "No backend changes required for Three.js integration"
+  - task: "No backend changes required for splash screen logo updates"
     implemented: true
     working: true
     file: "N/A"
@@ -115,7 +115,32 @@ backend:
     status_history:
         - working: true
         - agent: "main"
-        - comment: "Three.js implementation is frontend-only, no backend modifications needed"
+        - comment: "Splash screen logo update is frontend-only, no backend modifications needed"
+
+frontend:
+  - task: "Replace text-based ADYC logo with actual image in splash screen"
+    implemented: true
+    working: false
+    file: "SplashScreen.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Updated splash screen to use actual ADYC logo image instead of text, added spinning animation similar to SpinningLogo component"
+
+  - task: "Remove 'Loading ADYC...' text from splash screen spinner"
+    implemented: true
+    working: false
+    file: "SplashScreen.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Removed 'Loading ADYC...' text from loading state while keeping the spinner animation"
 
 frontend:
   - task: "Fix React version compatibility for Three.js libraries"
