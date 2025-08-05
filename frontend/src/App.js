@@ -7,6 +7,7 @@ import Blog from './components/Blog';
 import Register from './components/Register';
 import Executives from './components/Executives';
 import About from './components/About';
+import Contact from './components/Contact';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
