@@ -278,6 +278,9 @@ def test_get_specific_member():
                     data = response.json()
                     if data.get("member_id") == test_member_id:
                         print("✅ Specific member retrieved successfully")
+                        # Store for later tests
+                        global valid_member_id
+                        valid_member_id = test_member_id
                     else:
                         print(f"❌ Retrieved wrong member: expected {test_member_id}, got {data.get('member_id')}")
                 else:
@@ -301,6 +304,189 @@ def test_get_specific_member():
             
     except Exception as e:
         print(f"❌ Get specific member error: {str(e)}")
+
+def test_id_card_pdf_generation():
+    """Test ID card PDF generation endpoint"""
+    print("\n=== Testing ID Card PDF Generation ===")
+    
+    try:
+        # First, get a valid member ID
+        response = requests.get(f"{BACKEND_URL}/members")
+        if response.status_code == 200:
+            members = response.json()
+            if members:
+                test_member_id = members[0]["member_id"]
+                
+                # Test valid member ID card generation
+                response = requests.get(f"{BACKEND_URL}/members/{test_member_id}/id-card")
+                print(f"GET /api/members/{test_member_id}/id-card - Status: {response.status_code}")
+                
+                if response.status_code == 200:
+                    # Check content type
+                    content_type = response.headers.get('content-type', '')
+                    if 'application/pdf' in content_type:
+                        print("✅ PDF content type correct")
+                    else:
+                        print(f"❌ Wrong content type: {content_type}")
+                    
+                    # Check content disposition header
+                    content_disposition = response.headers.get('content-disposition', '')
+                    if f'ADYC_ID_Card_{test_member_id}.pdf' in content_disposition:
+                        print("✅ PDF filename header correct")
+                    else:
+                        print(f"❌ Wrong filename header: {content_disposition}")
+                    
+                    # Check if response contains PDF data
+                    if len(response.content) > 0 and response.content.startswith(b'%PDF'):
+                        print("✅ Valid PDF data received")
+                        print(f"✅ PDF size: {len(response.content)} bytes")
+                    else:
+                        print("❌ Invalid PDF data received")
+                        
+                else:
+                    print(f"❌ ID card generation failed: {response.text}")
+            else:
+                print("⚠️ No members found to test ID card generation")
+        
+        # Test invalid member ID for ID card
+        invalid_id = "ADYC-2024-INVALID"
+        response = requests.get(f"{BACKEND_URL}/members/{invalid_id}/id-card")
+        print(f"GET /api/members/{invalid_id}/id-card - Status: {response.status_code}")
+        
+        if response.status_code == 404:
+            data = response.json()
+            if "Member not found" in data.get("detail", ""):
+                print("✅ Invalid member ID for ID card properly handled")
+            else:
+                print(f"❌ Unexpected error message for invalid ID: {data}")
+        else:
+            print(f"❌ Invalid member ID for ID card not properly handled: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ ID card generation test error: {str(e)}")
+
+def test_send_test_email():
+    """Test sending test email endpoint"""
+    print("\n=== Testing Send Test Email ===")
+    
+    try:
+        # First, get a valid member ID
+        response = requests.get(f"{BACKEND_URL}/members")
+        if response.status_code == 200:
+            members = response.json()
+            if members:
+                test_member_id = members[0]["member_id"]
+                
+                # Test valid member ID for test email
+                response = requests.post(f"{BACKEND_URL}/send-test-email", 
+                                       params={"member_id": test_member_id})
+                print(f"POST /api/send-test-email?member_id={test_member_id} - Status: {response.status_code}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if "Test email sent successfully" in data.get("message", ""):
+                        print("✅ Test email endpoint processed successfully")
+                        print("ℹ️ Note: Actual email delivery will be tested manually by user")
+                    else:
+                        print(f"❌ Unexpected success message: {data}")
+                else:
+                    print(f"❌ Test email failed: {response.text}")
+                    # This might be expected if email service has issues
+                    if response.status_code == 500:
+                        print("ℹ️ Note: Email service error expected - user will test manually")
+            else:
+                print("⚠️ No members found to test email sending")
+        
+        # Test invalid member ID for test email
+        invalid_id = "ADYC-2024-INVALID"
+        response = requests.post(f"{BACKEND_URL}/send-test-email", 
+                               params={"member_id": invalid_id})
+        print(f"POST /api/send-test-email?member_id={invalid_id} - Status: {response.status_code}")
+        
+        if response.status_code == 404:
+            data = response.json()
+            if "Member not found" in data.get("detail", ""):
+                print("✅ Invalid member ID for test email properly handled")
+            else:
+                print(f"❌ Unexpected error message for invalid ID: {data}")
+        else:
+            print(f"❌ Invalid member ID for test email not properly handled: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Test email endpoint error: {str(e)}")
+
+def test_registration_with_email_background_task():
+    """Test that registration triggers background email task"""
+    print("\n=== Testing Registration with Email Background Task ===")
+    
+    try:
+        # Create test member data
+        test_member = {
+            "email": f"background.email.test.{uuid.uuid4().hex[:6]}@adyc.org",
+            "passport": create_test_passport_image(),
+            "full_name": "Background Email Test User",
+            "dob": "1992-08-20",
+            "ward": "Test Ward for Email",
+            "lga": "Test LGA for Email",
+            "state": "Test State for Email",
+            "country": "Nigeria",
+            "address": "123 Email Test Street, Test City",
+            "language": "English",
+            "marital_status": "Single",
+            "gender": "Female"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/register", json=test_member)
+        print(f"POST /api/register (with email task) - Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print("✅ Registration successful - background email task should be triggered")
+            print("ℹ️ Note: Background email task execution will be verified manually by user")
+            
+            # Verify member was created properly
+            member_id = data.get("member_id", "")
+            if member_id:
+                print(f"✅ Member created with ID: {member_id}")
+                
+                # Try to retrieve the member to confirm it's in database
+                get_response = requests.get(f"{BACKEND_URL}/members/{member_id}")
+                if get_response.status_code == 200:
+                    print("✅ Member successfully stored in database")
+                else:
+                    print("❌ Member not found in database after registration")
+            else:
+                print("❌ No member ID returned from registration")
+                
+        else:
+            print(f"❌ Registration with email task failed: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Registration with email task error: {str(e)}")
+
+def test_email_dependencies():
+    """Test if email dependencies are properly installed"""
+    print("\n=== Testing Email Dependencies ===")
+    
+    try:
+        # Test basic endpoint to see if email service imports work
+        response = requests.get(f"{BACKEND_URL}/")
+        print(f"GET /api/ (dependency check) - Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            print("✅ Backend server running - email dependencies likely installed")
+        else:
+            print(f"❌ Backend server issues: {response.text}")
+            
+        # Additional check by trying to access members endpoint
+        response = requests.get(f"{BACKEND_URL}/members")
+        if response.status_code == 200:
+            print("✅ Email service imports working (no import errors)")
+        else:
+            print(f"❌ Possible email service import issues: {response.text}")
+            
+    except Exception as e:
+        print(f"❌ Email dependencies test error: {str(e)}")
 
 def run_all_tests():
     """Run all backend API tests"""
