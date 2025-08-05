@@ -169,7 +169,8 @@ const Home = ({ onNavigate }) => {
                 <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                   {feature.description}
                 </p>
-              </motion.div>
+                </motion.div>
+              </CardHover3D>
             ))}
           </div>
         </motion.div>
