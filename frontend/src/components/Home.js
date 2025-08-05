@@ -244,13 +244,13 @@ const Home = ({ onNavigate }) => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {executiveMembers.map((member, index) => (
-              <motion.div
-                key={member.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 text-center group cursor-pointer"
-                onClick={() => onNavigate('executives')}
-              >
+              <CardHover3D key={member.id} intensity={0.1}>
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  className="neumorphic glass-morphism rounded-xl border border-white/20 dark:border-neutral-700/50 p-4 text-center group cursor-pointer h-full"
+                  onClick={() => onNavigate('executives')}
+                >
                 <div className="w-20 h-20 rounded-full mx-auto mb-3 neumorphic-inset flex items-center justify-center overflow-hidden">
                   {member.image ? (
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
