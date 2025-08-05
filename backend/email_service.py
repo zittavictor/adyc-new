@@ -345,5 +345,12 @@ class EmailService:
             logger.error(f"Error sending contact notification: {e}")
             return False
 
-# Create global email service instance
-email_service = EmailService()
+# Create global email service instance (lazy initialization)
+email_service = None
+
+def get_email_service():
+    """Get email service instance with lazy initialization"""
+    global email_service
+    if email_service is None:
+        email_service = EmailService()
+    return email_service
