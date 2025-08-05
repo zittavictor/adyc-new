@@ -204,6 +204,16 @@ const SplashScreen = ({ onComplete }) => {
           </motion.p>
         </div>
 
+        {/* DEBUG INFO - Remove after fixing */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="absolute bottom-4 left-4 text-xs text-gray-600 bg-white p-2 rounded">
+            <div>logoLoaded: {logoLoaded.toString()}</div>
+            <div>logoError: {logoError.toString()}</div>
+            <div>showContent: {showContent.toString()}</div>
+            <div>Debug: {JSON.stringify(debugInfo)}</div>
+          </div>
+        )}
+        
         {/* LOADING PROGRESS INDICATOR */}
         <motion.div
           initial={{ width: 0 }}
