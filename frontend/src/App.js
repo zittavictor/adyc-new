@@ -34,7 +34,7 @@ function App() {
       case 'about':
         return <About onNavigate={handleNavigation} />;
       case 'contact':
-        return <div>Contact page coming soon...</div>;
+        return <Contact onNavigate={handleNavigation} />;
       case 'social':
         return <div>Social media page coming soon...</div>;
       default:
