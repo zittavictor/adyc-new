@@ -194,11 +194,14 @@ class EmailService:
             c.setFont("Helvetica", 5)
             reg_date = datetime.fromisoformat(member_data.get('registration_date', datetime.now().isoformat()))
             footer_text = f"VALID NATIONWIDE • ISSUED: {reg_date.year}"
-            c.drawCentredText(page_width/2, 3*mm, footer_text)
+            text_width = c.stringWidth(footer_text, "Helvetica", 5)
+            c.drawString((page_width - text_width) / 2, 3*mm, footer_text)
             
             # Slogan at bottom
             c.setFont("Helvetica-Bold", 6)
-            c.drawCentredText(page_width/2, 5.5*mm, "ARISE, IT'S YOUTH O'CLOCK!")
+            slogan_text = "ARISE, IT'S YOUTH O'CLOCK!"
+            text_width = c.stringWidth(slogan_text, "Helvetica-Bold", 6)
+            c.drawString((page_width - text_width) / 2, 5.5*mm, slogan_text)
             
             # Save the PDF
             c.save()
