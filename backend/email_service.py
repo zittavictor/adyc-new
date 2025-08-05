@@ -81,9 +81,14 @@ class EmailService:
             # Header text
             c.setFillColor(colors.white)
             c.setFont("Helvetica-Bold", 8)
-            c.drawCentredText(page_width/2, page_height - 6*mm, "AFRICAN DEMOCRATIC YOUTH CONGRESS")
+            header_text = "AFRICAN DEMOCRATIC YOUTH CONGRESS"
+            text_width = c.stringWidth(header_text, "Helvetica-Bold", 8)
+            c.drawString((page_width - text_width) / 2, page_height - 6*mm, header_text)
+            
             c.setFont("Helvetica", 6)
-            c.drawCentredText(page_width/2, page_height - 9*mm, "MEMBERSHIP ID CARD")
+            subheader_text = "MEMBERSHIP ID CARD"
+            text_width = c.stringWidth(subheader_text, "Helvetica", 6)
+            c.drawString((page_width - text_width) / 2, page_height - 9*mm, subheader_text)
             
             # Member photo section
             photo_x = 5*mm
