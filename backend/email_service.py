@@ -295,7 +295,7 @@ class EmailService:
             - LGA: {member_data['lga']}
             - Ward: {member_data['ward']}
             - Gender: {member_data['gender']}
-            - Registration Date: {datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y')}
+            - Registration Date: {datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y') if isinstance(member_data['registration_date'], str) else member_data['registration_date'].strftime('%B %d, %Y')}
             
             Your official ADYC membership ID card has been attached as a PDF.
             
