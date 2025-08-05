@@ -143,83 +143,29 @@ frontend:
         - comment: "Removed 'Loading ADYC...' text from loading state while keeping the spinner animation"
 
 frontend:
-  - task: "Fix React version compatibility for Three.js libraries"
+  - task: "Replace text-based ADYC logo with actual image in splash screen"
     implemented: true
-    working: true
-    file: "package.json"
+    working: false
+    file: "SplashScreen.js"
     stuck_count: 0
-    priority: "critical"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
         - working: false
         - agent: "main"
-        - comment: "White screen due to React 19 incompatibility with Three.js libraries"
-        - working: true
-        - agent: "main"
-        - comment: "Fixed by downgrading React from 19.0.0 to 18.3.1 for Three.js compatibility"
+        - comment: "Updated splash screen to use actual ADYC logo image instead of text, added spinning animation similar to SpinningLogo component"
 
-  - task: "Integrate Three.js background animations with floating particles and geometric shapes"
+  - task: "Remove 'Loading ADYC...' text from splash screen spinner"
     implemented: true
-    working: true
-    file: "ThreeJSBackground.js, Layout.js, Home.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-        - working: true
-        - agent: "main"
-        - comment: "ThreeJSBackground component successfully integrated with subtle floating particles and geometric shapes across the website"
-
-  - task: "Implement spinning logo with auto-spin on page load and user interaction"
-    implemented: true
-    working: true
-    file: "SpinningLogo.js, Home.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-        - working: true
-        - agent: "main"
-        - comment: "SpinningLogo component working with auto-spin on load and click-based interaction with direction changes"
-
-  - task: "Enhanced 'Welcome to ADYC' text with Three.js features"
-    implemented: true
-    working: true
-    file: "ThreeJSText.js, Home.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-        - working: true
-        - agent: "main"
-        - comment: "ThreeJSTextBackground component integrated with interactive 3D text elements and mouse responsiveness"
-
-  - task: "Add CardHover3D effects for interactive elements"
-    implemented: true
-    working: true
-    file: "Interactive3DElements.js, Home.js"
+    working: false
+    file: "SplashScreen.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
-    status_history:
-        - working: true
-        - agent: "main"
-        - comment: "CardHover3D component successfully applied to feature cards, blog posts, and executive member cards with 3D tilt effects"
-
-  - task: "Fix splash screen transition to main homepage"
-    implemented: true
-    working: true
-    file: "SplashScreen.js, App.js"
-    stuck_count: 1
-    priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: false
         - agent: "main"
-        - comment: "Splash screen stuck in infinite loop due to React 18 useEffect dependency issues"
-        - working: true
-        - agent: "main"
-        - comment: "Fixed by removing onComplete from useEffect dependencies and using useCallback for stable reference"
+        - comment: "Removed 'Loading ADYC...' text from loading state while keeping the spinner animation"
 
 metadata:
   created_by: "main_agent"
