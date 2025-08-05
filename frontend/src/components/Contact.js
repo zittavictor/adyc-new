@@ -1,46 +1,50 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from './Layout';
-import { Mail, Phone, MapPin, Clock, Users, Target, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Users, Target, Heart, Shield, Zap, Award } from 'lucide-react';
 
 const Contact = ({ onNavigate }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
   const contactInfo = [
     {
-      icon: <Mail className="w-6 h-6" />,
+      icon: Mail,
       title: "Email Address",
       content: "africandemocraticyouthcongress@gmail.com",
-      description: "Send us your questions, concerns, or suggestions"
+      description: "Send us your questions, concerns, or suggestions",
+      color: "blue"
     },
     {
-      icon: <MapPin className="w-6 h-6" />,
+      icon: MapPin,
       title: "Our Reach",
       content: "Nationwide Coverage",
-      description: "Operating across all states in Nigeria"
+      description: "Operating across all 36 states in Nigeria",
+      color: "green"
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: Users,
       title: "Membership",
       content: "Open to All Nigerian Youth",
-      description: "Join the movement for democratic change"
+      description: "Join the movement for democratic change",
+      color: "orange"
     },
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: Target,
       title: "Our Mission",
       content: "Youth Empowerment & Democratic Participation",
-      description: "Building a better Nigeria through active youth engagement"
+      description: "Building a better Nigeria through active youth engagement",
+      color: "purple"
     }
   ];
 
@@ -52,143 +56,244 @@ const Contact = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="contact" onNavigate={onNavigate}>
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-8 h-full overflow-y-auto mobile-scroll"
-      >
-        {/* Header Section */}
-        <motion.div variants={itemVariants} className="text-center">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-4">
-            Contact ADYC
-          </h1>
-          <p className="text-neutral-600 dark:text-neutral-400 text-lg max-w-2xl mx-auto">
-            Get in touch with the African Democratic Youth Congress. We're here to support youth 
-            participation in Nigeria's democratic process.
-          </p>
-        </motion.div>
+      <div className="container-custom">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-24 section-spacing"
+        >
+          {/* HEADER SECTION */}
+          <motion.section variants={itemVariants} className="text-center">
+            <h1 className="display-text text-primary mb-8">
+              Contact <span className="text-accent hand-drawn-accent">ADYC</span>
+            </h1>
+            <p className="body-large text-secondary max-w-3xl mx-auto mb-12">
+              Get in touch with the African Democratic Youth Congress. We're here to support youth 
+              participation in Nigeria's democratic process and answer any questions you may have.
+            </p>
 
-        {/* Logo Section */}
-        <motion.div variants={itemVariants} className="text-center">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden neumorphic">
-            <img 
-              src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg" 
-              alt="ADYC Logo" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h2 className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-            African Democratic Youth Congress
-          </h2>
-          <p className="text-lg font-medium text-secondary-600 dark:text-secondary-400 italic">
-            "Arise, It's Youth O'Clock!"
-          </p>
-        </motion.div>
-
-        {/* Contact Information Cards */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {contactInfo.map((info, index) => (
+            {/* ADYC Logo & Motto */}
             <motion.div
-              key={index}
-              variants={itemVariants}
-              className="floating-card p-6 hover:shadow-xl transition-all duration-300"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="max-w-md mx-auto"
             >
-              <div className="flex items-start space-x-4">
-                <div className="neumorphic-button bg-gradient-to-r from-primary-500 to-secondary-500 text-white p-3 rounded-xl">
-                  {info.icon}
+              <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-strong border border-orange-500/20">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl overflow-hidden shadow-moderate">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg" 
+                    alt="ADYC Logo" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">
-                    {info.title}
-                  </h3>
-                  <p className="text-primary-600 dark:text-primary-400 font-medium mb-2">
-                    {info.content}
-                  </p>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                    {info.description}
-                  </p>
+                <h2 className="heading-secondary text-primary mb-3">
+                  African Democratic Youth Congress
+                </h2>
+                <p className="text-lg font-semibold text-accent italic mb-4">
+                  "Arise, It's Youth O'Clock!"
+                </p>
+                <div className="flex items-center justify-center space-x-2 text-sm text-secondary">
+                  <Zap className="w-4 h-4 text-orange-500" />
+                  <span>Empowering Nigeria's Democratic Future</span>
                 </div>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
+          </motion.section>
 
-        {/* Office Hours Section */}
-        <motion.div variants={itemVariants} className="floating-card p-8">
-          <div className="text-center mb-6">
-            <div className="neumorphic-button bg-gradient-to-r from-secondary-500 to-primary-500 text-white p-4 rounded-full inline-flex mx-auto mb-4">
-              <Clock className="w-8 h-8" />
+          {/* CONTACT INFORMATION CARDS */}
+          <motion.section variants={itemVariants}>
+            <div className="text-center mb-12">
+              <h2 className="heading-primary text-primary mb-6">
+                Get in <span className="text-accent">Touch</span>
+              </h2>
+              <p className="body-large text-secondary max-w-2xl mx-auto">
+                Multiple ways to connect with our team and join the movement for democratic change.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-neutral-800 dark:text-white mb-2">
-              Contact Hours
-            </h3>
-            <p className="text-neutral-600 dark:text-neutral-400">
-              Best times to reach out to our team
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {officeHours.map((schedule, index) => (
-              <div 
-                key={index}
-                className="neumorphic bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-4 rounded-xl text-center"
-              >
-                <h4 className="font-semibold text-neutral-800 dark:text-white mb-2">
-                  {schedule.day}
-                </h4>
-                <p className="text-primary-600 dark:text-primary-400 font-medium">
-                  {schedule.hours}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {contactInfo.map((info, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="featured-card group hover:shadow-strong transition-all duration-300"
+                >
+                  <div className="flex items-start space-x-6">
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate flex-shrink-0 ${
+                      info.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                      info.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
+                      info.color === 'orange' ? 'bg-gradient-to-br from-orange-500 to-orange-600' :
+                      'bg-gradient-to-br from-purple-500 to-purple-600'
+                    }`}>
+                      <info.icon className="w-8 h-8" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors">
+                        {info.title}
+                      </h3>
+                      <p className="text-accent font-semibold mb-3">
+                        {info.content}
+                      </p>
+                      <p className="text-secondary">
+                        {info.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* OFFICE HOURS SECTION */}
+          <motion.section variants={itemVariants} className="bg-accent-subtle rounded-3xl">
+            <div className="container-custom section-spacing">
+              <div className="text-center mb-12">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center text-white shadow-accent mx-auto mb-6">
+                  <Clock className="w-8 h-8" />
+                </div>
+                <h2 className="heading-primary text-primary mb-4">
+                  Contact <span className="text-accent">Hours</span>
+                </h2>
+                <p className="body-large text-secondary">
+                  Best times to reach out to our dedicated team
                 </p>
               </div>
-            ))}
-          </div>
-        </motion.div>
 
-        {/* Call to Action Section */}
-        <motion.div variants={itemVariants} className="floating-card p-8 text-center">
-          <div className="max-w-2xl mx-auto">
-            <div className="neumorphic-button bg-gradient-to-r from-primary-500 to-secondary-500 text-white p-4 rounded-full inline-flex mx-auto mb-6">
-              <Heart className="w-8 h-8" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                {officeHours.map((schedule, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="modern-card text-center group hover:shadow-moderate transition-all"
+                  >
+                    <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                      {schedule.day}
+                    </h3>
+                    <p className="text-accent font-bold text-lg">
+                      {schedule.hours}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            
-            <h3 className="text-2xl font-bold text-neutral-800 dark:text-white mb-4">
-              Join the Movement
-            </h3>
-            <p className="text-neutral-600 dark:text-neutral-400 text-lg mb-6">
-              Ready to make a difference? Register as a member and be part of Nigeria's 
-              democratic transformation through youth engagement.
-            </p>
+          </motion.section>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate('register')}
-                className="neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all mobile-button"
-              >
-                Register Now
-              </motion.button>
-              
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate('about')}
-                className="neumorphic-button bg-white/50 dark:bg-neutral-800/30 text-neutral-700 dark:text-neutral-300 font-semibold py-3 px-8 rounded-xl border border-neutral-200/50 dark:border-neutral-600/50 mobile-button"
-              >
-                Learn More
-              </motion.button>
+          {/* WHY CONTACT US SECTION */}
+          <motion.section variants={itemVariants}>
+            <div className="text-center mb-12">
+              <h2 className="heading-primary text-primary mb-6">
+                Why <span className="text-accent">Connect</span> with Us?
+              </h2>
+              <p className="body-large text-secondary max-w-2xl mx-auto">
+                Discover the many ways ADYC can support your journey in democratic participation and youth leadership.
+              </p>
             </div>
-          </div>
-        </motion.div>
 
-        {/* Footer Note */}
-        <motion.div variants={itemVariants} className="text-center py-6">
-          <p className="text-neutral-500 dark:text-neutral-500 text-sm">
-            For urgent matters, please email us directly. We typically respond within 24-48 hours.
-          </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Shield,
+                  title: "Guidance & Support",
+                  description: "Get expert advice on democratic participation, leadership development, and civic engagement opportunities.",
+                  color: "blue"
+                },
+                {
+                  icon: Users,
+                  title: "Community Connection",
+                  description: "Connect with like-minded youth leaders and activists across all six geopolitical zones of Nigeria.",
+                  color: "green"
+                },
+                {
+                  icon: Award,
+                  title: "Leadership Opportunities",
+                  description: "Discover pathways to leadership roles in governance, community development, and political engagement.",
+                  color: "orange"
+                }
+              ].map((reason, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="modern-card text-center group"
+                >
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate mx-auto mb-6 ${
+                    reason.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                    reason.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
+                    'bg-gradient-to-br from-orange-500 to-orange-600'
+                  }`}>
+                    <reason.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                    {reason.title}
+                  </h3>
+                  <p className="text-secondary leading-relaxed">
+                    {reason.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* CALL TO ACTION SECTION */}
+          <motion.section variants={itemVariants}>
+            <div className="featured-card text-center">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center text-white shadow-accent mx-auto mb-8">
+                  <Heart className="w-8 h-8" />
+                </div>
+                
+                <h2 className="display-text text-primary mb-8">
+                  Join the <span className="text-accent hand-drawn-accent">Movement</span>
+                </h2>
+                <p className="body-large text-secondary mb-12 max-w-3xl mx-auto">
+                  Ready to make a difference? Register as a member and be part of Nigeria's 
+                  democratic transformation through youth engagement and leadership development.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <button
+                    onClick={() => onNavigate('register')}
+                    className="btn-primary mobile-touch text-lg px-12 py-5"
+                  >
+                    Register Now
+                  </button>
+                  <button
+                    onClick={() => onNavigate('about')}
+                    className="btn-secondary mobile-touch text-lg px-12 py-5"
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </motion.section>
+
+          {/* FOOTER NOTE */}
+          <motion.section variants={itemVariants} className="text-center">
+            <div className="max-w-2xl mx-auto">
+              <p className="text-secondary">
+                <strong>Response Time:</strong> We typically respond to all inquiries within 24-48 hours. 
+                For urgent matters, please email us directly at our official address.
+              </p>
+            </div>
+          </motion.section>
         </motion.div>
-      </motion.div>
+      </div>
     </Layout>
   );
 };
