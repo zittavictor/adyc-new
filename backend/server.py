@@ -39,7 +39,7 @@ class StatusCheckCreate(BaseModel):
 class MemberRegistration(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     member_id: str
-    email: str
+    email: EmailStr
     passport: str  # base64 encoded image
     full_name: str
     dob: str
@@ -54,7 +54,7 @@ class MemberRegistration(BaseModel):
     registration_date: datetime = Field(default_factory=datetime.utcnow)
 
 class MemberRegistrationCreate(BaseModel):
-    email: str
+    email: EmailStr
     passport: str  # base64 encoded image
     full_name: str
     dob: str
