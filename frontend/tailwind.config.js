@@ -9,34 +9,39 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+        heading: ['DM Sans', 'sans-serif'],
       },
       colors: {
-        // ADYC Brand Color Palette - Derived from provided logo
+        // Sophisticated Brand Color System - Human-Designed Palette
         primary: {
-          50: '#fff7ed',   // Ultra light orange
-          100: '#ffedd5',  // Very light orange
-          200: '#fed7aa',  // Light orange
-          300: '#fbbf24',  // Medium light orange
-          400: '#f59e0b',  // Medium orange
-          500: '#f97316',  // Primary Orange (ADYC Brand)
-          600: '#ea580c',  // Dark orange
-          700: '#c2410c',  // Darker orange
-          800: '#9a3412',  // Very dark orange
-          900: '#7c2d12',  // Ultra dark orange
+          50: '#fff8f1',   
+          100: '#feecdc',  
+          200: '#fcd9bd',  
+          300: '#fdba8c',  
+          400: '#ff9356',  
+          500: '#f97316',  // Core Orange - More vibrant and confident
+          600: '#ea580c',  
+          700: '#c2410c',  
+          800: '#9a3412',  
+          900: '#7c2d12',  
+          950: '#431407', 
         },
         secondary: {
-          50: '#f0fdf4',   // Ultra light green
-          100: '#dcfce7',  // Very light green
-          200: '#bbf7d0',  // Light green
-          300: '#86efac',  // Medium light green
-          400: '#4ade80',  // Medium green
-          500: '#22c55e',  // Primary Green (ADYC Accent)
-          600: '#16a34a',  // Dark green
-          700: '#15803d',  // Darker green
-          800: '#166534',  // Very dark green
-          900: '#14532d',  // Ultra dark green
+          50: '#f0fdf5',   
+          100: '#dcfce8',  
+          200: '#bbf7d1',  
+          300: '#86efac',  
+          400: '#4ade80',  
+          500: '#22c55e',  // Balanced Green - Professional yet energetic
+          600: '#16a34a',  
+          700: '#15803d',  
+          800: '#166534',  
+          900: '#14532d',  
+          950: '#052e16', 
         },
-        neutral: {
+        // Expanded Neutral Palette for Sophisticated UI
+        slate: {
           50: '#f8fafc',
           100: '#f1f5f9',
           200: '#e2e8f0',
@@ -47,7 +52,28 @@ module.exports = {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
+          950: '#020617',
         },
+        // Accent Colors for Variety
+        amber: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+        },
+        // Semantic Colors
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
+        info: '#3b82f6',
+        
+        // shadcn/ui variables
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -81,73 +107,105 @@ module.exports = {
           '5': 'hsl(var(--chart-5))'
         }
       },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
+      },
       boxShadow: {
-        // Neumorphic Shadow System - Adapted for ADYC colors
-        'neumorphic-light': '8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.8)',
-        'neumorphic-dark': '8px 8px 16px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.05)',
-        'neumorphic-inset-light': 'inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.8)',
-        'neumorphic-inset-dark': 'inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.05)',
-        'floating': '0 20px 40px rgba(0, 0, 0, 0.1)',
+        // Human-designed shadow system - more organic and varied
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'moderate': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 2px 10px -2px rgba(0, 0, 0, 0.05)',
+        'accent': '0 8px 30px -5px rgba(249, 115, 22, 0.15), 0 4px 15px -3px rgba(249, 115, 22, 0.1)',
+        'glow': '0 0 0 1px rgba(249, 115, 22, 0.05), 0 4px 20px -2px rgba(249, 115, 22, 0.1)',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'float-delay': 'float 6s ease-in-out infinite 2s',
-        'float-slow': 'float 8s ease-in-out infinite',
-        'bounce-dots': 'bounce 1.4s ease-in-out infinite',
-        'fade-in': 'fadeIn 1s ease-in-out',
-        'scale-up': 'scaleUp 1s ease-out',
-        'rotate-in': 'rotateIn 1s ease-out',
-        'stagger-letters': 'staggerLetters 0.8s ease-out',
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        // More natural, human-like animations
+        'float-gentle': 'float-gentle 6s ease-in-out infinite',
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+        'scale-in': 'scale-in 0.5s ease-out forwards',
+        'slide-in-right': 'slide-in-right 0.5s ease-out forwards',
+        'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+        'float-gentle': {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-10px) rotate(1deg)' },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        scaleUp: {
-          '0%': { transform: 'scale(0.5)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
-        },
-        rotateIn: {
-          '0%': { transform: 'scale(0.5) rotate(-180deg)', opacity: '0' },
-          '100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
-        },
-        staggerLetters: {
-          '0%': { transform: 'translateY(50px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        'accordion-down': {
-          from: {
-            height: '0'
+        'fade-in-up': {
+          '0%': { 
+            opacity: '0', 
+            transform: 'translateY(30px)' 
           },
-          to: {
-            height: 'var(--radix-accordion-content-height)'
-          }
-        },
-        'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)'
+          '100%': { 
+            opacity: '1', 
+            transform: 'translateY(0)' 
           },
-          to: {
-            height: '0'
-          }
-        }
+        },
+        'scale-in': {
+          '0%': { 
+            opacity: '0', 
+            transform: 'scale(0.9)' 
+          },
+          '100%': { 
+            opacity: '1', 
+            transform: 'scale(1)' 
+          },
+        },
+        'slide-in-right': {
+          '0%': { 
+            opacity: '0', 
+            transform: 'translateX(30px)' 
+          },
+          '100%': { 
+            opacity: '1', 
+            transform: 'translateX(0)' 
+          },
+        },
+        'bounce-subtle': {
+          '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-5px)' },
+          '60%': { transform: 'translateY(-3px)' },
+        },
       },
       backdropBlur: {
         xs: '2px',
       },
       borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
+        '4xl': '2.5rem',
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
-      }
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            h1: {
+              fontFamily: 'Playfair Display, serif',
+            },
+            h2: {
+              fontFamily: 'DM Sans, sans-serif',
+            },
+            h3: {
+              fontFamily: 'DM Sans, sans-serif',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require('@tailwindcss/typography'),
+  ],
 };
