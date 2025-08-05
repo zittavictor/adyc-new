@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import { Toaster } from './components/ui/toaster';
 import SplashScreen from './components/SplashScreen';
@@ -12,9 +12,9 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
 
-  const handleSplashComplete = () => {
+  const handleSplashComplete = useCallback(() => {
     setShowSplash(false);
-  };
+  }, []);
 
   const handleNavigation = (pageId) => {
     setCurrentPage(pageId);
