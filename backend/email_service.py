@@ -255,7 +255,7 @@ class EmailService:
                                 <p><strong>Local Government Area:</strong> {member_data['lga']}</p>
                                 <p><strong>Ward:</strong> {member_data['ward']}</p>
                                 <p><strong>Gender:</strong> {member_data['gender']}</p>
-                                <p><strong>Registration Date:</strong> {datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y')}</p>
+                                <p><strong>Registration Date:</strong> {datetime.fromisoformat(member_data['registration_date']).strftime('%B %d, %Y') if isinstance(member_data['registration_date'], str) else member_data['registration_date'].strftime('%B %d, %Y')}</p>
                             </div>
                         </div>
                         
