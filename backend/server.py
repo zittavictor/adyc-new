@@ -123,6 +123,51 @@ async def get_member(member_id: str):
         raise HTTPException(status_code=404, detail="Member not found")
     return MemberRegistration(**member)
 
+@api_router.get("/members/{member_id}/id-card")
+async def download_id_card(member_id: str):
+    """Download ID card PDF for a specific member"""
+    from fastapi.responses import Response
+    
+    member = await db.members.find_one({"member_id": member_id})
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    try:
+        # Generate PDF
+        pdf_data = email_service.generate_id_card_pdf(member)
+        
+        # Return PDF as response
+        return Response(
+            content=pdf_data,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f"attachment; filename=ADYC_ID_Card_{member_id}.pdf"}
+        )
+    except Exception as e:
+        logger.error(f"Error generating ID card: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Error generating ID card")
+
+@api_router.post("/send-test-email")
+async def send_test_email(member_id: str):
+    """Send test registration email for a specific member"""
+    member = await db.members.find_one({"member_id": member_id})
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    try:
+        success = email_service.send_registration_email(member)
+        if success:
+            return {"message": "Test email sent successfully", "member_id": member_id}
+        else:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=500, detail="Failed to send email")
+    except Exception as e:
+        logger.error(f"Error sending test email: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Error sending test email")
+
 # Include the router in the main app
 app.include_router(api_router)
 
