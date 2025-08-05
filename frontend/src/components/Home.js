@@ -266,7 +266,8 @@ const Home = ({ onNavigate }) => {
                 <p className="text-xs text-primary-600 dark:text-primary-400 font-medium">
                   {member.role}
                 </p>
-              </motion.div>
+                </motion.div>
+              </CardHover3D>
             ))}
           </div>
         </motion.div>
