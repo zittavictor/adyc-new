@@ -220,7 +220,8 @@ const Home = ({ onNavigate }) => {
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
-              </motion.div>
+                </motion.div>
+              </CardHover3D>
             ))}
           </div>
         </motion.div>
