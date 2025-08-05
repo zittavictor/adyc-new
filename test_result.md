@@ -197,15 +197,18 @@ backend:
 
   - task: "Implement admin notification emails for new registrations"
     implemented: true
-    working: "unknown"
+    working: true
     file: "email_service.py, server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "unknown"
         - agent: "main"
         - comment: "Added send_admin_notification_email method to EmailService class with formatted HTML email template including all member details, location info, and ID card PDF attachment. Updated registration endpoint to send admin notifications in background. Added test endpoint for admin notifications."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ TESTED: Admin notification system fully functional. All tests passed: 1) Admin notification endpoint (/api/send-admin-notification) works correctly with valid member IDs and returns 404 for invalid IDs 2) Registration process triggers both user confirmation and admin notification background tasks 3) Admin notification emails include all required information: member details (name, ID, email, gender, DOB), location data (state, LGA, ward, country, address), registration timestamp, and ID card PDF attachment 4) Email content properly formatted with HTML template and ADYC branding 5) Error handling works correctly for invalid member IDs. Both user and admin emails are automatically sent during member registration."
 
 frontend:
   - task: "Create Contact Us page with ADYC information"
