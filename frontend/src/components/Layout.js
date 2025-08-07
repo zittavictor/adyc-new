@@ -105,15 +105,15 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   />
                 </div>
 
-                {/* MOBILE MENU BUTTON */}
+                {/* MOBILE MENU BUTTON - Sleeker Design */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(true)}
-                  className="xl:hidden mobile-hamburger"
+                  className="xl:hidden p-2 sm:p-2.5 rounded-lg bg-slate-100/60 hover:bg-slate-200/60 transition-all touch-target"
                   aria-label="Open navigation menu"
                 >
-                  <Menu className="w-5 h-5 text-slate-600" />
+                  <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
                 </motion.button>
               </div>
             </div>
