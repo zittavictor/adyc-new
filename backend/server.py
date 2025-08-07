@@ -209,16 +209,15 @@ async def get_member(member_id: str):
 async def download_id_card(member_id: str):
     """Download ID card PDF for a specific member (one-time generation)"""
     from fastapi.responses import Response
+    from fastapi import HTTPException
     
     member = await supabase_service.get_member_by_id(member_id)
     if not member:
-        from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
     
     try:
         # Check if ID card has already been generated
         if member.get('id_card_generated', False):
-            from fastapi import HTTPException
             raise HTTPException(status_code=400, detail="ID card has already been generated for this member. Each member can only generate their ID card once for security purposes.")
         
         # Generate PDF
@@ -247,7 +246,6 @@ async def download_id_card(member_id: str):
         raise
     except Exception as e:
         logger.error(f"Error generating ID card: {e}")
-        from fastapi import HTTPException
         raise HTTPException(status_code=500, detail="Error generating ID card")
 
 @api_router.post("/send-test-email")
