@@ -234,9 +234,13 @@ class EmailService:
             c.saveState()
             c.setFillColor(colors.HexColor('#ffd700'))  # Gold color
             c.setFillAlpha(0.3)
-            # Draw small triangle in bottom right corner
-            triangle_points = [page_width - 8*mm, 0, page_width, 0, page_width, 8*mm]
-            c.polygon(triangle_points, fill=1)
+            # Draw small triangle in bottom right corner using path
+            p = c.beginPath()
+            p.moveTo(page_width - 8*mm, 0)
+            p.lineTo(page_width, 0)
+            p.lineTo(page_width, 8*mm)
+            p.closePath()
+            c.drawPath(p, fill=1)
             c.setFillColor(colors.black)
             c.setFillAlpha(1)
             c.setFont("Helvetica-Bold", 3)
