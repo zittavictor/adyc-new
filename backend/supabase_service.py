@@ -5,7 +5,7 @@ from supabase import create_client, Client
 import asyncpg
 from dotenv import load_dotenv
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 
 # Load environment variables
