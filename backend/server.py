@@ -242,6 +242,9 @@ async def download_id_card(member_id: str):
             media_type="application/pdf",
             headers={"Content-Disposition": f"attachment; filename=ADYC_ID_Card_{member_id}.pdf"}
         )
+    except HTTPException:
+        # Re-raise HTTPExceptions (like the 400 error above)
+        raise
     except Exception as e:
         logger.error(f"Error generating ID card: {e}")
         from fastapi import HTTPException
