@@ -287,6 +287,124 @@ async def send_admin_notification(member_id: str):
         from fastapi import HTTPException
         raise HTTPException(status_code=500, detail="Error sending admin notification email")
 
+# ADMIN AUTHENTICATION ENDPOINTS
+@api_router.post("/admin/login", response_model=Token)
+async def admin_login(login_data: AdminLogin):
+    """Admin login endpoint"""
+    admin_user = await supabase_service.get_admin_user(login_data.username)
+    if not admin_user or not verify_password(login_data.password, admin_user['password_hash']):
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+    
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": admin_user['username']}, expires_delta=access_token_expires
+    )
+    
+    # Log admin login
+    await supabase_service.log_activity(
+        user_email=admin_user['email'],
+        action='ADMIN_LOGIN',
+        resource_type='admin',
+        resource_id=admin_user['id'],
+        details={'username': admin_user['username']}
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@api_router.get("/admin/me", response_model=AdminUser)
+async def get_admin_me(current_admin: dict = Depends(get_current_admin_user)):
+    """Get current admin user info"""
+    return AdminUser(**current_admin)
+
+# BLOG POST ENDPOINTS
+@api_router.get("/blog/posts", response_model=List[BlogPost])
+async def get_blog_posts(published_only: bool = True):
+    """Get blog posts (public endpoint)"""
+    posts = await supabase_service.get_blog_posts(published_only)
+    return [BlogPost(**post) for post in posts]
+
+@api_router.post("/admin/blog/posts", response_model=BlogPost)
+async def create_blog_post(
+    post_data: BlogPostCreate, 
+    current_admin: dict = Depends(get_current_admin_user)
+):
+    """Create a new blog post (admin only)"""
+    post_dict = post_data.dict()
+    post_dict['author'] = current_admin['username']
+    post_dict['author_email'] = current_admin['email']
+    
+    result = await supabase_service.create_blog_post(post_dict)
+    return BlogPost(**result)
+
+@api_router.get("/admin/blog/posts", response_model=List[BlogPost])
+async def get_admin_blog_posts(current_admin: dict = Depends(get_current_admin_user)):
+    """Get all blog posts including drafts (admin only)"""
+    posts = await supabase_service.get_blog_posts(published_only=False)
+    return [BlogPost(**post) for post in posts]
+
+@api_router.put("/admin/blog/posts/{post_id}", response_model=BlogPost)
+async def update_blog_post(
+    post_id: str, 
+    post_data: BlogPostUpdate,
+    current_admin: dict = Depends(get_current_admin_user)
+):
+    """Update a blog post (admin only)"""
+    result = await supabase_service.update_blog_post(post_id, post_data.dict(exclude_unset=True))
+    if not result:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    return BlogPost(**result)
+
+@api_router.delete("/admin/blog/posts/{post_id}")
+async def delete_blog_post(
+    post_id: str, 
+    current_admin: dict = Depends(get_current_admin_user)
+):
+    """Delete a blog post (admin only)"""
+    success = await supabase_service.delete_blog_post(post_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    return {"message": "Blog post deleted successfully"}
+
+# ADMIN DASHBOARD ENDPOINTS
+@api_router.get("/admin/dashboard/stats")
+async def get_dashboard_stats(current_admin: dict = Depends(get_current_admin_user)):
+    """Get dashboard statistics (admin only)"""
+    stats = await supabase_service.get_dashboard_stats()
+    return stats
+
+@api_router.get("/admin/activity/logs")
+async def get_activity_logs(
+    limit: int = 50,
+    current_admin: dict = Depends(get_current_admin_user)
+):
+    """Get recent activity logs (admin only)"""
+    logs = await supabase_service.get_activity_logs(limit)
+    return logs
+
+# ADMIN SETUP ENDPOINT (for initial admin creation)
+@api_router.post("/setup/admin")
+async def setup_admin(username: str, email: EmailStr, password: str, setup_key: str):
+    """Setup initial admin user (requires setup key)"""
+    # Simple setup key check (you can make this more secure)
+    if setup_key != "adyc-setup-2025-secure":
+        raise HTTPException(status_code=403, detail="Invalid setup key")
+    
+    # Check if admin already exists
+    existing_admin = await supabase_service.get_admin_user(username)
+    if existing_admin:
+        raise HTTPException(status_code=400, detail="Admin user already exists")
+    
+    # Create admin user
+    admin_data = {
+        'username': username,
+        'email': email,
+        'password_hash': get_password_hash(password),
+        'is_active': True
+    }
+    
+    result = await supabase_service.create_admin_user(admin_data)
+    return {"message": "Admin user created successfully", "username": username}
+
 # Include the router in the main app
 app.include_router(api_router)
 
