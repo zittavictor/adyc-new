@@ -437,20 +437,42 @@ code {
     @apply text-sm leading-normal;
   }
 
-  /* Sophisticated Button System - Compact Design */
+  /* Sophisticated Button System - Compact Design with Spinner Effects */
   .btn-primary {
     @apply bg-orange-600 hover:bg-orange-700 text-white font-semibold 
            px-6 py-3 rounded-xl transition-all duration-300 
            shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]
            focus:outline-none focus:ring-4 focus:ring-orange-500/30
-           text-sm md:text-base;
+           text-sm md:text-base relative overflow-hidden;
+  }
+  
+  .btn-primary:active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(249, 115, 22, 0.3) 0%, transparent 70%);
+    transform: scale(0);
+    animation: button-ripple 0.8s ease-out;
+    pointer-events: none;
+    z-index: 1;
   }
   
   .btn-secondary {
     @apply bg-white hover:bg-slate-50 text-slate-900 font-semibold border border-slate-200 hover:border-slate-300
            px-6 py-3 rounded-xl transition-all duration-300 
            shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]
-           text-sm md:text-base;
+           text-sm md:text-base relative overflow-hidden;
+  }
+  
+  .btn-secondary:active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, transparent 70%);
+    transform: scale(0);
+    animation: button-ripple 0.8s ease-out;
+    pointer-events: none;
+    z-index: 1;
   }
   
   .btn-text {
