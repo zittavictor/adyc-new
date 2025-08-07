@@ -311,8 +311,9 @@ class EmailService:
         c.setFillColor(colors.white)
         c.setFont("Helvetica-Bold", 6)
         c.drawString(3*mm, 5*mm, "OFFICIAL MEMBERSHIP CARD")
-        c.setFont("Helvetica", 5)
-        c.drawString(3*mm, 2*mm, "www.adyc.org | Follow @ADYC_Official")
+        c.setFont("Helvetica", 4)
+        c.drawString(3*mm, 3*mm, "WhatsApp: wa.me/c/2349156257998 | TikTok: @adyc676")
+        c.drawString(3*mm, 1*mm, "www.adyc.org | Follow @ADYC_Official")
         
         # Security QR Code placeholder (enhanced)
         qr_size = 12*mm
