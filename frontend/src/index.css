@@ -88,24 +88,23 @@ code {
    ================================= */
 
 @layer components {
-  /* Sophisticated Card System - No More Generic Cards */
+  /* Sophisticated Card System - Light Mode Only */
   .modern-card {
-    @apply bg-white/60 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 
+    @apply bg-white/60 border border-slate-200/60 
            rounded-2xl p-8 backdrop-blur-sm transition-all duration-300
-           hover:bg-white/80 dark:hover:bg-slate-800/80 hover:border-slate-300/70 dark:hover:border-slate-600/70;
+           hover:bg-white/80 hover:border-slate-300/70;
   }
   
   .featured-card {
     @apply bg-gradient-to-br from-white via-slate-50/50 to-orange-50/30 
-           dark:from-slate-800 dark:via-slate-800/80 dark:to-orange-900/20
-           border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-10 
-           shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.25)]
-           transition-all duration-500 hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)] dark:hover:shadow-[0_20px_50px_rgb(0,0,0,0.4)];
+           border border-slate-200/80 rounded-3xl p-10 
+           shadow-[0_8px_30px_rgb(0,0,0,0.06)]
+           transition-all duration-500 hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)];
   }
   
   .accent-card {
     @apply bg-gradient-to-br from-orange-500/5 via-transparent to-green-500/5
-           border-l-4 border-l-orange-500 border border-slate-200/50 dark:border-slate-700/50
+           border-l-4 border-l-orange-500 border border-slate-200/50
            rounded-r-2xl p-8 backdrop-blur-sm;
   }
 
