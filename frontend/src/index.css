@@ -161,12 +161,12 @@ code {
            transition-all duration-200 text-sm md:text-base;
   }
 
-  /* Sophisticated Input System */
+  /* Sophisticated Input System - Light Mode Only */
   .input-field {
-    @apply w-full px-6 py-4 bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 
-           rounded-xl text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400
+    @apply w-full px-6 py-4 bg-white/80 border border-slate-200 
+           rounded-xl text-slate-900 placeholder-slate-500
            transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500/50
-           hover:border-slate-300 dark:hover:border-slate-600;
+           hover:border-slate-300;
   }
 
   /* Layout Utilities */
