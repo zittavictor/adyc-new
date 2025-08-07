@@ -13,22 +13,9 @@ const navigation = [
 ];
 
 const Layout = ({ children, currentPage = 'home', onNavigate }) => {
-  const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
-
-  // DARK MODE PERSISTENCE SYSTEM
-  useEffect(() => {
-    const saved = localStorage.getItem('adyc_dark_mode');
-    if (saved) {
-      const isDark = JSON.parse(saved);
-      setDarkMode(isDark);
-      if (isDark) {
-        document.documentElement.classList.add('dark');
-      }
-    }
-  }, []);
 
   // SCROLL DETECTION FOR HEADER STYLING
   useEffect(() => {
@@ -38,17 +25,6 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('adyc_dark_mode', JSON.stringify(newDarkMode));
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   const handleNavigation = (pageId) => {
     if (onNavigate) onNavigate(pageId);
