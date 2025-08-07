@@ -288,14 +288,25 @@ const Home = ({ onNavigate }) => {
                 className="col-span-12 lg:col-span-5"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { duration: 0.3 } 
+                }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="accent-card group cursor-pointer" onClick={() => onNavigate('blog')}>
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
+                <div className="accent-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('blog')}>
+                  <motion.div 
+                    className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6"
+                    whileHover={{ 
+                      scale: 1.15,
+                      rotate: -5,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
                     <Lightbulb className="w-6 h-6" />
-                  </div>
-                  <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors">
+                  </motion.div>
+                  <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors duration-300">
                     Innovation Hub
                   </h3>
                   <p className="body-text text-secondary">
