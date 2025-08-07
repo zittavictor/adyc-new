@@ -477,9 +477,9 @@ code {
     transform: skew(-12deg);
   }
 
-  /* Sophisticated Color System - Light Mode Only */
-  .text-primary { @apply text-slate-900; }
-  .text-secondary { @apply text-slate-600; }
+  /* Unified Typography - Black Text Standard */
+  .text-primary { @apply text-black; }
+  .text-secondary { @apply text-black opacity-70; }
   .text-accent { @apply text-orange-600; }
   .text-success { @apply text-green-600; }
   
