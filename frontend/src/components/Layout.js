@@ -101,28 +101,14 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   />
                 </div>
 
-                {/* DARK MODE TOGGLE */}
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={toggleDarkMode}
-                  className="p-3 rounded-xl bg-slate-100/60 dark:bg-slate-800/60 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-all mobile-touch"
-                >
-                  {darkMode ? (
-                    <Sun className="w-5 h-5 text-amber-500" />
-                  ) : (
-                    <Moon className="w-5 h-5 text-slate-600" />
-                  )}
-                </motion.button>
-
                 {/* MOBILE MENU BUTTON */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(true)}
-                  className="lg:hidden p-3 rounded-xl bg-slate-100/60 dark:bg-slate-800/60 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-all mobile-touch"
+                  className="lg:hidden p-3 rounded-xl bg-slate-100/60 hover:bg-slate-200/60 transition-all mobile-touch"
                 >
-                  <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <Menu className="w-5 h-5 text-slate-600" />
                 </motion.button>
               </div>
             </div>
