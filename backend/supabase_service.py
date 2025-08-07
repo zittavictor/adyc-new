@@ -206,6 +206,59 @@ class SupabaseService:
             logger.error(f"Error fetching blog posts: {e}")
             raise
     
+    async def update_blog_post(self, post_id: str, update_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Update a blog post"""
+        try:
+            update_data['updated_at'] = datetime.utcnow().isoformat()
+            
+            result = self.supabase.table('blog_posts').update(update_data).eq('id', post_id).execute()
+            return result.data[0] if result.data else None
+            
+        except Exception as e:
+            logger.error(f"Error updating blog post: {e}")
+            raise
+    
+    async def delete_blog_post(self, post_id: str) -> bool:
+        """Delete a blog post"""
+        try:
+            result = self.supabase.table('blog_posts').delete().eq('id', post_id).execute()
+            return bool(result.data)
+            
+        except Exception as e:
+            logger.error(f"Error deleting blog post: {e}")
+            raise
+    
+    async def get_dashboard_stats(self) -> Dict[str, Any]:
+        """Get dashboard statistics"""
+        try:
+            # Get member count
+            members_result = self.supabase.table('members').select('id').execute()
+            member_count = len(members_result.data)
+            
+            # Get blog post count
+            posts_result = self.supabase.table('blog_posts').select('id').execute()
+            blog_post_count = len(posts_result.data)
+            
+            # Get published blog post count
+            published_posts_result = self.supabase.table('blog_posts').select('id').eq('published', True).execute()
+            published_post_count = len(published_posts_result.data)
+            
+            # Get recent activity count (last 7 days)
+            seven_days_ago = (datetime.utcnow() - timedelta(days=7)).isoformat()
+            recent_activity_result = self.supabase.table('activity_logs').select('id').gte('created_at', seven_days_ago).execute()
+            recent_activity_count = len(recent_activity_result.data)
+            
+            return {
+                'total_members': member_count,
+                'total_blog_posts': blog_post_count,
+                'published_blog_posts': published_post_count,
+                'recent_activity_count': recent_activity_count
+            }
+            
+        except Exception as e:
+            logger.error(f"Error fetching dashboard stats: {e}")
+            raise
+    
     # ADMIN OPERATIONS
     async def create_admin_user(self, admin_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new admin user"""
