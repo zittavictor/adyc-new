@@ -38,7 +38,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
         {/* SOPHISTICATED HEADER */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-soft'
+            ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-soft'
             : 'bg-transparent'
         }`}>
           <div className="container-custom">
