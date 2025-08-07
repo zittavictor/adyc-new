@@ -47,8 +47,10 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {renderCurrentPage()}
+    <div className="App min-h-screen overflow-x-hidden">
+      <div className="mobile-scroll-container">
+        {renderCurrentPage()}
+      </div>
       <Toaster />
     </div>
   );
