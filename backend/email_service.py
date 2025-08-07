@@ -189,24 +189,40 @@ class EmailService:
             c.setFillColor(colors.HexColor('#22c55e'))  # Green color
             c.rect(0, 0, page_width, footer_height, fill=1)
             
-            # Add security watermark (semi-transparent)
+            # Add enhanced security watermark with ADYC logo pattern
             c.saveState()
-            c.setFillColor(colors.grey)
-            c.setFillAlpha(0.15)  # Make it semi-transparent
-            c.setFont("Helvetica-Bold", 24)
+            c.setFillColor(colors.HexColor('#f8f9fa'))
+            c.setFillAlpha(0.1)  # Very light watermark
             
-            # Diagonal watermark text
+            # Multiple ADYC logos as watermark across the card
+            c.setFont("Helvetica-Bold", 18)
             c.rotate(45)
-            watermark_text = "ADYC OFFICIAL"
-            c.drawString(15*mm, -5*mm, watermark_text)
+            watermark_positions = [
+                (5*mm, -10*mm), (25*mm, -5*mm), (10*mm, -25*mm), (30*mm, -20*mm)
+            ]
+            for pos_x, pos_y in watermark_positions:
+                c.drawString(pos_x, pos_y, "ADYC")
+            
+            # Add "OFFICIAL" text diagonally
+            c.setFont("Helvetica", 12)
+            c.drawString(15*mm, -35*mm, "OFFICIAL")
             c.restoreState()
             
-            # Add micro-pattern for forgery prevention (tiny dots pattern)
+            # Add security line pattern instead of dots
             c.saveState()
-            c.setFillColor(colors.HexColor('#f0f0f0'))
-            for i in range(0, int(page_width/mm), 2):
-                for j in range(0, int(page_height/mm), 2):
-                    c.circle(i*mm, j*mm, 0.1*mm, fill=1)
+            c.setStrokeColor(colors.HexColor('#f0f0f0'))
+            c.setLineWidth(0.3)
+            # Diagonal lines pattern
+            for i in range(-50, 100, 3):
+                c.line(i*mm, 0, (i+50)*mm, page_height)
+            c.restoreState()
+            
+            # Add holographic effect border
+            c.saveState()
+            c.setStrokeColor(colors.HexColor('#ffd700'))  # Gold color
+            c.setLineWidth(1)
+            c.setDash([2, 2])
+            c.rect(2*mm, 2*mm, page_width-4*mm, page_height-4*mm, fill=0, stroke=1)
             c.restoreState()
             
             # Footer text with serial number
