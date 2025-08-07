@@ -70,7 +70,7 @@ class EmailService:
             raise
     
     def _generate_front_side(self, c, member_data, card_width, card_height):
-        """Generate the front side of the ID card"""
+        """Generate the front side of the ID card with specific layout"""
         from reportlab.lib.units import mm
         from reportlab.lib import colors
         from reportlab.lib.utils import ImageReader
@@ -81,64 +81,53 @@ class EmailService:
         c.setFillColor(colors.HexColor('#f8fafc'))
         c.rect(0, 0, card_width, card_height, fill=1)
         
-        # Add subtle gradient bars
-        c.setFillColor(colors.HexColor('#f1f5f9'))
-        c.rect(0, 0, card_width, 8*mm, fill=1)
-        c.setFillColor(colors.HexColor('#e2e8f0'))
-        c.rect(0, card_height-8*mm, card_width, 8*mm, fill=1)
-        
-        # Enhanced security watermarks
+        # Enhanced watermark - Multiple ADYC logos for forgery prevention
         c.saveState()
         c.setFillColor(colors.HexColor('#f8f9fa'))
-        c.setFillAlpha(0.08)
-        c.setFont("Helvetica-Bold", 16)
+        c.setFillAlpha(0.06)  # Very subtle watermark
+        c.setFont("Helvetica-Bold", 14)
         
-        # Multiple ADYC watermarks in a pattern
-        positions = [
-            (10*mm, 30*mm), (45*mm, 25*mm), (20*mm, 10*mm), 
-            (60*mm, 35*mm), (35*mm, 5*mm), (70*mm, 15*mm)
-        ]
-        c.rotate(25)
-        for pos_x, pos_y in positions:
-            c.drawString(pos_x, pos_y, "ADYC")
-            c.drawString(pos_x+2*mm, pos_y-3*mm, "OFFICIAL")
+        # Create a complex watermark pattern
+        c.rotate(30)
+        for i in range(-20, 40, 12):
+            for j in range(-10, 20, 8):
+                c.drawString(i*mm, j*mm, "ADYC")
+                c.drawString(i*mm+2*mm, j*mm-2*mm, "OFFICIAL")
         c.restoreState()
         
         # Security line pattern
         c.saveState()
         c.setStrokeColor(colors.HexColor('#e5e7eb'))
-        c.setLineWidth(0.2)
-        for i in range(0, int(card_width/mm), 4):
+        c.setLineWidth(0.1)
+        for i in range(0, int(card_width/mm), 3):
             c.line(i*mm, 0, i*mm, card_height)
+        for j in range(0, int(card_height/mm), 3):
+            c.line(0, j*mm, card_width, j*mm)
         c.restoreState()
         
-        # Header section with logo
+        # Header section with ADYC logo
         try:
             # ADYC Logo
-            logo_size = 12*mm
+            logo_size = 14*mm
             c.drawImage(
                 "https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg",
-                5*mm, card_height-17*mm, 
+                4*mm, card_height-18*mm, 
                 width=logo_size, height=logo_size,
                 preserveAspectRatio=True, mask='auto'
             )
         except:
             # Fallback logo
             c.setFillColor(colors.HexColor('#f97316'))
-            c.rect(5*mm, card_height-17*mm, 12*mm, 12*mm, fill=1)
+            c.rect(4*mm, card_height-18*mm, 14*mm, 14*mm, fill=1)
             c.setFillColor(colors.white)
             c.setFont("Helvetica-Bold", 8)
             c.drawString(7*mm, card_height-13*mm, "ADYC")
         
-        # Organization name and title
+        # Organization name
         c.setFillColor(colors.black)
-        c.setFont("Helvetica-Bold", 9)
-        c.drawString(19*mm, card_height-8*mm, "AFRICAN DEMOCRATIC")
-        c.drawString(19*mm, card_height-11*mm, "YOUTH CONGRESS")
-        
-        c.setFillColor(colors.HexColor('#059669'))
-        c.setFont("Helvetica-Bold", 7)
-        c.drawString(19*mm, card_height-15*mm, "MEMBERSHIP CARD")
+        c.setFont("Helvetica-Bold", 10)
+        c.drawString(20*mm, card_height-8*mm, "AFRICAN DEMOCRATIC")
+        c.drawString(20*mm, card_height-12*mm, "YOUTH CONGRESS")
         
         # Member photo
         try:
@@ -148,49 +137,79 @@ class EmailService:
                 image_stream = io.BytesIO(image_data)
                 img = ImageReader(image_stream)
                 
-                photo_width = 18*mm
-                photo_height = 22*mm
-                photo_x = card_width - photo_width - 5*mm
-                photo_y = card_height - photo_height - 5*mm
+                photo_width = 16*mm
+                photo_height = 20*mm
+                photo_x = card_width - photo_width - 4*mm
+                photo_y = card_height - photo_height - 4*mm
                 
                 c.drawImage(img, photo_x, photo_y, width=photo_width, height=photo_height, preserveAspectRatio=True, mask='auto')
                 
-                # Photo frame
-                c.setStrokeColor(colors.HexColor('#d1d5db'))
-                c.setLineWidth(1)
-                c.rect(photo_x, photo_y, photo_width, photo_height, fill=0, stroke=1)
+                # Photo frame with security border
+                c.setStrokeColor(colors.HexColor('#f97316'))
+                c.setLineWidth(1.5)
+                c.rect(photo_x-1, photo_y-1, photo_width+2, photo_height+2, fill=0, stroke=1)
         except Exception as e:
             # Fallback photo placeholder
-            photo_x = card_width - 18*mm - 5*mm
-            photo_y = card_height - 22*mm - 5*mm
+            photo_x = card_width - 16*mm - 4*mm
+            photo_y = card_height - 20*mm - 4*mm
             c.setFillColor(colors.HexColor('#e5e7eb'))
-            c.rect(photo_x, photo_y, 18*mm, 22*mm, fill=1)
+            c.rect(photo_x, photo_y, 16*mm, 20*mm, fill=1)
             c.setFillColor(colors.HexColor('#6b7280'))
             c.setFont("Helvetica", 6)
-            c.drawString(photo_x+5*mm, photo_y+10*mm, "PHOTO")
+            c.drawString(photo_x+5*mm, photo_y+9*mm, "PHOTO")
         
-        # Member information
-        info_start_y = card_height - 25*mm
+        # Member information - Specific layout as requested
+        info_start_y = card_height - 26*mm
         c.setFillColor(colors.black)
         
-        # Name
-        c.setFont("Helvetica-Bold", 8)
-        c.drawString(5*mm, info_start_y, "NAME:")
-        c.setFont("Helvetica", 7)
-        name = member_data.get('full_name', '').upper()[:25]  # Truncate if too long
-        c.drawString(5*mm, info_start_y-3*mm, name)
+        # NAME: ZITTA VICTOR
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(4*mm, info_start_y, "NAME:")
+        c.setFont("Times-Bold", 8)  # Using Times font as shown in image
+        name = member_data.get('full_name', 'ZITTA VICTOR').upper()
+        c.drawString(4*mm, info_start_y-3*mm, name)
         
-        # Member ID
-        c.setFont("Helvetica-Bold", 8)
-        c.drawString(5*mm, info_start_y-8*mm, "ID:")
-        c.setFont("Helvetica", 7)
-        c.drawString(5*mm, info_start_y-11*mm, member_data.get('member_id', ''))
+        # ID: ADYC-2025-5A5514
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(4*mm, info_start_y-8*mm, "ID:")
+        c.setFont("Times-Bold", 8)
+        member_id = member_data.get('member_id', 'ADYC-2025-5A5514')
+        c.drawString(4*mm, info_start_y-11*mm, member_id)
         
-        # State and LGA
-        c.setFont("Helvetica-Bold", 8)
-        c.drawString(5*mm, info_start_y-16*mm, "STATE:")
-        c.setFont("Helvetica", 7)
-        c.drawString(5*mm, info_start_y-19*mm, member_data.get('state', '').upper())
+        # STATE: PLATEAU
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(4*mm, info_start_y-16*mm, "STATE:")
+        c.setFont("Times-Bold", 8)
+        state = member_data.get('state', 'PLATEAU').upper()
+        c.drawString(15*mm, info_start_y-16*mm, state)
+        
+        # EMAIL: zittavictor26@gmail.com (on right side)
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(45*mm, info_start_y, "EMAIL:")
+        c.setFont("Times-Roman", 6)
+        email = member_data.get('email', 'zittavictor26@gmail.com')[:30]  # Truncate long emails
+        c.drawString(45*mm, info_start_y-3*mm, email)
+        
+        # GENDER: MALE
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(45*mm, info_start_y-8*mm, "GENDER:")
+        c.setFont("Times-Bold", 8)
+        gender = member_data.get('gender', 'MALE').upper()
+        c.drawString(58*mm, info_start_y-8*mm, gender)
+        
+        # DOB: 2005-07-15
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(45*mm, info_start_y-13*mm, "DOB:")
+        c.setFont("Times-Bold", 8)
+        dob = member_data.get('dob', '2005-07-15')
+        c.drawString(52*mm, info_start_y-13*mm, dob)
+        
+        # LGA: JOS NORTH
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(45*mm, info_start_y-18*mm, "LGA:")
+        c.setFont("Times-Bold", 8)
+        lga = member_data.get('lga', 'JOS NORTH').upper()
+        c.drawString(52*mm, info_start_y-18*mm, lga)
         
         # Footer with holographic strip
         c.setFillColor(colors.HexColor('#16a34a'))
@@ -215,19 +234,17 @@ class EmailService:
         text_width = c.stringWidth(slogan_text, "Helvetica-Bold", 6)
         c.drawString((card_width - text_width) / 2, 0.5*mm, slogan_text)
         
-        # Security hologram corner
+        # Enhanced security hologram corner with logo
         c.saveState()
         c.setFillColor(colors.HexColor('#fbbf24'))
-        c.setFillAlpha(0.7)
-        # Triangle in top right corner using lines
-        from reportlab.graphics.shapes import Polygon
-        from reportlab.graphics import renderPDF
-        # Simple approach - draw a filled rectangle as security element
-        c.rect(card_width-10*mm, card_height-10*mm, 10*mm, 10*mm, fill=1)
+        c.setFillAlpha(0.8)
+        # Security triangle
+        triangle_points = [card_width-8*mm, card_height, card_width, card_height, card_width, card_height-8*mm]
+        c.polygon(triangle_points, fill=1)
         c.setFillColor(colors.black)
         c.setFillAlpha(1)
-        c.setFont("Helvetica-Bold", 4)
-        c.drawString(card_width-9*mm, card_height-6*mm, "SECURE")
+        c.setFont("Helvetica-Bold", 3)
+        c.drawString(card_width-7*mm, card_height-2*mm, "SECURE")
         c.restoreState()
     
     def _generate_back_side(self, c, member_data, card_width, card_height):
