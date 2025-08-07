@@ -80,28 +80,28 @@ const Contact = ({ onNavigate }) => {
               </p>
             </motion.div>
 
-            {/* ADYC Logo & Motto */}
+            {/* ADYC Logo & Motto - Mobile Responsive */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="max-w-md mx-auto"
+              className="max-w-sm sm:max-w-md mx-auto px-4"
             >
-              <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-strong border border-orange-500/20">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl overflow-hidden shadow-moderate">
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-strong border border-orange-500/20">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden shadow-moderate">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg" 
                     alt="ADYC Logo" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h2 className="heading-secondary text-primary mb-3">
+                <h2 className="heading-secondary-mobile text-black mb-2 sm:mb-3">
                   African Democratic Youth Congress
                 </h2>
-                <p className="text-lg font-semibold text-accent italic mb-4">
+                <p className="text-base sm:text-lg font-semibold text-accent italic mb-3 sm:mb-4">
                   "Arise, It's Youth O'Clock!"
                 </p>
-                <div className="flex items-center justify-center space-x-2 text-sm text-secondary">
+                <div className="flex items-center justify-center space-x-2 text-xs sm:text-sm text-black opacity-70">
                   <Zap className="w-4 h-4 text-orange-500" />
                   <span>Empowering Nigeria's Democratic Future</span>
                 </div>
@@ -109,18 +109,18 @@ const Contact = ({ onNavigate }) => {
             </motion.div>
           </motion.section>
 
-          {/* CONTACT INFORMATION CARDS */}
-          <motion.section variants={itemVariants}>
-            <div className="text-center mb-12">
-              <h2 className="heading-primary text-primary mb-6">
+          {/* CONTACT INFORMATION CARDS - Mobile Grid */}
+          <motion.section variants={itemVariants} className="px-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="heading-primary-mobile text-black mb-4 sm:mb-6">
                 Get in <span className="text-accent">Touch</span>
               </h2>
-              <p className="body-large text-secondary max-w-2xl mx-auto">
+              <p className="body-large-mobile text-black max-w-2xl mx-auto opacity-80">
                 Multiple ways to connect with our team and join the movement for democratic change.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="mobile-grid-2 lg:grid-cols-2">
               {contactInfo.map((info, index) => (
                 <motion.div
                   key={index}
@@ -128,25 +128,25 @@ const Contact = ({ onNavigate }) => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="featured-card group hover:shadow-strong transition-all duration-300"
+                  className="mobile-featured-card group hover:shadow-strong transition-all duration-300"
                 >
-                  <div className="flex items-start space-x-6">
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate flex-shrink-0 ${
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate flex-shrink-0 ${
                       info.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
                       info.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
                       info.color === 'orange' ? 'bg-gradient-to-br from-orange-500 to-orange-600' :
                       'bg-gradient-to-br from-purple-500 to-purple-600'
                     }`}>
-                      <info.icon className="w-8 h-8" />
+                      <info.icon className="w-5 h-5 sm:w-8 sm:h-8" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors">
+                    <div className="flex-1 text-center sm:text-left">
+                      <h3 className="heading-tertiary-mobile text-black mb-2 sm:mb-3 group-hover:text-accent transition-colors">
                         {info.title}
                       </h3>
-                      <p className="text-accent font-semibold mb-3">
+                      <p className="text-accent font-semibold mb-2 sm:mb-3 text-sm sm:text-base">
                         {info.content}
                       </p>
-                      <p className="text-secondary">
+                      <p className="text-black text-sm sm:text-base opacity-70">
                         {info.description}
                       </p>
                     </div>
