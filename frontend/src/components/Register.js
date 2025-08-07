@@ -331,34 +331,34 @@ const Register = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="register" onNavigate={onNavigate}>
-      <div className="container-custom section-spacing">
+      <div className="mobile-container mobile-section-spacing prevent-horizontal-scroll">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="max-w-5xl mx-auto"
         >
-          {/* Header Section */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h1 className="display-text text-primary mb-6">
-              Join <span className="text-accent hand-drawn-accent">ADYC</span> Today!
+          {/* Header Section - Mobile Optimized */}
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16 px-4">
+            <h1 className="display-text-mobile text-primary mb-4 sm:mb-6">
+              Join <span className="text-accent">ADYC</span> Today!
             </h1>
-            <p className="body-large text-secondary max-w-2xl mx-auto mb-8">
+            <p className="body-large-mobile text-secondary max-w-2xl mx-auto mb-6 sm:mb-8">
               Become a member of Africa's most dynamic youth political movement and help shape Nigeria's democratic future.
             </p>
             
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-secondary">
+            {/* Trust Indicators - Mobile Grid */}
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-secondary">
               <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-green-500" />
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                 <span>Secure Registration</span>
               </div>
               <div className="flex items-center space-x-2">
-                <UserCheck className="w-5 h-5 text-blue-500" />
+                <UserCheck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
                 <span>Instant Member ID</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Award className="w-5 h-5 text-orange-500" />
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
                 <span>Official Recognition</span>
               </div>
             </div>
