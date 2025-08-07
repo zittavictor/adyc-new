@@ -36,6 +36,9 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
     <div className="min-h-screen">
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 transition-all duration-500 relative">
         
+        {/* FLOATING BACKGROUND ELEMENTS */}
+        <FloatingBackgroundElements />
+        
         {/* SOPHISTICATED HEADER */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
