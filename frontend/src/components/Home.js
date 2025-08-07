@@ -256,14 +256,25 @@ const Home = ({ onNavigate }) => {
                 className="col-span-12 lg:col-span-4"
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ 
+                  y: -8, 
+                  transition: { duration: 0.3 } 
+                }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <div className="modern-card h-full group cursor-pointer" onClick={() => onNavigate('register')}>
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white mb-6">
+                <div className="modern-card h-full group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('register')}>
+                  <motion.div 
+                    className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white mb-6"
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 3,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
                     <Target className="w-6 h-6" />
-                  </div>
-                  <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                  </motion.div>
+                  <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors duration-300">
                     Democratic Participation
                   </h3>
                   <p className="body-text text-secondary">
