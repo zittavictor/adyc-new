@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, BackgroundTasks
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
@@ -9,14 +10,15 @@ from typing import List
 import uuid
 from datetime import datetime
 from email_service import get_email_service
-from supabase_service import get_supabase_service
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Supabase connection
-supabase_service = get_supabase_service()
+# MongoDB connection
+mongo_url = os.environ['MONGO_URL']
+client = AsyncIOMotorClient(mongo_url)
+db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
 app = FastAPI()
@@ -75,44 +77,50 @@ async def root():
 async def create_status_check(input: StatusCheckCreate):
     status_dict = input.dict()
     status_obj = StatusCheck(**status_dict)
-    result = await supabase_service.create_status_check(status_obj.client_name)
-    return StatusCheck(**result)
+    _ = await db.status_checks.insert_one(status_obj.dict())
+    return status_obj
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
-    status_checks = await supabase_service.get_status_checks()
+    status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
 # Member Registration Endpoints
 @api_router.post("/register", response_model=MemberRegistration)
 async def register_member(input: MemberRegistrationCreate, background_tasks: BackgroundTasks):
-    member_dict = input.dict()
+    # Generate member ID in format ADYC-YYYY-XXXXXX
+    current_year = datetime.now().year
+    random_id = f"{uuid.uuid4().hex[:6].upper()}"
+    member_id = f"ADYC-{current_year}-{random_id}"
     
-    try:
-        # Create member using Supabase service (it handles member_id generation and email checking)
-        result = await supabase_service.create_member(member_dict)
-        member_obj = MemberRegistration(**result)
-        
-        # Send registration email with ID card PDF in background
-        background_tasks.add_task(get_email_service().send_registration_email, result)
-        
-        # Send admin notification email in background
-        background_tasks.add_task(get_email_service().send_admin_notification_email, result)
-        
-        return member_obj
-        
-    except ValueError as e:
+    member_dict = input.dict()
+    member_obj = MemberRegistration(member_id=member_id, **member_dict)
+    
+    # Check if email already exists
+    existing_member = await db.members.find_one({"email": input.email})
+    if existing_member:
         from fastapi import HTTPException
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Insert into database
+    await db.members.insert_one(member_obj.dict())
+    
+    # Send registration email with ID card PDF in background
+    background_tasks.add_task(get_email_service().send_registration_email, member_obj.dict())
+    
+    # Send admin notification email in background
+    background_tasks.add_task(get_email_service().send_admin_notification_email, member_obj.dict())
+    
+    return member_obj
 
 @api_router.get("/members", response_model=List[MemberRegistration])
 async def get_members():
-    members = await supabase_service.get_members()
+    members = await db.members.find().to_list(1000)
     return [MemberRegistration(**member) for member in members]
 
 @api_router.get("/members/{member_id}", response_model=MemberRegistration)
 async def get_member(member_id: str):
-    member = await supabase_service.get_member_by_id(member_id)
+    member = await db.members.find_one({"member_id": member_id})
     if not member:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
@@ -123,7 +131,7 @@ async def download_id_card(member_id: str):
     """Download ID card PDF for a specific member"""
     from fastapi.responses import Response
     
-    member = await supabase_service.get_member_by_id(member_id)
+    member = await db.members.find_one({"member_id": member_id})
     if not member:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
@@ -146,7 +154,7 @@ async def download_id_card(member_id: str):
 @api_router.post("/send-test-email")
 async def send_test_email(member_id: str):
     """Send test registration email for a specific member"""
-    member = await supabase_service.get_member_by_id(member_id)
+    member = await db.members.find_one({"member_id": member_id})
     if not member:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
@@ -166,7 +174,7 @@ async def send_test_email(member_id: str):
 @api_router.post("/send-admin-notification")
 async def send_admin_notification(member_id: str):
     """Send test admin notification email for a specific member"""
-    member = await supabase_service.get_member_by_id(member_id)
+    member = await db.members.find_one({"member_id": member_id})
     if not member:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
@@ -201,7 +209,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Initialize Supabase tables on startup
-@app.on_event("startup")
-async def startup_event():
-    await supabase_service.create_tables()
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    client.close()
