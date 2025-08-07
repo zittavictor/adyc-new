@@ -206,13 +206,14 @@ code {
            transition-all duration-500 hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)];
   }
 
-  /* Mobile Button System */
+  /* Enhanced Button System with Spinning Effects */
   .btn-primary-mobile {
     @apply bg-orange-600 hover:bg-orange-700 text-white font-semibold 
            px-4 py-3 sm:px-6 sm:py-3 text-sm sm:text-base
            rounded-xl transition-all duration-300 touch-target
            shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]
-           focus:outline-none focus:ring-4 focus:ring-orange-500/30;
+           focus:outline-none focus:ring-4 focus:ring-orange-500/30
+           relative overflow-hidden;
   }
   
   .btn-secondary-mobile {
@@ -220,7 +221,62 @@ code {
            border border-slate-200 hover:border-slate-300
            px-4 py-3 sm:px-6 sm:py-3 text-sm sm:text-base
            rounded-xl transition-all duration-300 touch-target
-           shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+           shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]
+           relative overflow-hidden;
+  }
+
+  /* Button Spinning Effects */
+  .btn-with-spinner {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-with-spinner:active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(249, 115, 22, 0.3) 0%, transparent 70%);
+    transform: scale(0);
+    animation: button-ripple 0.8s ease-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .btn-secondary-mobile:active::before {
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, transparent 70%);
+  }
+  
+  @keyframes button-ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* Spinning shadow effect for buttons */
+  .btn-spinner-shadow {
+    position: absolute;
+    inset: -2px;
+    background: conic-gradient(from 0deg, transparent, rgba(249, 115, 22, 0.4), transparent);
+    border-radius: inherit;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .btn-with-spinner:active .btn-spinner-shadow {
+    opacity: 1;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* Mobile Form Elements */
