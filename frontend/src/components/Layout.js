@@ -77,7 +77,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                       className={`flex items-center space-x-2 px-4 py-3 rounded-xl font-medium transition-all duration-200 mobile-touch ${
                         isActive
                           ? 'bg-orange-600 text-white shadow-accent'
-                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/60'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
                       }`}
                     >
                       <item.icon className={`w-4 h-4 ${isActive ? 'text-white' : ''}`} />
