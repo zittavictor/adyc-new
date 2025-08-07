@@ -56,22 +56,29 @@ const Contact = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="contact" onNavigate={onNavigate}>
-      <div className="container-custom">
+      <div className="mobile-container prevent-horizontal-scroll">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-24 section-spacing"
+          className="mobile-section-spacing mobile-scroll-container"
         >
-          {/* HEADER SECTION */}
-          <motion.section variants={itemVariants} className="text-center">
-            <h1 className="display-text text-primary mb-8">
-              Contact <span className="text-accent hand-drawn-accent">ADYC</span>
-            </h1>
-            <p className="body-large text-secondary max-w-3xl mx-auto mb-12">
-              Get in touch with the African Democratic Youth Congress. We're here to support youth 
-              participation in Nigeria's democratic process and answer any questions you may have.
-            </p>
+          {/* HEADER SECTION - Mobile First */}
+          <motion.section variants={itemVariants} className="text-center mb-12 sm:mb-16 px-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="mb-6 sm:mb-8"
+            >
+              <h1 className="display-text-mobile text-black mb-4 sm:mb-6">
+                Contact <span className="text-accent">ADYC</span>
+              </h1>
+              <p className="body-large-mobile text-black max-w-3xl mx-auto leading-relaxed opacity-80">
+                Join the conversation and be part of Nigeria's youth-led democratic movement. 
+                We're here to listen, engage, and work together for our nation's progress.
+              </p>
+            </motion.div>
 
             {/* ADYC Logo & Motto */}
             <motion.div
