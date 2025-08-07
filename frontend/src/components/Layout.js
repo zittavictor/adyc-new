@@ -32,8 +32,8 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 transition-all duration-500 relative">
+    <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 transition-all duration-500 relative">
         
         {/* SOPHISTICATED HEADER */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
