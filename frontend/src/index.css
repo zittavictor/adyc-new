@@ -84,8 +84,249 @@ code {
 }
 
 /* ===================================
-   HUMAN-DESIGNED COMPONENT SYSTEM
+   MOBILE-FIRST RESPONSIVE SYSTEM
    ================================= */
+
+@layer components {
+  /* Mobile-first breakpoints:
+   * xs: 0-319px (tiny phones)
+   * sm: 320-639px (small phones) 
+   * md: 640-767px (large phones)
+   * lg: 768-1023px (tablets)
+   * xl: 1024-1279px (small desktops)
+   * 2xl: 1280px+ (large desktops)
+   */
+
+  /* Mobile Navigation Utilities */
+  .mobile-nav-item {
+    @apply flex items-center space-x-3 px-4 py-3 text-base font-medium rounded-xl
+           text-slate-700 hover:text-orange-600 hover:bg-orange-50
+           transition-all duration-200 w-full text-left;
+  }
+  
+  .mobile-nav-item.active {
+    @apply bg-orange-600 text-white hover:bg-orange-700 hover:text-white;
+  }
+
+  /* Touch Target Optimization */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+    touch-action: manipulation;
+  }
+  
+  .touch-friendly-button {
+    @apply touch-target px-6 py-3 rounded-xl font-semibold transition-all duration-300
+           focus:outline-none focus:ring-4 focus:ring-orange-500/20;
+  }
+
+  /* Responsive Typography Scale */
+  .display-text-mobile {
+    @apply text-3xl leading-tight tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .heading-primary-mobile {
+    @apply text-2xl leading-tight tracking-tight;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  .heading-secondary-mobile {
+    @apply text-xl leading-snug;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  .heading-tertiary-mobile {
+    @apply text-lg leading-snug;
+  }
+  
+  .body-large-mobile {
+    @apply text-base leading-relaxed;
+  }
+  
+  .body-text-mobile {
+    @apply text-sm leading-relaxed;
+  }
+  
+  @media (min-width: 640px) {
+    .display-text-mobile {
+      @apply text-4xl;
+    }
+    
+    .heading-primary-mobile {
+      @apply text-3xl;
+    }
+    
+    .heading-secondary-mobile {
+      @apply text-2xl;
+    }
+    
+    .heading-tertiary-mobile {
+      @apply text-xl;
+    }
+    
+    .body-large-mobile {
+      @apply text-lg;
+    }
+    
+    .body-text-mobile {
+      @apply text-base;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .display-text-mobile {
+      @apply text-5xl;
+    }
+    
+    .heading-primary-mobile {
+      @apply text-4xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .display-text-mobile {
+      @apply text-6xl;
+    }
+    
+    .heading-primary-mobile {
+      @apply text-5xl;
+    }
+  }
+
+  /* Mobile-Optimized Cards */
+  .mobile-card {
+    @apply bg-white/60 border border-slate-200/60 rounded-2xl p-4 sm:p-6 lg:p-8 
+           backdrop-blur-sm transition-all duration-300 hover:bg-white/80 hover:border-slate-300/70;
+  }
+  
+  .mobile-featured-card {
+    @apply bg-gradient-to-br from-white via-slate-50/50 to-orange-50/30 
+           border border-slate-200/80 rounded-3xl p-6 sm:p-8 lg:p-10 
+           shadow-[0_8px_30px_rgb(0,0,0,0.06)]
+           transition-all duration-500 hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)];
+  }
+
+  /* Mobile Button System */
+  .btn-primary-mobile {
+    @apply bg-orange-600 hover:bg-orange-700 text-white font-semibold 
+           px-4 py-3 sm:px-6 sm:py-3 text-sm sm:text-base
+           rounded-xl transition-all duration-300 touch-target
+           shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]
+           focus:outline-none focus:ring-4 focus:ring-orange-500/30;
+  }
+  
+  .btn-secondary-mobile {
+    @apply bg-white hover:bg-slate-50 text-slate-900 font-semibold 
+           border border-slate-200 hover:border-slate-300
+           px-4 py-3 sm:px-6 sm:py-3 text-sm sm:text-base
+           rounded-xl transition-all duration-300 touch-target
+           shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  /* Mobile Form Elements */
+  .input-field-mobile {
+    @apply w-full px-4 py-3 sm:px-6 sm:py-4 bg-white/80 border border-slate-200 
+           rounded-xl text-slate-900 placeholder-slate-500 text-base
+           transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/20 
+           focus:border-orange-500/50 hover:border-slate-300 touch-target;
+  }
+
+  /* Mobile Spacing System */
+  .mobile-section-spacing {
+    @apply py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24;
+  }
+  
+  .mobile-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Mobile Grid System */
+  .mobile-grid {
+    @apply grid grid-cols-1 gap-4 sm:gap-6 md:gap-8;
+  }
+  
+  .mobile-grid-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8;
+  }
+  
+  .mobile-grid-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8;
+  }
+  
+  .mobile-grid-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8;
+  }
+
+  /* Fluid Images */
+  .fluid-image {
+    @apply max-w-full h-auto object-cover;
+  }
+  
+  .responsive-image {
+    @apply w-full h-auto object-cover rounded-xl;
+  }
+
+  /* Mobile Navigation */
+  .mobile-hamburger {
+    @apply lg:hidden p-3 rounded-xl bg-slate-100/60 hover:bg-slate-200/60 
+           transition-all touch-target;
+  }
+  
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 lg:hidden;
+  }
+  
+  .mobile-menu-panel {
+    @apply w-80 max-w-[85vw] h-full bg-white shadow-strong;
+  }
+
+  /* Scroll and Overflow Management */
+  .mobile-scroll-container {
+    @apply overflow-x-hidden overflow-y-auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
+  
+  .prevent-horizontal-scroll {
+    @apply overflow-x-hidden max-w-full;
+  }
+
+  /* Safe Area Handling */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Mobile Performance Optimizations */
+  .mobile-optimized {
+    @apply will-change-transform transform-gpu;
+  }
+  
+  /* Hide/Show on Different Screens */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+  
+  .tablet-only {
+    @apply hidden sm:block lg:hidden;
+  }
+  
+  .desktop-only {
+    @apply hidden lg:block;
+  }
+  
+  .mobile-tablet {
+    @apply block lg:hidden;
+  }
+  
+  .tablet-desktop {
+    @apply hidden sm:block;
+  }
+}
 
 @layer components {
   /* Sophisticated Card System - Light Mode Only */
