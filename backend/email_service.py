@@ -32,246 +32,291 @@ class EmailService:
         if not self.username or not self.password:
             raise ValueError("Email credentials not configured properly")
 
-    def generate_id_card_pdf(self, member_data: Dict[str, Any]) -> bytes:
-        """Generate ID card PDF with ADYC logo and member information"""
+    def generate_id_card_pdf(self, member_data):
+        """Generate an enhanced ID card PDF with front and back sides"""
+        from reportlab.lib.pagesizes import letter
+        from reportlab.pdfgen import canvas
+        from reportlab.lib.units import mm
+        from reportlab.lib import colors
+        from reportlab.lib.utils import ImageReader
+        import io
+        import base64
+        
         try:
-            # Create a BytesIO buffer for the PDF
-            buffer = BytesIO()
+            # Create PDF buffer
+            buffer = io.BytesIO()
             
-            # Create PDF with custom page size (ID card dimensions)
-            # Standard ID card size: 85.6mm x 54mm (credit card size)
-            page_width = 85.6 * mm
-            page_height = 54 * mm
+            # ID card dimensions (credit card size)
+            card_width = 85.6*mm  # Standard credit card width
+            card_height = 53.98*mm  # Standard credit card height
             
-            doc = SimpleDocTemplate(buffer, pagesize=(page_width, page_height),
-                                  topMargin=2*mm, bottomMargin=2*mm, 
-                                  leftMargin=2*mm, rightMargin=2*mm)
+            # Create canvas with two pages (front and back)
+            c = canvas.Canvas(buffer, pagesize=(card_width, card_height))
             
-            # Create the PDF using canvas for more control
-            c = canvas.Canvas(buffer, pagesize=(page_width, page_height))
+            # =================== FRONT SIDE ===================
+            self._generate_front_side(c, member_data, card_width, card_height)
+            c.showPage()  # Move to next page
             
-            # Background color
-            c.setFillColor(colors.white)
-            c.rect(0, 0, page_width, page_height, fill=1)
+            # =================== BACK SIDE ===================
+            self._generate_back_side(c, member_data, card_width, card_height)
             
-            # Header section with ADYC branding
-            header_height = 15*mm
-            c.setFillColor(colors.HexColor('#f97316'))  # Orange color
-            c.rect(0, page_height - header_height, page_width, header_height, fill=1)
-            
-            # ADYC Logo - Download and embed the logo
-            try:
-                logo_url = "https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg"
-                response = requests.get(logo_url)
-                if response.status_code == 200:
-                    logo_image = PILImage.open(BytesIO(response.content))
-                    logo_image_reader = ImageReader(BytesIO(response.content))
-                    
-                    # Place logo in top left
-                    logo_size = 10*mm
-                    c.drawImage(logo_image_reader, 2*mm, page_height - 13*mm, 
-                              width=logo_size, height=logo_size, mask='auto')
-            except Exception as e:
-                logger.error(f"Error loading logo: {e}")
-                # Fallback: Add text logo
-                c.setFillColor(colors.white)
-                c.setFont("Helvetica-Bold", 8)
-                c.drawString(2*mm, page_height - 8*mm, "ADYC")
-            
-            # Header text
-            c.setFillColor(colors.white)
-            c.setFont("Helvetica-Bold", 8)
-            header_text = "AFRICAN DEMOCRATIC YOUTH CONGRESS"
-            text_width = c.stringWidth(header_text, "Helvetica-Bold", 8)
-            c.drawString((page_width - text_width) / 2, page_height - 6*mm, header_text)
-            
-            c.setFont("Helvetica", 6)
-            subheader_text = "MEMBERSHIP ID CARD"
-            text_width = c.stringWidth(subheader_text, "Helvetica", 6)
-            c.drawString((page_width - text_width) / 2, page_height - 9*mm, subheader_text)
-            
-            # Member photo section
-            photo_x = 5*mm
-            photo_y = page_height - 35*mm
-            photo_width = 18*mm
-            photo_height = 20*mm
-            
-            # Draw photo placeholder or actual photo
-            if member_data.get('passport'):
-                try:
-                    # Decode base64 image
-                    if member_data['passport'].startswith('data:image'):
-                        photo_data = member_data['passport'].split(',')[1]
-                    else:
-                        photo_data = member_data['passport']
-                    
-                    photo_bytes = base64.b64decode(photo_data)
-                    photo_image = PILImage.open(BytesIO(photo_bytes))
-                    photo_image_reader = ImageReader(BytesIO(photo_bytes))
-                    
-                    c.drawImage(photo_image_reader, photo_x, photo_y, 
-                              width=photo_width, height=photo_height, mask='auto')
-                except Exception as e:
-                    logger.error(f"Error processing member photo: {e}")
-                    # Fallback: Draw placeholder
-                    c.setFillColor(colors.lightgrey)
-                    c.rect(photo_x, photo_y, photo_width, photo_height, fill=1)
-                    c.setFillColor(colors.black)
-                    c.setFont("Helvetica", 6)
-                    photo_text = "PHOTO"
-                    text_width = c.stringWidth(photo_text, "Helvetica", 6)
-                    c.drawString(photo_x + (photo_width - text_width) / 2, photo_y + photo_height/2, photo_text)
-            else:
-                # Draw placeholder
-                c.setFillColor(colors.lightgrey)
-                c.rect(photo_x, photo_y, photo_width, photo_height, fill=1)
-                c.setFillColor(colors.black)
-                c.setFont("Helvetica", 6)
-                photo_text = "PHOTO"
-                text_width = c.stringWidth(photo_text, "Helvetica", 6)
-                c.drawString(photo_x + (photo_width - text_width) / 2, photo_y + photo_height/2, photo_text)
-            
-            # Member information section
-            info_x = 26*mm
-            info_y = page_height - 20*mm
-            
-            c.setFillColor(colors.black)
-            c.setFont("Helvetica-Bold", 7)
-            
-            # Name
-            c.drawString(info_x, info_y, "NAME:")
-            c.setFont("Helvetica", 6)
-            c.drawString(info_x, info_y - 3*mm, member_data.get('full_name', '').upper())
-            
-            # Member ID
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(info_x, info_y - 7*mm, "MEMBER ID:")
-            c.setFont("Helvetica", 6)
-            c.drawString(info_x, info_y - 10*mm, member_data.get('member_id', ''))
-            
-            # Email
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(info_x, info_y - 14*mm, "EMAIL:")
-            c.setFont("Helvetica", 5)
-            c.drawString(info_x, info_y - 17*mm, member_data.get('email', ''))
-            
-            # Right column information
-            right_x = 55*mm
-            
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(right_x, info_y, "STATE:")
-            c.setFont("Helvetica", 6)
-            c.drawString(right_x, info_y - 3*mm, member_data.get('state', '').upper())
-            
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(right_x, info_y - 7*mm, "LGA:")
-            c.setFont("Helvetica", 6)
-            c.drawString(right_x, info_y - 10*mm, member_data.get('lga', '').upper())
-            
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(right_x, info_y - 14*mm, "WARD:")
-            c.setFont("Helvetica", 6)
-            c.drawString(right_x, info_y - 17*mm, member_data.get('ward', '').upper())
-            
-            # Gender and Country
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(info_x, info_y - 21*mm, "GENDER:")
-            c.setFont("Helvetica", 6)
-            c.drawString(info_x, info_y - 24*mm, member_data.get('gender', '').upper())
-            
-            c.setFont("Helvetica-Bold", 7)
-            c.drawString(right_x, info_y - 21*mm, "COUNTRY:")
-            c.setFont("Helvetica", 6)
-            c.drawString(right_x, info_y - 24*mm, member_data.get('country', '').upper())
-            
-            # Footer section with serial number
-            footer_height = 8*mm
-            c.setFillColor(colors.HexColor('#22c55e'))  # Green color
-            c.rect(0, 0, page_width, footer_height, fill=1)
-            
-            # Add enhanced security watermark with ADYC logo pattern
-            c.saveState()
-            c.setFillColor(colors.HexColor('#f8f9fa'))
-            c.setFillAlpha(0.1)  # Very light watermark
-            
-            # Multiple ADYC logos as watermark across the card
-            c.setFont("Helvetica-Bold", 18)
-            c.rotate(45)
-            watermark_positions = [
-                (5*mm, -10*mm), (25*mm, -5*mm), (10*mm, -25*mm), (30*mm, -20*mm)
-            ]
-            for pos_x, pos_y in watermark_positions:
-                c.drawString(pos_x, pos_y, "ADYC")
-            
-            # Add "OFFICIAL" text diagonally
-            c.setFont("Helvetica", 12)
-            c.drawString(15*mm, -35*mm, "OFFICIAL")
-            c.restoreState()
-            
-            # Add security line pattern instead of dots
-            c.saveState()
-            c.setStrokeColor(colors.HexColor('#f0f0f0'))
-            c.setLineWidth(0.3)
-            # Diagonal lines pattern
-            for i in range(-50, 100, 3):
-                c.line(i*mm, 0, (i+50)*mm, page_height)
-            c.restoreState()
-            
-            # Add holographic effect border
-            c.saveState()
-            c.setStrokeColor(colors.HexColor('#ffd700'))  # Gold color
-            c.setLineWidth(1)
-            c.setDash([2, 2])
-            c.rect(2*mm, 2*mm, page_width-4*mm, page_height-4*mm, fill=0, stroke=1)
-            c.restoreState()
-            
-            # Footer text with serial number
-            c.setFillColor(colors.white)
-            c.setFont("Helvetica", 5)
-            reg_date_raw = member_data.get('registration_date', datetime.now())
-            if isinstance(reg_date_raw, str):
-                reg_date = datetime.fromisoformat(reg_date_raw)
-            else:
-                reg_date = reg_date_raw
-            
-            # Include serial number in footer
-            serial_number = member_data.get('id_card_serial_number', 'SN-UNKNOWN')
-            footer_text = f"VALID NATIONWIDE • ISSUED: {reg_date.year} • S/N: {serial_number}"
-            text_width = c.stringWidth(footer_text, "Helvetica", 5)
-            c.drawString((page_width - text_width) / 2, 3*mm, footer_text)
-            
-            # Slogan at bottom
-            c.setFont("Helvetica-Bold", 6)
-            slogan_text = "ARISE, IT'S YOUTH O'CLOCK!"
-            text_width = c.stringWidth(slogan_text, "Helvetica-Bold", 6)
-            c.drawString((page_width - text_width) / 2, 5.5*mm, slogan_text)
-            
-            # Add security hologram effect (corner triangle)
-            c.saveState()
-            c.setFillColor(colors.HexColor('#ffd700'))  # Gold color
-            c.setFillAlpha(0.3)
-            # Draw small triangle in bottom right corner using path
-            p = c.beginPath()
-            p.moveTo(page_width - 8*mm, 0)
-            p.lineTo(page_width, 0)
-            p.lineTo(page_width, 8*mm)
-            p.close()
-            c.drawPath(p, fill=1)
-            c.setFillColor(colors.black)
-            c.setFillAlpha(1)
-            c.setFont("Helvetica-Bold", 3)
-            c.drawString(page_width - 7*mm, 1*mm, "SECURE")
-            c.restoreState()
-            
-            # Save the PDF
+            # Save PDF
             c.save()
-            
             buffer.seek(0)
             return buffer.getvalue()
             
         except Exception as e:
             logger.error(f"Error generating ID card PDF: {e}")
             raise
+    
+    def _generate_front_side(self, c, member_data, card_width, card_height):
+        """Generate the front side of the ID card"""
+        from reportlab.lib.units import mm
+        from reportlab.lib import colors
+        from reportlab.lib.utils import ImageReader
+        import io
+        import base64
+        
+        # Background gradient effect
+        c.setFillColor(colors.HexColor('#f8fafc'))
+        c.rect(0, 0, card_width, card_height, fill=1)
+        
+        # Add subtle gradient bars
+        c.setFillColor(colors.HexColor('#f1f5f9'))
+        c.rect(0, 0, card_width, 8*mm, fill=1)
+        c.setFillColor(colors.HexColor('#e2e8f0'))
+        c.rect(0, card_height-8*mm, card_width, 8*mm, fill=1)
+        
+        # Enhanced security watermarks
+        c.saveState()
+        c.setFillColor(colors.HexColor('#f8f9fa'))
+        c.setFillAlpha(0.08)
+        c.setFont("Helvetica-Bold", 16)
+        
+        # Multiple ADYC watermarks in a pattern
+        positions = [
+            (10*mm, 30*mm), (45*mm, 25*mm), (20*mm, 10*mm), 
+            (60*mm, 35*mm), (35*mm, 5*mm), (70*mm, 15*mm)
+        ]
+        c.rotate(25)
+        for pos_x, pos_y in positions:
+            c.drawString(pos_x, pos_y, "ADYC")
+            c.drawString(pos_x+2*mm, pos_y-3*mm, "OFFICIAL")
+        c.restoreState()
+        
+        # Security line pattern
+        c.saveState()
+        c.setStrokeColor(colors.HexColor('#e5e7eb'))
+        c.setLineWidth(0.2)
+        for i in range(0, int(card_width/mm), 4):
+            c.line(i*mm, 0, i*mm, card_height)
+        c.restoreState()
+        
+        # Header section with logo
+        try:
+            # ADYC Logo
+            logo_size = 12*mm
+            c.drawImage(
+                "https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg",
+                5*mm, card_height-17*mm, 
+                width=logo_size, height=logo_size,
+                preserveAspectRatio=True, mask='auto'
+            )
+        except:
+            # Fallback logo
+            c.setFillColor(colors.HexColor('#f97316'))
+            c.rect(5*mm, card_height-17*mm, 12*mm, 12*mm, fill=1)
+            c.setFillColor(colors.white)
+            c.setFont("Helvetica-Bold", 8)
+            c.drawString(7*mm, card_height-13*mm, "ADYC")
+        
+        # Organization name and title
+        c.setFillColor(colors.black)
+        c.setFont("Helvetica-Bold", 9)
+        c.drawString(19*mm, card_height-8*mm, "AFRICAN DEMOCRATIC")
+        c.drawString(19*mm, card_height-11*mm, "YOUTH CONGRESS")
+        
+        c.setFillColor(colors.HexColor('#059669'))
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(19*mm, card_height-15*mm, "MEMBERSHIP CARD")
+        
+        # Member photo
+        try:
+            if member_data.get('passport'):
+                # Decode base64 image
+                image_data = base64.b64decode(member_data['passport'].split(',')[1])
+                image_stream = io.BytesIO(image_data)
+                img = ImageReader(image_stream)
+                
+                photo_width = 18*mm
+                photo_height = 22*mm
+                photo_x = card_width - photo_width - 5*mm
+                photo_y = card_height - photo_height - 5*mm
+                
+                c.drawImage(img, photo_x, photo_y, width=photo_width, height=photo_height, preserveAspectRatio=True, mask='auto')
+                
+                # Photo frame
+                c.setStrokeColor(colors.HexColor('#d1d5db'))
+                c.setLineWidth(1)
+                c.rect(photo_x, photo_y, photo_width, photo_height, fill=0, stroke=1)
+        except Exception as e:
+            # Fallback photo placeholder
+            photo_x = card_width - 18*mm - 5*mm
+            photo_y = card_height - 22*mm - 5*mm
+            c.setFillColor(colors.HexColor('#e5e7eb'))
+            c.rect(photo_x, photo_y, 18*mm, 22*mm, fill=1)
+            c.setFillColor(colors.HexColor('#6b7280'))
+            c.setFont("Helvetica", 6)
+            c.drawString(photo_x+5*mm, photo_y+10*mm, "PHOTO")
+        
+        # Member information
+        info_start_y = card_height - 25*mm
+        c.setFillColor(colors.black)
+        
+        # Name
+        c.setFont("Helvetica-Bold", 8)
+        c.drawString(5*mm, info_start_y, "NAME:")
+        c.setFont("Helvetica", 7)
+        name = member_data.get('full_name', '').upper()[:25]  # Truncate if too long
+        c.drawString(5*mm, info_start_y-3*mm, name)
+        
+        # Member ID
+        c.setFont("Helvetica-Bold", 8)
+        c.drawString(5*mm, info_start_y-8*mm, "ID:")
+        c.setFont("Helvetica", 7)
+        c.drawString(5*mm, info_start_y-11*mm, member_data.get('member_id', ''))
+        
+        # State and LGA
+        c.setFont("Helvetica-Bold", 8)
+        c.drawString(5*mm, info_start_y-16*mm, "STATE:")
+        c.setFont("Helvetica", 7)
+        c.drawString(5*mm, info_start_y-19*mm, member_data.get('state', '').upper())
+        
+        # Footer with holographic strip
+        c.setFillColor(colors.HexColor('#16a34a'))
+        c.rect(0, 0, card_width, 6*mm, fill=1)
+        
+        # Serial number and validity
+        c.setFillColor(colors.white)
+        c.setFont("Helvetica-Bold", 5)
+        serial_number = member_data.get('id_card_serial_number', 'SN-UNKNOWN')
+        c.drawString(3*mm, 2*mm, f"S/N: {serial_number}")
+        
+        c.setFont("Helvetica", 5)
+        reg_date = member_data.get('registration_date', datetime.now())
+        if isinstance(reg_date, str):
+            reg_date = datetime.fromisoformat(reg_date)
+        
+        c.drawString(3*mm, 4*mm, f"VALID NATIONWIDE • ISSUED: {reg_date.year}")
+        
+        # Slogan
+        c.setFont("Helvetica-Bold", 6)
+        slogan_text = "ARISE, IT'S YOUTH O'CLOCK!"
+        text_width = c.stringWidth(slogan_text, "Helvetica-Bold", 6)
+        c.drawString((card_width - text_width) / 2, 0.5*mm, slogan_text)
+        
+        # Security hologram corner
+        c.saveState()
+        c.setFillColor(colors.HexColor('#fbbf24'))
+        c.setFillAlpha(0.7)
+        # Triangle in top right corner
+        triangle_points = [card_width-10*mm, card_height, card_width, card_height, card_width, card_height-10*mm]
+        c.polygon(triangle_points, fill=1)
+        c.setFillColor(colors.black)
+        c.setFillAlpha(1)
+        c.setFont("Helvetica-Bold", 4)
+        c.drawString(card_width-9*mm, card_height-3*mm, "SECURE")
+        c.restoreState()
+    
+    def _generate_back_side(self, c, member_data, card_width, card_height):
+        """Generate the back side of the ID card"""
+        from reportlab.lib.units import mm
+        from reportlab.lib import colors
+        
+        # Background
+        c.setFillColor(colors.HexColor('#f8fafc'))
+        c.rect(0, 0, card_width, card_height, fill=1)
+        
+        # Enhanced watermark pattern
+        c.saveState()
+        c.setFillColor(colors.HexColor('#f1f5f9'))
+        c.setFillAlpha(0.6)
+        c.setFont("Helvetica-Bold", 12)
+        c.rotate(-30)
+        for i in range(-10, 15, 8):
+            for j in range(-5, 8, 6):
+                c.drawString(i*mm, j*mm, "ADYC")
+        c.restoreState()
+        
+        # Header
+        c.setFillColor(colors.HexColor('#16a34a'))
+        c.rect(0, card_height-12*mm, card_width, 12*mm, fill=1)
+        
+        c.setFillColor(colors.white)
+        c.setFont("Helvetica-Bold", 10)
+        c.drawString(5*mm, card_height-7*mm, "MEMBERSHIP DETAILS")
+        
+        # Member details
+        details_y = card_height - 18*mm
+        c.setFillColor(colors.black)
+        
+        details = [
+            ("EMAIL:", member_data.get('email', '')),
+            ("GENDER:", member_data.get('gender', '').upper()),
+            ("DOB:", member_data.get('dob', '')),
+            ("LGA:", member_data.get('lga', '').upper()),
+            ("WARD:", member_data.get('ward', '').upper()),
+            ("COUNTRY:", member_data.get('country', '').upper()),
+        ]
+        
+        for i, (label, value) in enumerate(details):
+            y_pos = details_y - (i * 4*mm)
+            c.setFont("Helvetica-Bold", 6)
+            c.drawString(5*mm, y_pos, label)
+            c.setFont("Helvetica", 5)
+            # Truncate long values
+            display_value = value[:30] if len(value) > 30 else value
+            c.drawString(20*mm, y_pos, display_value)
+        
+        # Terms and conditions
+        c.setFont("Helvetica", 4)
+        terms_y = 18*mm
+        terms = [
+            "This card is the property of ADYC and must be returned upon request.",
+            "Misuse of this card is prohibited and may result in membership termination.",
+            "Report lost or stolen cards immediately to ADYC administration.",
+            "This card grants access to ADYC programs and events nationwide.",
+            "Valid for active members in good standing only."
+        ]
+        
+        for i, term in enumerate(terms):
+            c.drawString(3*mm, terms_y - (i * 2.5*mm), f"• {term}")
+        
+        # Footer with contact info
+        c.setFillColor(colors.HexColor('#059669'))
+        c.rect(0, 0, card_width, 8*mm, fill=1)
+        
+        c.setFillColor(colors.white)
+        c.setFont("Helvetica-Bold", 6)
+        c.drawString(3*mm, 5*mm, "CONTACT: info@adyc.org")
+        c.setFont("Helvetica", 5)
+        c.drawString(3*mm, 2*mm, "www.adyc.org | Social: @ADYC_Official")
+        
+        # QR Code placeholder (for future implementation)
+        qr_size = 15*mm
+        qr_x = card_width - qr_size - 5*mm
+        qr_y = 2*mm
+        c.setFillColor(colors.HexColor('#e5e7eb'))
+        c.rect(qr_x, qr_y, qr_size, qr_size, fill=1)
+        c.setStrokeColor(colors.HexColor('#6b7280'))
+        c.setLineWidth(0.5)
+        c.rect(qr_x, qr_y, qr_size, qr_size, fill=0, stroke=1)
+        
+        # QR placeholder text
+        c.setFillColor(colors.HexColor('#6b7280'))
+        c.setFont("Helvetica", 4)
+        c.drawString(qr_x+4*mm, qr_y+7*mm, "QR CODE")
+        c.drawString(qr_x+3*mm, qr_y+5*mm, "VERIFICATION")
 
     def send_registration_email(self, member_data: Dict[str, Any]) -> bool:
         """Send registration confirmation email with ID card PDF attachment"""
