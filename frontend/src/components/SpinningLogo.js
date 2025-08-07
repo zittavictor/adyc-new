@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 
-const SpinningLogo = ({ size = 80 }) => {
+const SpinningLogo = ({ className, size = 80 }) => {
   const [spinDirection, setSpinDirection] = useState(1);
   const [isSpinning, setIsSpinning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [hasAutoSpun, setHasAutoSpun] = useState(false);
 
   // Auto-spin on component mount (page load)
@@ -28,12 +29,18 @@ const SpinningLogo = ({ size = 80 }) => {
   const handleClick = () => {
     if (!isSpinning) {
       setIsSpinning(true);
+      setIsClicked(true);
       setSpinDirection(prev => prev * -1); // Change direction
       
       // Stop spinning after one full rotation
       setTimeout(() => {
         setIsSpinning(false);
       }, 1000);
+      
+      // Remove clicked effect after animation
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 2000);
     }
   };
 
