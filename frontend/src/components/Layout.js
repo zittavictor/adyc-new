@@ -133,7 +133,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* MOBILE HEADER */}
-              <div className="flex items-center justify-between h-20 px-6 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center justify-between h-20 px-6 border-b border-slate-200">
                 <div className="flex items-center space-x-3">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
