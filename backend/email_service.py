@@ -239,7 +239,7 @@ class EmailService:
             p.moveTo(page_width - 8*mm, 0)
             p.lineTo(page_width, 0)
             p.lineTo(page_width, 8*mm)
-            p.closePath()
+            p.close()
             c.drawPath(p, fill=1)
             c.setFillColor(colors.black)
             c.setFillAlpha(1)
