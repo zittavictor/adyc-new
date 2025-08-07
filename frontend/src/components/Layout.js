@@ -212,9 +212,9 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
           </motion.div>
         )}
 
-        {/* MAIN CONTENT AREA - Mobile Optimized */}
-        <main className="pt-16 sm:pt-18 lg:pt-20 min-h-screen prevent-horizontal-scroll mobile-scroll-container">
-          <div className="relative z-10">
+        {/* MAIN CONTENT AREA - Mobile Optimized with Proper Scrolling */}
+        <main className="pt-16 sm:pt-18 lg:pt-20 min-h-screen prevent-horizontal-scroll">
+          <div className="relative z-10 w-full">
             {children}
           </div>
         </main>
