@@ -19,48 +19,52 @@ const About = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="about" onNavigate={onNavigate}>
-      <div className="container-custom">
+      <div className="mobile-container prevent-horizontal-scroll">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-24 section-spacing"
+          className="mobile-section-spacing mobile-scroll-container"
         >
-          {/* HERO SECTION - Sophisticated Layout */}
-          <motion.section variants={itemVariants} className="text-center">
+          {/* HERO SECTION - Mobile First Responsive */}
+          <motion.section variants={itemVariants} className="text-center px-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
-              <h1 className="display-text text-primary mb-8">
-                About <span className="text-accent hand-drawn-accent">ADYC</span>
+              <h1 className="display-text-mobile text-black mb-6 sm:mb-8">
+                About <span className="text-accent">ADYC</span>
               </h1>
-              <p className="body-large text-secondary max-w-4xl mx-auto leading-relaxed">
+              <p className="body-large-mobile text-black max-w-4xl mx-auto leading-relaxed opacity-80">
                 Empowering Nigerian youth to shape the future through democratic participation, 
                 innovative leadership, and community-driven development across all six geopolitical zones.
               </p>
             </motion.div>
 
-            {/* Trust Metrics */}
+            {/* Trust Metrics - Mobile Grid */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto mb-8 sm:mb-12"
             >
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent mb-2">1000+</div>
-                <div className="caption-text text-secondary">Active Members</div>
+              <div className="text-center p-4">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600 mb-1">50K+</div>
+                <div className="text-xs sm:text-sm text-black opacity-70">Active Members</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent mb-2">36</div>
-                <div className="caption-text text-secondary">States Coverage</div>
+              <div className="text-center p-4">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 mb-1">36</div>
+                <div className="text-xs sm:text-sm text-black opacity-70">States</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent mb-2">6</div>
-                <div className="caption-text text-secondary">Geopolitical Zones</div>
+              <div className="text-center p-4">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 mb-1">6</div>
+                <div className="text-xs sm:text-sm text-black opacity-70">Geopolitical Zones</div>
+              </div>
+              <div className="text-center p-4">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600 mb-1">1000+</div>
+                <div className="text-xs sm:text-sm text-black opacity-70">Programs</div>
               </div>
             </motion.div>
           </motion.section>
