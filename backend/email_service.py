@@ -184,12 +184,32 @@ class EmailService:
             c.setFont("Helvetica", 6)
             c.drawString(right_x, info_y - 24*mm, member_data.get('country', '').upper())
             
-            # Footer section
+            # Footer section with serial number
             footer_height = 8*mm
             c.setFillColor(colors.HexColor('#22c55e'))  # Green color
             c.rect(0, 0, page_width, footer_height, fill=1)
             
-            # Footer text
+            # Add security watermark (semi-transparent)
+            c.saveState()
+            c.setFillColor(colors.grey)
+            c.setFillAlpha(0.15)  # Make it semi-transparent
+            c.setFont("Helvetica-Bold", 24)
+            
+            # Diagonal watermark text
+            c.rotate(45)
+            watermark_text = "ADYC OFFICIAL"
+            c.drawString(15*mm, -5*mm, watermark_text)
+            c.restoreState()
+            
+            # Add micro-pattern for forgery prevention (tiny dots pattern)
+            c.saveState()
+            c.setFillColor(colors.HexColor('#f0f0f0'))
+            for i in range(0, int(page_width/mm), 2):
+                for j in range(0, int(page_height/mm), 2):
+                    c.circle(i*mm, j*mm, 0.1*mm, fill=1)
+            c.restoreState()
+            
+            # Footer text with serial number
             c.setFillColor(colors.white)
             c.setFont("Helvetica", 5)
             reg_date_raw = member_data.get('registration_date', datetime.now())
@@ -197,7 +217,10 @@ class EmailService:
                 reg_date = datetime.fromisoformat(reg_date_raw)
             else:
                 reg_date = reg_date_raw
-            footer_text = f"VALID NATIONWIDE • ISSUED: {reg_date.year}"
+            
+            # Include serial number in footer
+            serial_number = member_data.get('id_card_serial_number', 'SN-UNKNOWN')
+            footer_text = f"VALID NATIONWIDE • ISSUED: {reg_date.year} • S/N: {serial_number}"
             text_width = c.stringWidth(footer_text, "Helvetica", 5)
             c.drawString((page_width - text_width) / 2, 3*mm, footer_text)
             
@@ -206,6 +229,19 @@ class EmailService:
             slogan_text = "ARISE, IT'S YOUTH O'CLOCK!"
             text_width = c.stringWidth(slogan_text, "Helvetica-Bold", 6)
             c.drawString((page_width - text_width) / 2, 5.5*mm, slogan_text)
+            
+            # Add security hologram effect (corner triangle)
+            c.saveState()
+            c.setFillColor(colors.HexColor('#ffd700'))  # Gold color
+            c.setFillAlpha(0.3)
+            # Draw small triangle in bottom right corner
+            triangle_points = [page_width - 8*mm, 0, page_width, 0, page_width, 8*mm]
+            c.polygon(triangle_points, fill=1)
+            c.setFillColor(colors.black)
+            c.setFillAlpha(1)
+            c.setFont("Helvetica-Bold", 3)
+            c.drawString(page_width - 7*mm, 1*mm, "SECURE")
+            c.restoreState()
             
             # Save the PDF
             c.save()
