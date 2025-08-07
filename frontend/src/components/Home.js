@@ -156,7 +156,7 @@ const Home = ({ onNavigate }) => {
                   transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
                   className="relative"
                 >
-                  <SpinningLogo className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80" />
+                  <SpinningLogo className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" />
                   {/* Floating elements - Hidden on mobile */}
                   <motion.div
                     animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
