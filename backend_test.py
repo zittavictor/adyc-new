@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Testing for ADYC Platform
-Tests the enhanced member registration system with email field and improved ID generation.
+Backend API Testing for ADYC Platform - Supabase Migration Testing
+Tests the Supabase migration and basic API functionality.
 """
 
 import requests
