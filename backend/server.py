@@ -21,6 +21,13 @@ load_dotenv(ROOT_DIR / '.env')
 # Supabase connection
 supabase_service = get_supabase_service()
 
+# Security setup
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+security = HTTPBearer()
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "adyc-super-secret-key-change-in-production")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 # Create the main app without a prefix
 app = FastAPI()
 
