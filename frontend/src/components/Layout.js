@@ -48,10 +48,10 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
           <div className="mobile-container">
             <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
               
-              {/* REFINED LOGO SECTION */}
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* REFINED LOGO SECTION - Enhanced Visibility */}
+              <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-shrink-0">
                 <motion.div 
-                  className="relative cursor-pointer touch-target"
+                  className="relative cursor-pointer touch-target flex-shrink-0"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onNavigate('home')}
@@ -62,9 +62,11 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                     className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-xl shadow-moderate"
                   />
                 </motion.div>
-                <div className="hidden xs:block sm:block">
-                  <h1 className="text-lg sm:text-xl font-bold text-primary">ADYC</h1>
-                  <p className="text-xs sm:text-sm text-secondary leading-tight hidden sm:block">African Democratic Youth Congress</p>
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-lg sm:text-xl font-bold text-black truncate">ADYC</h1>
+                  <p className="text-xs sm:text-sm text-black opacity-70 leading-tight truncate">
+                    African Democratic Youth Congress
+                  </p>
                 </div>
               </div>
 
