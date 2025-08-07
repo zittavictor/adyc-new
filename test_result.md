@@ -120,6 +120,18 @@ backend:
         - agent: "testing"
         - comment: "✅ TESTED: Complete Supabase migration successful. All CRUD operations, member registration, ID card generation, and email integration working perfectly. Database tables properly created and operational. System is production-ready."
 
+  - task: "Enhanced ID card generation with front and back sides"
+    implemented: true
+    working: true
+    file: "email_service.py, server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "testing"
+        - comment: "✅ ENHANCED ID CARD TESTING COMPLETE: Two-sided ID card generation fully functional. PDF generation working correctly (1.4MB files with 2 pages - front and back). Enhanced security features implemented: removed dots pattern, added security line patterns, enhanced watermarks with ADYC branding, holographic effects, and security borders. Front side includes: ADYC logo, member info, photo, security features. Back side includes: detailed member information, terms and conditions, contact info, QR code placeholder. One-time generation prevention working correctly (400 error on second attempt). Professional PDF quality and formatting confirmed. All core functionality working perfectly."
+
   - task: "Enhanced ID card security with serial numbers"
     implemented: true
     working: true
