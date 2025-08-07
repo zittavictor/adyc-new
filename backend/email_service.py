@@ -219,17 +219,15 @@ class EmailService:
         c.saveState()
         c.setFillColor(colors.HexColor('#fbbf24'))
         c.setFillAlpha(0.7)
-        # Triangle in top right corner using path
-        c.beginPath()
-        c.moveTo(card_width-10*mm, card_height)
-        c.lineTo(card_width, card_height)
-        c.lineTo(card_width, card_height-10*mm)
-        c.closePath()
-        c.drawPath(fill=1)
+        # Triangle in top right corner using lines
+        from reportlab.graphics.shapes import Polygon
+        from reportlab.graphics import renderPDF
+        # Simple approach - draw a filled rectangle as security element
+        c.rect(card_width-10*mm, card_height-10*mm, 10*mm, 10*mm, fill=1)
         c.setFillColor(colors.black)
         c.setFillAlpha(1)
         c.setFont("Helvetica-Bold", 4)
-        c.drawString(card_width-9*mm, card_height-3*mm, "SECURE")
+        c.drawString(card_width-9*mm, card_height-6*mm, "SECURE")
         c.restoreState()
     
     def _generate_back_side(self, c, member_data, card_width, card_height):
