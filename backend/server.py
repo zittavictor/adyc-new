@@ -76,6 +76,83 @@ class MemberRegistrationCreate(BaseModel):
     marital_status: str = ""
     gender: str
 
+# Admin Authentication Models
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+
+class AdminUser(BaseModel):
+    id: str
+    username: str
+    email: EmailStr
+    is_active: bool
+    created_at: datetime
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+# Blog Post Models
+class BlogPost(BaseModel):
+    id: str
+    title: str
+    content: str
+    summary: Optional[str] = None
+    author: str
+    author_email: EmailStr
+    image_url: Optional[str] = None
+    published: bool = False
+    created_at: datetime
+    updated_at: datetime
+
+class BlogPostCreate(BaseModel):
+    title: str
+    content: str
+    summary: Optional[str] = None
+    image_url: Optional[str] = None
+    published: bool = False
+
+class BlogPostUpdate(BaseModel):
+    title: Optional[str] = None
+    content: Optional[str] = None
+    summary: Optional[str] = None
+    image_url: Optional[str] = None
+    published: Optional[bool] = None
+
+# Security Functions
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+async def get_current_admin_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get current authenticated admin user"""
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    
+    admin_user = await supabase_service.get_admin_user(username)
+    if admin_user is None:
+        raise HTTPException(status_code=401, detail="Admin user not found")
+    
+    return admin_user
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
