@@ -69,53 +69,53 @@ const About = ({ onNavigate }) => {
             </motion.div>
           </motion.section>
 
-          {/* MAIN INTRODUCTION - Asymmetric Design */}
-          <motion.section variants={itemVariants}>
-            <div className="asymmetric-grid items-center gap-12">
-              <div className="col-span-12 lg:col-span-7">
-                <div className="featured-card">
-                  <div className="flex items-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent mr-6">
-                      <Users className="w-8 h-8" />
+          {/* MAIN INTRODUCTION - Mobile First Responsive */}
+          <motion.section variants={itemVariants} className="px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <div className="col-span-1 lg:col-span-7">
+                <div className="mobile-featured-card">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent mb-4 sm:mb-0 sm:mr-6">
+                      <Users className="w-6 h-6 sm:w-8 sm:h-8" />
                     </div>
-                    <div>
-                      <h2 className="heading-primary text-primary mb-2">
+                    <div className="text-center sm:text-left">
+                      <h2 className="heading-primary-mobile text-black mb-2">
                         A Unified Platform for National Development
                       </h2>
-                      <p className="text-accent font-semibold">Introducing ADYC</p>
+                      <p className="text-accent font-semibold text-sm sm:text-base">Introducing ADYC</p>
                     </div>
                   </div>
                   
-                  <div className="prose max-w-none text-secondary leading-relaxed space-y-6">
-                    <p className="body-text">
+                  <div className="prose max-w-none text-black leading-relaxed space-y-4 sm:space-y-6">
+                    <p className="body-text-mobile">
                       African Democratic Youth Congress (ADYC), a newly formed and formidable coalition of diverse youth political movements spanning all six geopolitical zones of Nigeria. Born from a shared commitment to national progress, ADYC represents a strategic consolidation of youth energy, talent, and aspirations.
                     </p>
                     
-                    <p className="body-text">
+                    <p className="body-text-mobile">
                       Our mission is dedicated to fostering active and meaningful participation of young Nigerians in our democratic process and national development. We empower a new generation of responsible and ethical leaders who will actively shape a democratic, equitable, and prosperous Nigeria.
                     </p>
 
-                    <div className="bg-accent-subtle rounded-2xl p-6 my-8">
-                      <h3 className="heading-tertiary text-primary mb-4 flex items-center">
-                        <Zap className="w-6 h-6 text-accent mr-3" />
-                        Our Core Mission
+                    <div className="bg-orange-50 rounded-2xl p-4 sm:p-6 my-6 sm:my-8">
+                      <h3 className="heading-tertiary-mobile text-black mb-3 sm:mb-4 flex flex-col sm:flex-row items-center sm:items-start">
+                        <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-accent mb-2 sm:mb-0 sm:mr-3" />
+                        <span>Our Core Mission</span>
                       </h3>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 sm:space-y-3">
                         <li className="flex items-start">
-                          <ArrowRight className="w-5 h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
-                          <span>Mobilising and unifying youth across all geopolitical zones</span>
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm sm:text-base text-black">Mobilising and unifying youth across all geopolitical zones</span>
                         </li>
                         <li className="flex items-start">
-                          <ArrowRight className="w-5 h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
-                          <span>Providing comprehensive political education and leadership training</span>
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm sm:text-base text-black">Providing comprehensive political education and leadership training</span>
                         </li>
                         <li className="flex items-start">
-                          <ArrowRight className="w-5 h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
-                          <span>Advocating for youth-centric policies and governance reforms</span>
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm sm:text-base text-black">Advocating for youth-centric policies and governance reforms</span>
                         </li>
                         <li className="flex items-start">
-                          <ArrowRight className="w-5 h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
-                          <span>Driving initiatives for socio-economic growth and job creation</span>
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm sm:text-base text-black">Driving initiatives for socio-economic growth and job creation</span>
                         </li>
                       </ul>
                     </div>
@@ -123,24 +123,24 @@ const About = ({ onNavigate }) => {
                 </div>
               </div>
 
-              <div className="col-span-12 lg:col-span-5">
-                <div className="space-y-6">
-                  <div className="modern-card bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-l-4 border-l-green-500">
-                    <h3 className="heading-tertiary text-primary mb-4 flex items-center">
-                      <Shield className="w-6 h-6 text-green-500 mr-3" />
-                      Our Vision
+              <div className="col-span-1 lg:col-span-5">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="mobile-card bg-gradient-to-br from-green-50 to-blue-50 border-l-4 border-l-green-500">
+                    <h3 className="heading-tertiary-mobile text-black mb-3 sm:mb-4 flex flex-col sm:flex-row items-center sm:items-start">
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mb-2 sm:mb-0 sm:mr-3" />
+                      <span>Our Vision</span>
                     </h3>
-                    <p className="text-secondary">
+                    <p className="text-black text-sm sm:text-base opacity-80">
                       To become Africa's most impactful youth political congress, driving democratic transformation and national development through unified action and ethical leadership.
                     </p>
                   </div>
 
-                  <div className="modern-card bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border-l-4 border-l-orange-500">
-                    <h3 className="heading-tertiary text-primary mb-4 flex items-center">
-                      <Heart className="w-6 h-6 text-red-500 mr-3" />
-                      Our Values
+                  <div className="mobile-card bg-gradient-to-br from-orange-50 to-red-50 border-l-4 border-l-orange-500">
+                    <h3 className="heading-tertiary-mobile text-black mb-3 sm:mb-4 flex flex-col sm:flex-row items-center sm:items-start">
+                      <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 mb-2 sm:mb-0 sm:mr-3" />
+                      <span>Our Values</span>
                     </h3>
-                    <p className="text-secondary">
+                    <p className="text-black text-sm sm:text-base opacity-80">
                       Unity beyond religion and tribe, democratic participation, innovative solutions, and transparent governance that serves all Nigerians.
                     </p>
                   </div>
