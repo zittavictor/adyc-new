@@ -83,29 +83,29 @@ const Home = ({ onNavigate }) => {
         animate="visible"
         className="space-y-24 h-full overflow-y-auto smooth-scroll relative"
       >
-        {/* HERO SECTION - Asymmetric, Human-Designed Layout */}
+        {/* HERO SECTION - Mobile First Responsive Design */}
         <motion.section 
           variants={itemVariants}
-          className="relative py-20 px-6"
+          className="relative mobile-section-spacing px-4 sm:px-6"
         >
-          {/* Background decorative elements */}
+          {/* Background decorative elements - Responsive */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-20 right-10 w-64 h-64 bg-gradient-to-br from-orange-500/10 to-green-500/10 rounded-full blur-3xl animate-float-gentle"></div>
-            <div className="absolute bottom-20 left-10 w-48 h-48 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-full blur-3xl animate-float-gentle" style={{animationDelay: '2s'}}></div>
+            <div className="absolute top-10 sm:top-20 right-4 sm:right-10 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-orange-500/10 to-green-500/10 rounded-full blur-xl sm:blur-3xl animate-float-gentle"></div>
+            <div className="absolute bottom-10 sm:bottom-20 left-4 sm:left-10 w-24 h-24 sm:w-48 sm:h-48 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-full blur-lg sm:blur-3xl animate-float-gentle" style={{animationDelay: '2s'}}></div>
           </div>
           
-          <div className="container-custom relative z-10">
-            <div className="asymmetric-grid items-center">
-              {/* Text Content - Spans 7 columns */}
-              <div className="col-span-12 lg:col-span-7 space-y-8">
+          <div className="mobile-container relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+              {/* Text Content - Mobile Optimized */}
+              <div className="col-span-1 lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
                 <motion.div
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                 >
-                  <h1 className="display-text text-primary">
+                  <h1 className="display-text-mobile text-primary">
                     Welcome to{' '}
-                    <span className="text-accent hand-drawn-accent">ADYC</span>
+                    <span className="text-accent">ADYC</span>
                   </h1>
                 </motion.div>
                 
@@ -113,66 +113,60 @@ const Home = ({ onNavigate }) => {
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="body-large text-secondary max-w-2xl"
+                  className="body-large-mobile text-secondary max-w-2xl mx-auto lg:mx-0"
                 >
                   Empowering Nigerian youth to become active, responsible, and impactful citizens. 
                   Join the movement for democratic participation and national development.
                 </motion.p>
                 
+                {/* CTA Buttons - Touch Optimized */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9, duration: 0.8 }}
-                  className="flex flex-col sm:flex-row gap-4"
+                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 >
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => onNavigate('register')}
-                    className="btn-primary mobile-touch group"
+                    className="btn-primary-mobile"
                   >
-                    <span>Join ADYC Today</span>
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <button
+                    Join ADYC Today
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => onNavigate('about')}
-                    className="btn-secondary mobile-touch"
+                    className="btn-secondary-mobile"
                   >
                     Learn More
-                  </button>
-                </motion.div>
-                
-                {/* Trust indicators */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                  className="flex items-center space-x-6 text-sm text-secondary pt-6"
-                >
-                  <div className="flex items-center space-x-2">
-                    <Star className="w-5 h-5 text-amber-500 fill-current" />
-                    <span>Nationwide Coverage</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Users className="w-5 h-5 text-green-500" />
-                    <span>1000+ Active Members</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Heart className="w-5 h-5 text-red-500" />
-                    <span>Community Focused</span>
-                  </div>
+                  </motion.button>
                 </motion.div>
               </div>
               
-              {/* Logo Section - Spans 5 columns, offset */}
-              <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end relative">
+              {/* Visual Element - Mobile Responsive */}
+              <div className="col-span-1 lg:col-span-5 flex justify-center relative">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                  initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+                  transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
                   className="relative"
                 >
-                  <SpinningLogo size={200} />
-                  {/* Decorative ring */}
-                  <div className="absolute inset-0 rounded-full border-2 border-orange-500/20 animate-pulse" style={{transform: 'scale(1.2)'}}></div>
+                  <SpinningLogo className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80" />
+                  {/* Floating elements - Hidden on mobile */}
+                  <motion.div
+                    animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute -top-4 -right-4 w-8 h-8 sm:w-12 sm:h-12 bg-orange-500/20 rounded-full blur-sm hidden sm:block"
+                  />
+                  <motion.div
+                    animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                    className="absolute -bottom-4 -left-4 w-10 h-10 sm:w-16 sm:h-16 bg-green-500/20 rounded-full blur-sm hidden sm:block"
+                  />
                 </motion.div>
               </div>
             </div>
