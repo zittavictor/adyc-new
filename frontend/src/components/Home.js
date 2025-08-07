@@ -246,8 +246,9 @@ const Home = ({ onNavigate }) => {
               </motion.div>
 
               {/* Side feature */}
+              {/* Secondary feature cards - Mobile optimized */}
               <motion.div
-                className="col-span-12 lg:col-span-4"
+                className="col-span-1 sm:col-span-1 lg:col-span-4"
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 whileHover={{ 
@@ -257,29 +258,29 @@ const Home = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <div className="modern-card h-full group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('register')}>
+                <div className="mobile-card h-full group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('register')}>
                   <motion.div 
-                    className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white mb-6"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white mb-4 sm:mb-6 mx-auto sm:mx-0"
                     whileHover={{ 
                       scale: 1.1,
                       rotate: 3,
                       transition: { duration: 0.3 }
                     }}
                   >
-                    <Target className="w-6 h-6" />
+                    <Target className="w-5 h-5 sm:w-6 sm:h-6" />
                   </motion.div>
-                  <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors duration-300">
+                  <h3 className="heading-tertiary-mobile text-primary mb-3 sm:mb-4 group-hover:text-accent transition-colors duration-300 text-center sm:text-left">
                     Democratic Participation
                   </h3>
-                  <p className="body-text text-secondary">
+                  <p className="body-text-mobile text-secondary text-center sm:text-left">
                     Active engagement across all six geopolitical zones, ensuring every voice contributes to national development.
                   </p>
                 </div>
               </motion.div>
 
-              {/* Bottom row - varied sizes */}
+              {/* Innovation Hub Card */}
               <motion.div
-                className="col-span-12 lg:col-span-5"
+                className="col-span-1 sm:col-span-1 lg:col-span-5"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ 
@@ -289,28 +290,29 @@ const Home = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="accent-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('blog')}>
+                <div className="mobile-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('blog')}>
                   <motion.div 
-                    className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-4 sm:mb-6 mx-auto sm:mx-0"
                     whileHover={{ 
                       scale: 1.15,
                       rotate: -5,
                       transition: { duration: 0.3 }
                     }}
                   >
-                    <Lightbulb className="w-6 h-6" />
+                    <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" />
                   </motion.div>
-                  <h3 className="heading-tertiary text-primary mb-3 group-hover:text-accent transition-colors duration-300">
+                  <h3 className="heading-tertiary-mobile text-primary mb-2 sm:mb-3 group-hover:text-accent transition-colors duration-300 text-center sm:text-left">
                     Innovation Hub
                   </h3>
-                  <p className="body-text text-secondary">
+                  <p className="body-text-mobile text-secondary text-center sm:text-left">
                     Collaborative spaces where young minds solve Nigeria's most pressing challenges through creative solutions.
                   </p>
                 </div>
               </motion.div>
 
+              {/* Political Education Card */}
               <motion.div
-                className="col-span-12 lg:col-span-3"
+                className="col-span-1 sm:col-span-1 lg:col-span-3"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ 
@@ -320,28 +322,29 @@ const Home = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <div className="modern-card text-center group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('about')}>
+                <div className="mobile-card text-center group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('about')}>
                   <motion.div 
-                    className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 mx-auto"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-3 sm:mb-4 mx-auto"
                     whileHover={{ 
                       scale: 1.1,
                       rotate: 8,
                       transition: { duration: 0.3 }
                     }}
                   >
-                    <BookOpen className="w-6 h-6" />
+                    <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
                   </motion.div>
-                  <h3 className="text-lg font-semibold text-primary mb-3 group-hover:text-accent transition-colors duration-300">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary mb-2 sm:mb-3 group-hover:text-accent transition-colors duration-300">
                     Political Education
                   </h3>
-                  <p className="caption-text text-secondary">
+                  <p className="text-sm sm:text-base text-secondary">
                     Comprehensive training on governance and civic responsibility.
                   </p>
                 </div>
               </motion.div>
 
+              {/* Recognition Programs Card */}
               <motion.div
-                className="col-span-12 lg:col-span-4"
+                className="col-span-1 sm:col-span-1 lg:col-span-4"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ 
@@ -351,25 +354,25 @@ const Home = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <div className="modern-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('executives')}>
-                  <div className="flex items-center space-x-4 mb-4">
+                <div className="mobile-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('executives')}>
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 mb-3 sm:mb-4">
                     <motion.div 
-                      className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white"
+                      className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white flex-shrink-0"
                       whileHover={{ 
                         scale: 1.1,
                         rotate: -3,
                         transition: { duration: 0.3 }
                       }}
                     >
-                      <Award className="w-6 h-6" />
+                      <Award className="w-5 h-5 sm:w-6 sm:h-6" />
                     </motion.div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-primary group-hover:text-accent transition-colors duration-300">
+                    <div className="text-center sm:text-left">
+                      <h3 className="text-base sm:text-lg font-semibold text-primary group-hover:text-accent transition-colors duration-300">
                         Recognition Programs
                       </h3>
                     </div>
                   </div>
-                  <p className="caption-text text-secondary">
+                  <p className="text-sm sm:text-base text-secondary text-center sm:text-left">
                     Celebrating outstanding contributions to community development and youth empowerment.
                   </p>
                 </div>
