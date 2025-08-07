@@ -120,13 +120,13 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
           </div>
         </header>
 
-        {/* MOBILE NAVIGATION - Premium Design */}
+        {/* ENHANCED MOBILE MENU - Fully Responsive */}
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 lg:hidden"
+            className="mobile-menu-overlay"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
@@ -134,11 +134,11 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ type: "spring", damping: 25, stiffness: 500 }}
-              className="w-80 h-full bg-white shadow-strong"
+              className="mobile-menu-panel safe-area-top"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* MOBILE HEADER */}
-              <div className="flex items-center justify-between h-20 px-6 border-b border-slate-200">
+              {/* MOBILE HEADER - Optimized */}
+              <div className="flex items-center justify-between h-16 sm:h-18 px-4 sm:px-6 border-b border-slate-200">
                 <div className="flex items-center space-x-3">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
@@ -146,56 +146,66 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                     className="w-10 h-10 object-contain rounded-lg"
                   />
                   <div>
-                    <h1 className="font-bold text-primary">ADYC</h1>
-                    <p className="text-xs text-secondary">Youth Congress</p>
+                    <h1 className="font-bold text-primary text-base">ADYC</h1>
+                    <p className="text-xs text-secondary">Navigation</p>
                   </div>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                  className="touch-target p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                  aria-label="Close navigation menu"
                 >
                   <X className="w-5 h-5 text-slate-600" />
                 </motion.button>
               </div>
 
-              {/* MOBILE SEARCH */}
-              <div className="p-6 border-b border-slate-100">
+              {/* MOBILE SEARCH - Enhanced */}
+              <div className="p-4 sm:p-6 border-b border-slate-100">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Search ADYC..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="input-field pl-11 pr-4 py-3 w-full text-sm"
+                    className="input-field-mobile pl-11 pr-4 text-base"
                   />
                 </div>
               </div>
 
-              {/* MOBILE NAVIGATION */}
-              <nav className="px-4 py-6 space-y-2">
+              {/* MOBILE NAVIGATION - Touch Optimized */}
+              <div className="flex-1 px-4 sm:px-6 py-4 space-y-2 mobile-scroll-container">
                 {navigation.map((item) => {
                   const isActive = currentPage === item.id;
                   return (
                     <motion.button
                       key={item.name}
-                      whileHover={{ scale: 1.02, x: 5 }}
+                      whileHover={{ scale: 1.02, x: 4 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleNavigation(item.id)}
-                      className={`w-full flex items-center space-x-4 px-4 py-4 text-left rounded-xl transition-all ${
-                        isActive
-                          ? 'bg-orange-600 text-white shadow-accent'
-                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                      }`}
+                      className={`mobile-nav-item ${isActive ? 'active' : ''}`}
                     >
-                      <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
-                      <span className="font-medium">{item.name}</span>
+                      <item.icon className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-base font-medium">{item.name}</span>
+                      {isActive && (
+                        <div className="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                      )}
                     </motion.button>
                   );
                 })}
-              </nav>
+              </div>
+
+              {/* MOBILE MENU FOOTER */}
+              <div className="p-4 sm:p-6 border-t border-slate-100 safe-area-bottom">
+                <p className="text-xs text-slate-500 text-center">
+                  African Democratic Youth Congress Platform
+                </p>
+                <p className="text-xs text-slate-400 text-center mt-1">
+                  Version 2.0 • Empowering Nigeria's Youth
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         )}
