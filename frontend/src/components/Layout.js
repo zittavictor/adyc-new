@@ -10,7 +10,6 @@ const navigation = [
   { id: 'register', name: 'Register', icon: UserPlus },
   { id: 'about', name: 'About ADYC', icon: Info },
   { id: 'contact', name: 'Contact Us', icon: Phone },
-  { id: 'social', name: 'Social Media', icon: Share2 },
 ];
 
 const Layout = ({ children, currentPage = 'home', onNavigate }) => {
