@@ -350,16 +350,27 @@ const Home = ({ onNavigate }) => {
                 className="col-span-12 lg:col-span-4"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { duration: 0.3 } 
+                }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <div className="modern-card group cursor-pointer" onClick={() => onNavigate('executives')}>
+                <div className="modern-card group cursor-pointer hover:shadow-lg transition-all duration-500" onClick={() => onNavigate('executives')}>
                   <div className="flex items-center space-x-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white">
+                    <motion.div 
+                      className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white"
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: -3,
+                        transition: { duration: 0.3 }
+                      }}
+                    >
                       <Award className="w-6 h-6" />
-                    </div>
+                    </motion.div>
                     <div>
-                      <h3 className="text-lg font-semibold text-primary group-hover:text-accent transition-colors">
+                      <h3 className="text-lg font-semibold text-primary group-hover:text-accent transition-colors duration-300">
                         Recognition Programs
                       </h3>
                     </div>
