@@ -173,12 +173,12 @@ const Home = ({ onNavigate }) => {
           </div>
         </motion.section>
 
-        {/* FEATURES SECTION - Masonry-style Layout */}
-        <motion.section variants={itemVariants} className="section-spacing">
-          <div className="container-custom">
-            <div className="text-center mb-16">
+        {/* FEATURES SECTION - Mobile First Responsive Grid */}
+        <motion.section variants={itemVariants} className="mobile-section-spacing">
+          <div className="mobile-container">
+            <div className="text-center mb-12 sm:mb-16">
               <motion.h2 
-                className="heading-primary text-primary mb-6"
+                className="heading-primary-mobile text-primary mb-4 sm:mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -186,7 +186,7 @@ const Home = ({ onNavigate }) => {
                 Why Join <span className="text-accent">ADYC?</span>
               </motion.h2>
               <motion.p 
-                className="body-large text-secondary max-w-2xl mx-auto"
+                className="body-large-mobile text-secondary max-w-2xl mx-auto px-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -196,11 +196,11 @@ const Home = ({ onNavigate }) => {
               </motion.p>
             </div>
 
-            {/* Sophisticated Feature Grid - Human Layout */}
-            <div className="grid grid-cols-12 gap-6 lg:gap-8">
-              {/* Featured large card */}
+            {/* Mobile-First Feature Grid */}
+            <div className="mobile-grid-3 lg:grid-cols-12">
+              {/* Featured large card - Full width on mobile */}
               <motion.div
-                className="col-span-12 lg:col-span-8"
+                className="col-span-1 sm:col-span-2 lg:col-span-8"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ 
@@ -210,34 +210,34 @@ const Home = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="featured-card group cursor-pointer hover:shadow-2xl transition-all duration-500" onClick={() => onNavigate('about')}>
-                  <div className="flex items-start space-x-6">
-                    <div className="flex-shrink-0">
+                <div className="mobile-featured-card group cursor-pointer hover:shadow-2xl transition-all duration-500" onClick={() => onNavigate('about')}>
+                  <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div className="flex-shrink-0 mx-auto sm:mx-0">
                       <motion.div 
-                        className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent"
+                        className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent"
                         whileHover={{ 
                           rotate: 5,
                           scale: 1.1,
                           transition: { duration: 0.3 }
                         }}
                       >
-                        <Users className="w-8 h-8" />
+                        <Users className="w-6 h-6 sm:w-8 sm:h-8" />
                       </motion.div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors duration-300">
+                    <div className="flex-1 text-center sm:text-left">
+                      <h3 className="heading-tertiary-mobile text-primary mb-3 sm:mb-4 group-hover:text-accent transition-colors duration-300">
                         Youth Leadership Development
                       </h3>
-                      <p className="body-text text-secondary mb-6">
+                      <p className="body-text-mobile text-secondary mb-4 sm:mb-6">
                         Comprehensive programs designed to nurture the next generation of ethical leaders who will drive Nigeria's democratic progress through innovation, collaboration, and community engagement.
                       </p>
                       <motion.div 
-                        className="flex items-center text-accent font-semibold"
+                        className="flex items-center justify-center sm:justify-start text-accent font-semibold"
                         initial={{ x: 0 }}
                         whileHover={{ x: 8 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <span>Learn More</span>
+                        <span className="text-sm sm:text-base">Learn More</span>
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </motion.div>
                     </div>
