@@ -209,27 +209,43 @@ const Home = ({ onNavigate }) => {
                 className="col-span-12 lg:col-span-8"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ 
+                  scale: 1.02, 
+                  transition: { duration: 0.3 } 
+                }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="featured-card group cursor-pointer" onClick={() => onNavigate('about')}>
+                <div className="featured-card group cursor-pointer hover:shadow-2xl transition-all duration-500" onClick={() => onNavigate('about')}>
                   <div className="flex items-start space-x-6">
                     <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent">
+                      <motion.div 
+                        className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent"
+                        whileHover={{ 
+                          rotate: 5,
+                          scale: 1.1,
+                          transition: { duration: 0.3 }
+                        }}
+                      >
                         <Users className="w-8 h-8" />
-                      </div>
+                      </motion.div>
                     </div>
                     <div className="flex-1">
-                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors duration-300">
                         Youth Leadership Development
                       </h3>
                       <p className="body-text text-secondary mb-6">
                         Comprehensive programs designed to nurture the next generation of ethical leaders who will drive Nigeria's democratic progress through innovation, collaboration, and community engagement.
                       </p>
-                      <div className="flex items-center text-accent font-semibold group-hover:translate-x-2 transition-transform">
+                      <motion.div 
+                        className="flex items-center text-accent font-semibold"
+                        initial={{ x: 0 }}
+                        whileHover={{ x: 8 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <span>Learn More</span>
                         <ArrowRight className="w-4 h-4 ml-2" />
-                      </div>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
