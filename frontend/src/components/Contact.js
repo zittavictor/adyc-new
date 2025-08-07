@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from './Layout';
-import { Mail, Phone, MapPin, Clock, Users, Target, Heart, Shield, Zap, Award } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Users, Target, Heart, Shield, Zap, Award, MessageCircle, Video } from 'lucide-react';
 
 const Contact = ({ onNavigate }) => {
   const containerVariants = {
