@@ -248,7 +248,7 @@ class EmailService:
         c.restoreState()
     
     def _generate_back_side(self, c, member_data, card_width, card_height):
-        """Generate the back side of the ID card"""
+        """Generate the back side of the ID card with specific terms and conditions"""
         from reportlab.lib.units import mm
         from reportlab.lib import colors
         
@@ -259,11 +259,11 @@ class EmailService:
         # Enhanced watermark pattern
         c.saveState()
         c.setFillColor(colors.HexColor('#f1f5f9'))
-        c.setFillAlpha(0.6)
-        c.setFont("Helvetica-Bold", 12)
-        c.rotate(-30)
-        for i in range(-10, 15, 8):
-            for j in range(-5, 8, 6):
+        c.setFillAlpha(0.5)
+        c.setFont("Helvetica-Bold", 10)
+        c.rotate(-25)
+        for i in range(-15, 20, 10):
+            for j in range(-8, 12, 6):
                 c.drawString(i*mm, j*mm, "ADYC")
         c.restoreState()
         
@@ -272,70 +272,70 @@ class EmailService:
         c.rect(0, card_height-12*mm, card_width, 12*mm, fill=1)
         
         c.setFillColor(colors.white)
-        c.setFont("Helvetica-Bold", 10)
-        c.drawString(5*mm, card_height-7*mm, "MEMBERSHIP DETAILS")
+        c.setFont("Helvetica-Bold", 9)
+        c.drawString(5*mm, card_height-7*mm, "AFRICAN DEMOCRATIC YOUTH CONGRESS")
+        c.setFont("Helvetica-Bold", 7)
+        c.drawString(5*mm, card_height-10*mm, "MEMBERSHIP TERMS & CONDITIONS")
         
-        # Member details
-        details_y = card_height - 18*mm
+        # Terms and conditions - Specific content as requested
+        c.setFont("Times-Roman", 6)
+        terms_y = card_height - 18*mm
         c.setFillColor(colors.black)
         
-        details = [
-            ("EMAIL:", member_data.get('email', '')),
-            ("GENDER:", member_data.get('gender', '').upper()),
-            ("DOB:", member_data.get('dob', '')),
-            ("LGA:", member_data.get('lga', '').upper()),
-            ("WARD:", member_data.get('ward', '').upper()),
-            ("COUNTRY:", member_data.get('country', '').upper()),
-        ]
-        
-        for i, (label, value) in enumerate(details):
-            y_pos = details_y - (i * 4*mm)
-            c.setFont("Helvetica-Bold", 6)
-            c.drawString(5*mm, y_pos, label)
-            c.setFont("Helvetica", 5)
-            # Truncate long values
-            display_value = value[:30] if len(value) > 30 else value
-            c.drawString(20*mm, y_pos, display_value)
-        
-        # Terms and conditions
-        c.setFont("Helvetica", 4)
-        terms_y = 18*mm
         terms = [
-            "This card is the property of ADYC and must be returned upon request.",
-            "Misuse of this card is prohibited and may result in membership termination.",
-            "Report lost or stolen cards immediately to ADYC administration.",
-            "This card grants access to ADYC programs and events nationwide.",
-            "Valid for active members in good standing only."
+            "• This card is the property of ADYC and must be returned upon request.",
+            "• Misuse of this card is prohibited and may result in membership termination.",
+            "• Report lost or stolen cards immediately to ADYC administration.",
+            "• This card grants access to ADYC programs and events nationwide.", 
+            "• Valid for active members in good standing only."
         ]
         
         for i, term in enumerate(terms):
-            c.drawString(3*mm, terms_y - (i * 2.5*mm), f"• {term}")
+            c.drawString(3*mm, terms_y - (i * 3*mm), term)
         
-        # Footer with contact info
+        # Contact Information Section
+        contact_y = terms_y - 18*mm
+        c.setFillColor(colors.HexColor('#f97316'))
+        c.setFont("Helvetica-Bold", 8)
+        c.drawString(3*mm, contact_y, "CONTACT INFORMATION:")
+        
+        c.setFillColor(colors.black)
+        c.setFont("Times-Roman", 7)
+        c.drawString(3*mm, contact_y - 4*mm, "Phone: 08156257998")
+        c.drawString(3*mm, contact_y - 8*mm, "Email: africandemocraticyouthcongress@gmail.com")
+        
+        # Footer with holographic design
         c.setFillColor(colors.HexColor('#059669'))
         c.rect(0, 0, card_width, 8*mm, fill=1)
         
         c.setFillColor(colors.white)
         c.setFont("Helvetica-Bold", 6)
-        c.drawString(3*mm, 5*mm, "CONTACT: info@adyc.org")
+        c.drawString(3*mm, 5*mm, "OFFICIAL MEMBERSHIP CARD")
         c.setFont("Helvetica", 5)
-        c.drawString(3*mm, 2*mm, "www.adyc.org | Social: @ADYC_Official")
+        c.drawString(3*mm, 2*mm, "www.adyc.org | Follow @ADYC_Official")
         
-        # QR Code placeholder (for future implementation)
-        qr_size = 15*mm
-        qr_x = card_width - qr_size - 5*mm
-        qr_y = 2*mm
+        # Security QR Code placeholder (enhanced)
+        qr_size = 12*mm
+        qr_x = card_width - qr_size - 3*mm
+        qr_y = contact_y - 12*mm
         c.setFillColor(colors.HexColor('#e5e7eb'))
         c.rect(qr_x, qr_y, qr_size, qr_size, fill=1)
         c.setStrokeColor(colors.HexColor('#6b7280'))
         c.setLineWidth(0.5)
         c.rect(qr_x, qr_y, qr_size, qr_size, fill=0, stroke=1)
         
-        # QR placeholder text
+        # QR placeholder with security text
         c.setFillColor(colors.HexColor('#6b7280'))
-        c.setFont("Helvetica", 4)
-        c.drawString(qr_x+4*mm, qr_y+7*mm, "QR CODE")
-        c.drawString(qr_x+3*mm, qr_y+5*mm, "VERIFICATION")
+        c.setFont("Helvetica-Bold", 4)
+        c.drawString(qr_x+2*mm, qr_y+7*mm, "SECURITY")
+        c.drawString(qr_x+2*mm, qr_y+5*mm, "QR CODE")
+        c.drawString(qr_x+1.5*mm, qr_y+3*mm, "VERIFICATION")
+        
+        # Serial number on back
+        c.setFillColor(colors.black)
+        c.setFont("Helvetica", 5)
+        serial_number = member_data.get('id_card_serial_number', 'SN-UNKNOWN')
+        c.drawString(qr_x, qr_y-3*mm, f"Serial: {serial_number}")
 
     def send_registration_email(self, member_data: Dict[str, Any]) -> bool:
         """Send registration confirmation email with ID card PDF attachment"""
