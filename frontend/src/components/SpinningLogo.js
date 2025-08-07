@@ -56,7 +56,7 @@ const SpinningLogo = ({ className, size = 80 }) => {
   const shouldSpin = isSpinning || isHovered;
 
   return (
-    <div className="flex justify-center mb-8">
+    <div className={`flex justify-center ${className}`}>
       <motion.div
         onClick={handleClick}
         onMouseEnter={handleHoverStart}
@@ -66,19 +66,36 @@ const SpinningLogo = ({ className, size = 80 }) => {
         whileTap={{ scale: 0.95 }}
         style={{ width: size, height: size }}
       >
-        {/* Enhanced glow effect that responds to hover */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 dark:from-primary-400/30 dark:to-secondary-400/30 rounded-full blur-lg scale-110 -z-10 transition-all duration-300 ${
-          isHovered ? 'scale-125 from-primary-600/30 to-secondary-600/30 dark:from-primary-400/40 dark:to-secondary-400/40 blur-xl' : 'group-hover:scale-125'
+        {/* Enhanced glow effect that responds to hover and click */}
+        <div className={`absolute inset-0 bg-gradient-to-br from-orange-500/30 to-green-500/30 rounded-full blur-xl transition-all duration-500 ${
+          isClicked 
+            ? 'scale-200 from-orange-600/60 to-green-600/60 blur-3xl shadow-2xl' 
+            : isHovered 
+              ? 'scale-150 from-orange-500/40 to-green-500/40 blur-2xl shadow-xl' 
+              : 'scale-110 blur-lg shadow-lg group-hover:scale-125'
         }`} />
         
-        {/* Pulsing ring effect on hover */}
-        {isHovered && (
-          <div className="absolute inset-0 rounded-full border-2 border-primary-400/50 dark:border-primary-300/60 animate-ping" />
+        {/* Additional prominent shadow for click effect */}
+        {(isClicked || isHovered) && (
+          <div className={`absolute inset-0 bg-gradient-to-br from-orange-400/20 to-green-400/20 rounded-full transition-all duration-700 ${
+            isClicked 
+              ? 'scale-250 blur-[4rem] opacity-60' 
+              : 'scale-175 blur-2xl opacity-40'
+          }`} />
+        )}
+        
+        {/* Pulsing ring effect on hover/click */}
+        {(isHovered || isClicked) && (
+          <div className={`absolute inset-0 rounded-full border-2 transition-all duration-500 ${
+            isClicked 
+              ? 'border-orange-400/70 animate-ping scale-125' 
+              : 'border-orange-400/50 animate-ping'
+          }`} />
         )}
         
         {/* Main logo container */}
         <motion.div
-          className="w-full h-full bg-white/95 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary-100/50 dark:border-neutral-600/50 shadow-lg overflow-hidden relative"
+          className="w-full h-full bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center border border-orange-100/50 shadow-lg overflow-hidden relative"
           animate={shouldSpin ? { 
             rotate: isSpinning ? 360 * spinDirection : 360,
           } : {}}
@@ -98,29 +115,33 @@ const SpinningLogo = ({ className, size = 80 }) => {
             }}
           />
           {/* Fallback text logo */}
-          <div className="hidden w-full h-full bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-full items-center justify-center">
+          <div className="hidden w-full h-full bg-gradient-to-br from-orange-600 via-orange-700 to-green-600 rounded-full items-center justify-center">
             <span className="text-white font-bold text-2xl tracking-wider">ADYC</span>
           </div>
         </motion.div>
 
-        {/* Decorative ring with hover effects */}
+        {/* Decorative ring with hover/click effects */}
         <div className={`absolute inset-0 rounded-full border transition-all duration-300 ${
-          isHovered 
-            ? 'border-primary-400/60 dark:border-primary-300/70 shadow-md' 
-            : 'border-primary-200/30 dark:border-neutral-600/40 group-hover:border-primary-300/50 dark:group-hover:border-primary-400/60'
+          isClicked
+            ? 'border-orange-500/80 shadow-2xl scale-105'
+            : isHovered 
+              ? 'border-orange-400/60 shadow-md' 
+              : 'border-orange-200/30 group-hover:border-orange-300/50'
         }`} />
         
-        {/* Sparkle effects on hover */}
-        {isHovered && (
+        {/* Enhanced sparkle effects on hover/click */}
+        {(isHovered || isClicked) && (
           <>
             <motion.div
-              className="absolute top-2 right-2 w-1 h-1 bg-yellow-400 rounded-full"
+              className={`absolute top-2 right-2 rounded-full ${
+                isClicked ? 'w-2 h-2 bg-yellow-300' : 'w-1 h-1 bg-yellow-400'
+              }`}
               animate={{ 
-                scale: [0, 1, 0],
+                scale: isClicked ? [0, 1.5, 0] : [0, 1, 0],
                 opacity: [0, 1, 0] 
               }}
               transition={{ 
-                duration: 1.5, 
+                duration: isClicked ? 2 : 1.5, 
                 repeat: Infinity,
                 delay: 0 
               }}
