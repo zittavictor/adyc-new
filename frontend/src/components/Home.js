@@ -319,14 +319,25 @@ const Home = ({ onNavigate }) => {
                 className="col-span-12 lg:col-span-3"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ 
+                  y: -6,
+                  transition: { duration: 0.3 } 
+                }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <div className="modern-card text-center group cursor-pointer" onClick={() => onNavigate('about')}>
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 mx-auto">
+                <div className="modern-card text-center group cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => onNavigate('about')}>
+                  <motion.div 
+                    className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 mx-auto"
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 8,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
                     <BookOpen className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-primary mb-3 group-hover:text-accent transition-colors">
+                  </motion.div>
+                  <h3 className="text-lg font-semibold text-primary mb-3 group-hover:text-accent transition-colors duration-300">
                     Political Education
                   </h3>
                   <p className="caption-text text-secondary">
