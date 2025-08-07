@@ -1,15 +1,18 @@
-from fastapi import FastAPI, APIRouter, BackgroundTasks
+from fastapi import FastAPI, APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
-from typing import List
+from typing import List, Optional
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from email_service import get_email_service
 from supabase_service import get_supabase_service
+import jwt
+from passlib.context import CryptContext
 
 
 ROOT_DIR = Path(__file__).parent
