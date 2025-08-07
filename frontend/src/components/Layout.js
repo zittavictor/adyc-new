@@ -129,7 +129,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ type: "spring", damping: 25, stiffness: 500 }}
-              className="w-80 h-full bg-white dark:bg-slate-900 shadow-strong"
+              className="w-80 h-full bg-white shadow-strong"
               onClick={(e) => e.stopPropagation()}
             >
               {/* MOBILE HEADER */}
