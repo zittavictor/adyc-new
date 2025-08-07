@@ -77,12 +77,13 @@ const Home = ({ onNavigate }) => {
 
   return (
     <Layout currentPage="home" onNavigate={onNavigate}>
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-24 h-full overflow-y-auto smooth-scroll relative"
-      >
+      <div className="w-full min-h-screen prevent-horizontal-scroll">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="w-full"
+        >
         {/* HERO SECTION - Mobile First Responsive Design */}
         <motion.section 
           variants={itemVariants}
