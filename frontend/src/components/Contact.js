@@ -156,6 +156,88 @@ const Contact = ({ onNavigate }) => {
             </div>
           </motion.section>
 
+          {/* SOCIAL MEDIA SECTION */}
+          <motion.section variants={itemVariants} className="px-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="heading-primary-mobile text-black mb-4 sm:mb-6">
+                Follow <span className="text-accent">ADYC</span>
+              </h2>
+              <p className="body-large-mobile text-black max-w-2xl mx-auto opacity-80">
+                Stay connected with us on social media for the latest updates, events, and youth empowerment initiatives.
+              </p>
+            </div>
+
+            <div className="mobile-grid-2 max-w-2xl mx-auto">
+              {/* WhatsApp Channel */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="mobile-featured-card group hover:shadow-strong transition-all duration-300"
+              >
+                <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate flex-shrink-0 bg-gradient-to-br from-green-500 to-green-600">
+                    <MessageCircle className="w-5 h-5 sm:w-8 sm:h-8" />
+                  </div>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h3 className="heading-tertiary-mobile text-black mb-2 sm:mb-3 group-hover:text-accent transition-colors">
+                      WhatsApp Channel
+                    </h3>
+                    <p className="text-black text-sm sm:text-base opacity-70 mb-3">
+                      Join our official WhatsApp channel for instant updates and community discussions.
+                    </p>
+                    <motion.a
+                      href="https://whatsapp.com/channel/0029Vb6XUTYCxoAqRGLeM023"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="btn-primary-mobile inline-flex items-center space-x-2"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Join Channel</span>
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* TikTok */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="mobile-featured-card group hover:shadow-strong transition-all duration-300"
+              >
+                <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white shadow-moderate flex-shrink-0 bg-gradient-to-br from-pink-500 to-purple-600">
+                    <Video className="w-5 h-5 sm:w-8 sm:h-8" />
+                  </div>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h3 className="heading-tertiary-mobile text-black mb-2 sm:mb-3 group-hover:text-accent transition-colors">
+                      TikTok
+                    </h3>
+                    <p className="text-black text-sm sm:text-base opacity-70 mb-3">
+                      Follow us on TikTok for engaging content and youth-focused initiatives.
+                    </p>
+                    <motion.a
+                      href="https://www.tiktok.com/@adyc676"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="btn-primary-mobile inline-flex items-center space-x-2"
+                    >
+                      <Video className="w-4 h-4" />
+                      <span>Follow @adyc676</span>
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.section>
+
           {/* OFFICE HOURS SECTION */}
           <motion.section variants={itemVariants} className="bg-accent-subtle rounded-3xl">
             <div className="container-custom section-spacing">
