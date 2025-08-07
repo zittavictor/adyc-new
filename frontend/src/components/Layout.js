@@ -156,7 +156,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               </div>
 
               {/* MOBILE SEARCH */}
-              <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+              <div className="p-6 border-b border-slate-100">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
