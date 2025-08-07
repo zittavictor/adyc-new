@@ -40,18 +40,18 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
         <FloatingBackgroundElements />
         
         {/* SOPHISTICATED HEADER */}
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 safe-area-top ${
           isScrolled 
             ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-soft'
             : 'bg-transparent'
         }`}>
-          <div className="container-custom">
-            <div className="flex justify-between items-center h-20">
+          <div className="mobile-container">
+            <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
               
               {/* REFINED LOGO SECTION */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 <motion.div 
-                  className="relative cursor-pointer"
+                  className="relative cursor-pointer touch-target"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onNavigate('home')}
@@ -59,17 +59,17 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   <img 
                     src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
                     alt="ADYC Logo" 
-                    className="w-12 h-12 object-contain rounded-xl shadow-moderate"
+                    className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-xl shadow-moderate"
                   />
                 </motion.div>
-                <div className="hidden sm:block">
-                  <h1 className="text-xl font-bold text-primary">ADYC</h1>
-                  <p className="text-sm text-secondary leading-tight">African Democratic Youth Congress</p>
+                <div className="hidden xs:block sm:block">
+                  <h1 className="text-lg sm:text-xl font-bold text-primary">ADYC</h1>
+                  <p className="text-xs sm:text-sm text-secondary leading-tight hidden sm:block">African Democratic Youth Congress</p>
                 </div>
               </div>
 
-              {/* DESKTOP NAVIGATION - Sophisticated Design */}
-              <nav className="hidden lg:flex items-center space-x-2">
+              {/* DESKTOP NAVIGATION - Hidden on mobile/tablet */}
+              <nav className="hidden xl:flex items-center space-x-1 lg:space-x-2">
                 {navigation.map((item) => {
                   const isActive = currentPage === item.id;
                   return (
@@ -78,22 +78,22 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleNavigation(item.id)}
-                      className={`flex items-center space-x-2 px-4 py-3 rounded-xl font-medium transition-all duration-200 mobile-touch ${
+                      className={`flex items-center space-x-2 px-3 py-2 lg:px-4 lg:py-3 rounded-xl font-medium transition-all duration-200 touch-target ${
                         isActive
                           ? 'bg-orange-600 text-white shadow-accent'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
                       }`}
                     >
                       <item.icon className={`w-4 h-4 ${isActive ? 'text-white' : ''}`} />
-                      <span>{item.name}</span>
+                      <span className="text-sm lg:text-base">{item.name}</span>
                     </motion.button>
                   );
                 })}
               </nav>
 
-              {/* RIGHT SIDE CONTROLS - Clean Design */}
-              <div className="flex items-center space-x-3">
-                {/* SEARCH BAR - Hidden on mobile to reduce clutter */}
+              {/* RIGHT SIDE CONTROLS - Mobile Optimized */}
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                {/* SEARCH BAR - Hidden on mobile */}
                 <div className="hidden xl:flex relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
@@ -101,7 +101,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="input-field pl-11 pr-4 py-3 w-64 text-sm"
+                    className="input-field-mobile pl-11 pr-4 py-3 w-64 text-sm"
                   />
                 </div>
 
@@ -110,7 +110,8 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(true)}
-                  className="lg:hidden p-3 rounded-xl bg-slate-100/60 hover:bg-slate-200/60 transition-all mobile-touch"
+                  className="xl:hidden mobile-hamburger"
+                  aria-label="Open navigation menu"
                 >
                   <Menu className="w-5 h-5 text-slate-600" />
                 </motion.button>
