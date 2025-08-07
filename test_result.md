@@ -210,6 +210,21 @@ backend:
         - agent: "testing"
         - comment: "✅ TESTED: Admin notification system fully functional. All tests passed: 1) Admin notification endpoint (/api/send-admin-notification) works correctly with valid member IDs and returns 404 for invalid IDs 2) Registration process triggers both user confirmation and admin notification background tasks 3) Admin notification emails include all required information: member details (name, ID, email, gender, DOB), location data (state, LGA, ward, country, address), registration timestamp, and ID card PDF attachment 4) Email content properly formatted with HTML template and ADYC branding 5) Error handling works correctly for invalid member IDs. Both user and admin emails are automatically sent during member registration."
 
+  - task: "Migrate backend from MongoDB to Supabase"
+    implemented: true
+    working: false
+    file: "supabase_service.py, server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "unknown"
+        - agent: "main"
+        - comment: "Migrated backend from MongoDB to Supabase. Created supabase_service.py with all CRUD operations, updated server.py to use Supabase service, configured environment variables for Supabase connection."
+        - working: false
+        - agent: "testing"
+        - comment: "❌ TESTED: Supabase migration code is complete and correct, but database tables are missing. Basic API connectivity works (GET /api/ returns 200), FastAPI validation works (422 errors), but all database operations fail with 500 errors due to missing tables. Required tables: status_checks, members, blog_posts, admin_users, activity_logs. SQL creation script available at /app/backend/setup_supabase_tables.py. Once tables are created in Supabase dashboard, all functionality should work correctly."
+
 frontend:
   - task: "Create Contact Us page with ADYC information"
     implemented: true
