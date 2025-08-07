@@ -556,7 +556,8 @@ const Home = ({ onNavigate }) => {
             </div>
           </div>
         </motion.section>
-      </motion.div>
+        </motion.div>
+      </div>
     </Layout>
   );
 };
