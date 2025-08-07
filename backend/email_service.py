@@ -219,9 +219,13 @@ class EmailService:
         c.saveState()
         c.setFillColor(colors.HexColor('#fbbf24'))
         c.setFillAlpha(0.7)
-        # Triangle in top right corner
-        triangle_points = [card_width-10*mm, card_height, card_width, card_height, card_width, card_height-10*mm]
-        c.polygon(triangle_points, fill=1)
+        # Triangle in top right corner using path
+        c.beginPath()
+        c.moveTo(card_width-10*mm, card_height)
+        c.lineTo(card_width, card_height)
+        c.lineTo(card_width, card_height-10*mm)
+        c.closePath()
+        c.drawPath(fill=1)
         c.setFillColor(colors.black)
         c.setFillAlpha(1)
         c.setFont("Helvetica-Bold", 4)
