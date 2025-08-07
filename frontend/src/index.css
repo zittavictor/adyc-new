@@ -555,9 +555,9 @@ code {
     transform: skew(-12deg);
   }
 
-  /* Unified Typography - Black Text Standard */
+  /* WCAG AA Compliant Typography - Enhanced Contrast */
   .text-primary { @apply text-black; }
-  .text-secondary { @apply text-black opacity-70; }
+  .text-secondary { @apply text-slate-800; } /* Increased contrast from opacity-70 */
   .text-accent { @apply text-orange-600; }
   .text-success { @apply text-green-600; }
   
