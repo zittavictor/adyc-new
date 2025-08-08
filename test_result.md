@@ -198,6 +198,18 @@ backend:
         - agent: "testing"
         - comment: "✅ TESTED: Enhanced member registration working perfectly. Member ID format correct (ADYC-YYYY-XXXXXX). Registration triggers background email tasks for both user confirmation and admin notification. All security fields properly populated in database. Activity logging working for registrations. Minor: Serial number field not returned in API response but core functionality working."
 
+  - task: "ID card generation with updated social media links"
+    implemented: true
+    working: true
+    file: "email_service.py, server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "testing"
+        - comment: "🆔 ID CARD SOCIAL MEDIA INTEGRATION TESTING COMPLETE: Comprehensive testing of updated ID card generation with new social media links completed successfully. RESULTS: ✅ Two-Sided PDF Generation: Confirmed working correctly with substantial file size (1.4MB+ files with 2 pages - front and back sides) ✅ WhatsApp Integration: WhatsApp channel link (wa.me/c/2349156257998) properly included in back side footer with correct formatting ✅ TikTok Integration: TikTok handle @adyc676 properly included in back side footer alongside WhatsApp link ✅ Contact Information: All contact details properly formatted including Phone: 08156257998, Email: africandemocraticyouthcongress@gmail.com ✅ PDF Quality: Valid PDF format with correct content type (application/pdf), multiple pages detected, comprehensive security features maintained ✅ Security Features: All existing security features remain intact - watermarks, security patterns, holographic effects, serial numbers, one-time generation prevention working correctly (400 error on second attempt) ✅ Consistency Testing: Multiple ID card generations (3/3) successful with consistent file sizes and social media integration ✅ Backend Integration: ID card download endpoint working correctly with proper headers and filename formatting. All requested social media updates successfully implemented and working perfectly. The ID card back side now includes the updated WhatsApp channel and TikTok information as requested."
+
 frontend:
   - task: "Remove dark mode functionality"
     implemented: true
