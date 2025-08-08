@@ -238,12 +238,12 @@ class EmailService:
         c.saveState()
         c.setFillColor(colors.HexColor('#fbbf24'))
         c.setFillAlpha(0.8)
-        # Security triangle using path instead of polygon
+        # Security triangle using path
         p = c.beginPath()
         p.moveTo(card_width-8*mm, card_height)
         p.lineTo(card_width, card_height)
         p.lineTo(card_width, card_height-8*mm)
-        p.closePath()
+        p.close()
         c.drawPath(p, fill=1)
         c.setFillColor(colors.black)
         c.setFillAlpha(1)
