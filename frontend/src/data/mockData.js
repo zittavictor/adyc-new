@@ -49,7 +49,7 @@ export const blogPosts = [
 export const executiveMembers = [
   {
     id: 1,
-    name: 'Honourable Murtala Dantoro',
+    name: 'Hon Murtala Dantoro',
     role: 'Director General ADYC',
     description: 'Coordinates community outreach and strategic initiatives across all six geopolitical zones.',
     image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/gowo8xm6_WhatsApp%20Image%202025-08-04%20at%2021.43.29_54d3bbdc.jpg',
@@ -61,24 +61,11 @@ export const executiveMembers = [
     bio: 'A dedicated leader with extensive experience in youth mobilization and community development across Nigeria.'
   },
   {
-    id: 2,
-    name: 'Dr. Jamila Yaro',
-    role: 'Director of Education',
-    description: 'Manages educational initiatives and leadership training programs for ADYC members.',
-    image: null,
-    social: {
-      facebook: '#',
-      twitter: '#',
-      linkedin: '#'
-    },
-    bio: 'Educational expert focused on developing comprehensive training programs for youth leadership development.'
-  },
-  {
     id: 3,
-    name: 'Haj. Ruqayya Lamido',
+    name: 'Hon Rukayya',
     role: 'Director of Communications',
     description: 'Handles communications, media relations, and public outreach for ADYC initiatives.',
-    image: null,
+    image: 'https://customer-assets.emergentagent.com/job_supa-refresh/artifacts/7t4f8l65_IMG-20250809-WA0017.jpg',
     social: {
       facebook: '#',
       twitter: '#',
@@ -88,10 +75,10 @@ export const executiveMembers = [
   },
   {
     id: 4,
-    name: 'Hon. Abdullahi MB Sadiq',
+    name: 'Hon Abdullahi MB Sadiq',
     role: 'Founder & Strategic Advisor',
     description: 'Founder of ADYC and strategic planning expert guiding the organization\'s vision and mission.',
-    image: null,
+    image: 'https://customer-assets.emergentagent.com/job_supa-refresh/artifacts/3qid41iy_IMG-20250809-WA0018_1.jpg',
     social: {
       facebook: '#',
       twitter: '#',
