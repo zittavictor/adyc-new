@@ -29,20 +29,9 @@ export const blogPosts = [
     content: 'ADYC stands as a beacon of unity, bringing together young Nigerians from all walks of life, regardless of their religious beliefs or tribal affiliations. Our mission is to foster collaboration and understanding across all divides.',
     image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/bmpewkg3_BEYOND%20ok.jpg',
     date: 'July 30, 2025',
-    author: 'Honourable Murtala Dantoro',
+    author: 'Hon Murtala Dantoro',
     category: 'Unity',
     slug: 'adyc-unity-beyond-religion-tribe'
-  },
-  {
-    id: 4,
-    title: 'Youth Inclusivity: Building Tomorrow Together',
-    summary: 'How ADYC promotes inclusive participation among young Nigerians, ensuring every voice is heard and every contribution valued in our democratic processes.',
-    content: 'Our youth inclusivity initiatives focus on creating opportunities for all young Nigerians to participate meaningfully in governance and community development, regardless of their background or circumstances.',
-    image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/d1lwxqiv_ENCLUSI_001.jpg',
-    date: 'July 28, 2025',
-    author: 'Dr. Jamila Yaro',
-    category: 'Inclusivity',
-    slug: 'youth-inclusivity-building-tomorrow'
   }
 ];
 
