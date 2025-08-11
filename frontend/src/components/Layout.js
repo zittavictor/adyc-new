@@ -63,7 +63,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                 </motion.div>
                 <div className="min-w-0 flex-1">
                   <h1 className="text-lg sm:text-xl font-bold text-black truncate">ADYC</h1>
-                  <p className="text-xs sm:text-sm text-black opacity-70 leading-tight truncate">
+                  <p className="text-xs sm:text-sm text-slate-800 leading-tight truncate font-medium">
                     African Democratic Youth Congress
                   </p>
                 </div>
