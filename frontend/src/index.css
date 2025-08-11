@@ -555,11 +555,17 @@ code {
     transform: skew(-12deg);
   }
 
-  /* WCAG AA Compliant Typography - Enhanced Contrast */
-  .text-primary { @apply text-black; }
-  .text-secondary { @apply text-slate-800; } /* Increased contrast from opacity-70 */
-  .text-accent { @apply text-orange-600; }
-  .text-success { @apply text-green-600; }
+  /* WCAG AA Compliant Typography - Enhanced Contrast and Visibility */
+  .text-primary { 
+    @apply text-black font-medium; 
+    text-shadow: 0 0 1px rgba(0,0,0,0.1);
+  }
+  .text-secondary { 
+    @apply text-slate-900 font-normal; 
+    text-shadow: 0 0 1px rgba(0,0,0,0.05);
+  }
+  .text-accent { @apply text-orange-600 font-medium; }
+  .text-success { @apply text-green-600 font-medium; }
   
   .bg-surface { @apply bg-white/80; }
   .bg-surface-elevated { @apply bg-white; }
