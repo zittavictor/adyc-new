@@ -11,7 +11,7 @@ import uuid
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://b3076608-bce0-4064-9558-d8e12af8d9c4.preview.emergentagent.com/api"
+BACKEND_URL = "https://d2c285e3-ea23-4d13-9a66-2426074e790a.preview.emergentagent.com/api"
 
 def create_test_passport_image():
     """Create a simple base64 encoded test image"""
