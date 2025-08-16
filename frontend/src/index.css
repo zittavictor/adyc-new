@@ -566,6 +566,15 @@ code {
   }
   .text-secondary { 
     @apply text-slate-900 font-normal; 
+  /* Force full opacity for all text utility classes to avoid faint look */
+  .text-primary, .text-secondary, .text-accent, p, h1, h2, h3, h4, h5, h6, span, li, label {
+    opacity: 1 !important;
+  }
+  
+  /* Normalize weight for clarity across the app (balanced boldness) */
+  .text-primary { @apply font-semibold; }
+  .text-secondary { @apply font-medium; }
+
     text-shadow: 0 0 1px rgba(0,0,0,0.05);
   }
   .text-accent { 
