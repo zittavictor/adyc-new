@@ -672,3 +672,9 @@ code {
     display: none !important;
   }
 }
+
+/* Final overrides (post-utilities) to ensure accent text is solid black and bold */
+body .text-accent {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
