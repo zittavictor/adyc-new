@@ -569,7 +569,7 @@ code {
     text-shadow: 0 0 1px rgba(0,0,0,0.05);
   }
   .text-accent { 
-    @apply text-orange-700 font-bold; /* was orange-600 and medium */
+    @apply text-black font-bold;
     text-shadow: 0 0 1px rgba(0,0,0,0.12);
   }
   .text-success { @apply text-green-600 font-medium; }
