@@ -11,6 +11,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Global readability improvements */
+    font-size: 18px;            /* Increase base font size */
+    line-height: 1.7;           /* Comfortable line height */
+    letter-spacing: 0.2px;      /* Slightly more spacing for clarity */
 }
 
 code {
@@ -121,12 +125,12 @@ code {
 
   /* Responsive Typography Scale */
   .display-text-mobile {
-    @apply text-3xl leading-tight tracking-tight;
+    @apply text-4xl leading-tight tracking-tight; /* was 3xl */
     font-family: 'Playfair Display', serif;
   }
   
   .heading-primary-mobile {
-    @apply text-2xl leading-tight tracking-tight;
+    @apply text-3xl leading-tight tracking-tight; /* was 2xl */
     font-family: 'DM Sans', sans-serif;
   }
   
@@ -140,20 +144,20 @@ code {
   }
   
   .body-large-mobile {
-    @apply text-base leading-relaxed;
+    @apply text-lg leading-relaxed; /* was base */
   }
   
   .body-text-mobile {
-    @apply text-sm leading-relaxed;
+    @apply text-base leading-relaxed; /* was sm */
   }
   
   @media (min-width: 640px) {
     .display-text-mobile {
-      @apply text-4xl;
+      @apply text-5xl; /* was 4xl */
     }
     
     .heading-primary-mobile {
-      @apply text-3xl;
+      @apply text-4xl; /* was 3xl */
     }
     
     .heading-secondary-mobile {
@@ -165,31 +169,31 @@ code {
     }
     
     .body-large-mobile {
-      @apply text-lg;
+      @apply text-xl; /* was lg */
     }
     
     .body-text-mobile {
-      @apply text-base;
+      @apply text-lg; /* was base */
     }
   }
   
   @media (min-width: 768px) {
     .display-text-mobile {
-      @apply text-5xl;
+      @apply text-6xl; /* was 5xl */
     }
     
     .heading-primary-mobile {
-      @apply text-4xl;
+      @apply text-5xl; /* was 4xl */
     }
   }
   
   @media (min-width: 1024px) {
     .display-text-mobile {
-      @apply text-6xl;
+      @apply text-7xl; /* was 6xl */
     }
     
     .heading-primary-mobile {
-      @apply text-5xl;
+      @apply text-6xl; /* was 5xl */
     }
   }
 
@@ -407,34 +411,34 @@ code {
 
   /* Typography Hierarchy System */
   .display-text {
-    @apply text-4xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight;
+    @apply text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight; /* bumped up */
     font-family: 'Playfair Display', serif;
   }
   
   .heading-primary {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight; /* bumped up */
     font-family: 'DM Sans', sans-serif;
   }
   
   .heading-secondary {
-    @apply text-2xl md:text-3xl font-semibold leading-snug;
+    @apply text-3xl md:text-4xl font-semibold leading-snug; /* bumped up */
     font-family: 'DM Sans', sans-serif;
   }
   
   .heading-tertiary {
-    @apply text-xl md:text-2xl font-semibold leading-snug;
+    @apply text-2xl md:text-3xl font-semibold leading-snug; /* bumped up */
   }
   
   .body-large {
-    @apply text-lg md:text-xl leading-relaxed;
+    @apply text-xl md:text-2xl leading-relaxed; /* bumped up */
   }
   
   .body-text {
-    @apply text-base leading-relaxed;
+    @apply text-lg leading-relaxed; /* bumped up */
   }
   
   .caption-text {
-    @apply text-sm leading-normal;
+    @apply text-base leading-normal; /* bumped up */
   }
 
   /* Sophisticated Button System - Compact Design with Spinner Effects */
@@ -564,7 +568,10 @@ code {
     @apply text-slate-900 font-normal; 
     text-shadow: 0 0 1px rgba(0,0,0,0.05);
   }
-  .text-accent { @apply text-orange-600 font-medium; }
+  .text-accent { 
+    @apply text-orange-700 font-bold; /* was orange-600 and medium */
+    text-shadow: 0 0 1px rgba(0,0,0,0.12);
+  }
   .text-success { @apply text-green-600 font-medium; }
   
   .bg-surface { @apply bg-white/80; }
