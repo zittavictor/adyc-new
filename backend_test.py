@@ -13,7 +13,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://d2c285e3-ea23-4d13-9a66-2426074e790a.preview.emergentagent.com/api"
+BACKEND_URL = "https://clear-text.preview.emergentagent.com/api"
 
 # Global variables for test data
 admin_token = None
