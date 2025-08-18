@@ -223,7 +223,7 @@ const About = ({ onNavigate }) => {
           <motion.section variants={itemVariants} className="bg-accent-subtle rounded-3xl">
             <div className="container-custom section-spacing">
               <div className="text-center mb-16">
-                <h2 className="heading-primary text-primary mb-6 subheading-uniform">
+                <h2 className="heading-primary text-primary mb-6">
                   Our <span className="text-accent">Foundation</span>
                 </h2>
                 <p className="body-large text-secondary max-w-2xl mx-auto">
