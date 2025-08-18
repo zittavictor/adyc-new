@@ -70,7 +70,7 @@ const SpinningLogo = ({ className, size = 80 }) => {
         style={{ width: size, height: size }}
       >
         {/* Enhanced glow effect that responds to hover and click */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-orange-500/30 to-green-500/30 rounded-full blur-xl transition-all duration-500 ${
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }} className={`absolute inset-0 bg-gradient-to-br from-orange-500/30 to-green-500/30 rounded-full blur-xl transition-all duration-500 ${
           isClicked 
             ? 'scale-200 from-orange-600/60 to-green-600/60 blur-3xl shadow-2xl' 
             : isHovered 
