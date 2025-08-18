@@ -177,7 +177,7 @@ const Home = ({ onNavigate }) => {
         {/* FEATURES SECTION - Mobile First Responsive Grid */}
         <motion.section variants={itemVariants} className="mobile-section-spacing">
           <div className="mobile-container">
-            <div className="text-center mb-12 sm:mb-16">
+            <motion.div className="text-center mb-12 sm:mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: "easeOut" }}>
               <motion.h2 
                 className="heading-primary-mobile text-primary mb-4 sm:mb-6"
                 initial={{ opacity: 0, y: 20 }}
