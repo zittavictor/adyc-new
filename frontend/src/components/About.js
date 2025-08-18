@@ -293,7 +293,7 @@ const About = ({ onNavigate }) => {
                     <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white shadow-moderate mx-auto mb-4">
                       <TrendingUp className="w-8 h-8" />
                     </div>
-                    <h3 className="heading-tertiary text-primary">Our Goals</h3>
+                    <h3 className="heading-tertiary text-primary subheading-uniform">Our Goals</h3>
                   </div>
                   <p className="text-secondary leading-relaxed text-center mb-6">
                     By 2030, establish presence in all major Nigerian regions, fostering over 1 million active youth members directly contributing to nation-building.
