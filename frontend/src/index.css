@@ -428,6 +428,11 @@ code {
   .heading-tertiary {
     @apply text-2xl md:text-3xl font-semibold leading-snug; /* bumped up */
   }
+
+  /* Uniform subheading size matching 'Our Vision' paragraph */
+  .subheading-uniform {
+    @apply text-sm sm:text-base font-semibold;
+  }
   
   .body-large {
     @apply text-xl md:text-2xl leading-relaxed; /* bumped up */
