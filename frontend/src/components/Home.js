@@ -91,7 +91,7 @@ const Home = ({ onNavigate }) => {
         >
           {/* Background decorative elements - Responsive */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-10 sm:top-20 right-4 sm:right-10 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-orange-500/10 to-green-500/10 rounded-full blur-xl sm:blur-3xl animate-float-gentle"></div>
+            <div className="absolute top-10 sm:top-20 right-4 sm:right-10 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-orange-500/10 to-green-500/10 rounded-full blur-xl sm:blur-3xl animate-float-gentle" style={{ animationDelay: '0.6s' }}></div>
             <div className="absolute bottom-10 sm:bottom-20 left-4 sm:left-10 w-24 h-24 sm:w-48 sm:h-48 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-full blur-lg sm:blur-3xl animate-float-gentle" style={{animationDelay: '2s'}}></div>
           </div>
           
