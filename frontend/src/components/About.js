@@ -263,7 +263,7 @@ const About = ({ onNavigate }) => {
                     <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center text-white shadow-moderate mx-auto mb-4">
                       <Lightbulb className="w-8 h-8" />
                     </div>
-                    <h3 className="heading-tertiary text-primary">Our Objectives</h3>
+                    <h3 className="heading-tertiary text-primary subheading-uniform">Our Objectives</h3>
                   </div>
                   <ul className="space-y-3 text-secondary">
                     {[
