@@ -322,7 +322,7 @@ const About = ({ onNavigate }) => {
           <motion.section variants={itemVariants}>
             <div className="featured-card bg-gradient-to-br from-slate-50 to-orange-50/30 dark:from-slate-800 dark:to-orange-900/20">
               <div className="text-center mb-8">
-                <h2 className="heading-primary text-primary mb-6 subheading-uniform">
+                <h2 className="heading-primary text-primary mb-6">
                   Leadership <span className="text-accent">Message</span>
                 </h2>
               </div>
