@@ -151,9 +151,9 @@ const Home = ({ onNavigate }) => {
               {/* Visual Element - Mobile Responsive */}
               <div className="col-span-1 lg:col-span-5 flex justify-center relative">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                  initial={{ opacity: 0, scale: 0.92, rotate: -4 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
+                  transition={{ delay: 0.6, duration: 0.9, ease: "easeOut" }}
                   className="relative"
                 >
                   <SpinningLogo size={160} />
