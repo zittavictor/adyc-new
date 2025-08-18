@@ -64,6 +64,9 @@ const SpinningLogo = ({ className, size = 80 }) => {
         className="cursor-pointer relative group"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
         style={{ width: size, height: size }}
       >
         {/* Enhanced glow effect that responds to hover and click */}
