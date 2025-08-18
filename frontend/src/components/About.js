@@ -206,7 +206,7 @@ const About = ({ onNavigate }) => {
                       <benefit.icon className="w-8 h-8" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors">
+                      <h3 className="heading-tertiary text-primary mb-4 group-hover:text-accent transition-colors subheading-uniform">
                         {benefit.title}
                       </h3>
                       <p className="text-secondary leading-relaxed">
