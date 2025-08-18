@@ -244,7 +244,7 @@ const About = ({ onNavigate }) => {
                     <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-accent mx-auto mb-4">
                       <Target className="w-8 h-8" />
                     </div>
-                    <h3 className="heading-tertiary text-primary">Our Aim</h3>
+                    <h3 className="heading-tertiary text-primary subheading-uniform">Our Aim</h3>
                   </div>
                   <p className="text-secondary leading-relaxed text-center">
                     To empower the youth of Nigeria and Africa to become active, responsible, and impactful citizens committed to democratic values, sustainable development, and social justice.
