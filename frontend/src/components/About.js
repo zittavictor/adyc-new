@@ -359,7 +359,7 @@ const About = ({ onNavigate }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <h2 className="display-text text-primary mb-8">
+                <h2 className="heading-primary text-primary mb-8">
                   Ready to Make a <span className="text-accent hand-drawn-accent">Difference?</span>
                 </h2>
                 <p className="body-large text-secondary mb-12 max-w-3xl mx-auto">
