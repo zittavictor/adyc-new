@@ -138,7 +138,7 @@ const About = ({ onNavigate }) => {
                   <div className="mobile-card bg-gradient-to-br from-orange-50 to-red-50 border-l-4 border-l-orange-500">
                     <h3 className="heading-tertiary-mobile text-black mb-3 sm:mb-4 flex flex-col sm:flex-row items-center sm:items-start">
                       <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 mb-2 sm:mb-0 sm:mr-3" />
-                      <span>Our Values</span>
+                      <span className="subheading-uniform">Our Values</span>
                     </h3>
                     <p className="text-black text-sm sm:text-base opacity-80">
                       Unity beyond religion and tribe, democratic participation, innovative solutions, and transparent governance that serves all Nigerians.
