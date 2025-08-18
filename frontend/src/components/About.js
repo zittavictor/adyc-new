@@ -152,7 +152,7 @@ const About = ({ onNavigate }) => {
           {/* STRATEGIC BENEFITS - Premium Grid Layout */}
           <motion.section variants={itemVariants}>
             <div className="text-center mb-16">
-              <h2 className="heading-primary text-primary mb-6">
+              <h2 className="heading-primary text-primary mb-6 subheading-uniform">
                 Strategic <span className="text-accent">Benefits</span> of ADYC
               </h2>
               <p className="body-large text-secondary max-w-2xl mx-auto">
