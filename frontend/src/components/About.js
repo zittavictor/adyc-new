@@ -79,7 +79,7 @@ const About = ({ onNavigate }) => {
                       <Users className="w-6 h-6 sm:w-8 sm:h-8" />
                     </div>
                     <div className="text-center sm:text-left">
-                      <h2 className="heading-primary-mobile text-black mb-2">
+                      <h2 className="heading-primary-mobile text-black mb-2 subheading-uniform">
                         A Unified Platform for National Development
                       </h2>
                       <p className="text-accent font-semibold text-sm sm:text-base">Introducing ADYC</p>
