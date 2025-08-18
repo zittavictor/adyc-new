@@ -128,7 +128,7 @@ const About = ({ onNavigate }) => {
                   <div className="mobile-card bg-gradient-to-br from-green-50 to-blue-50 border-l-4 border-l-green-500">
                     <h3 className="heading-tertiary-mobile text-black mb-3 sm:mb-4 flex flex-col sm:flex-row items-center sm:items-start">
                       <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mb-2 sm:mb-0 sm:mr-3" />
-                      <span>Our Vision</span>
+                      <span className="subheading-uniform">Our Vision</span>
                     </h3>
                     <p className="text-black text-sm sm:text-base opacity-80">
                       To become Africa's most impactful youth political congress, driving democratic transformation and national development through unified action and ethical leadership.
