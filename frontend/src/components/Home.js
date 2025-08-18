@@ -195,7 +195,7 @@ const Home = ({ onNavigate }) => {
               >
                 Discover the opportunities that await you as part of Nigeria's most dynamic youth political movement.
               </motion.p>
-            </div>
+            </motion.div>
 
             {/* Mobile-First Feature Grid */}
             <div className="mobile-grid-3 lg:grid-cols-12">
