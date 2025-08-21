@@ -165,6 +165,21 @@ class SupabaseService:
             logger.error(f"Error marking ID card as generated: {e}")
             raise
     
+    async def update_member_photo(self, member_id: str, photo_url: str, photo_public_id: str) -> bool:
+        """Update member photo URL and public_id"""
+        try:
+            result = self.supabase.table('members').update({
+                'passport': photo_url,
+                'photo_public_id': photo_public_id,
+                'updated_at': datetime.utcnow().isoformat()
+            }).eq('member_id', member_id).execute()
+            
+            return bool(result.data)
+            
+        except Exception as e:
+            logger.error(f"Error updating member photo: {e}")
+            raise
+    
     # BLOG POSTS OPERATIONS
     async def create_blog_post(self, post_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new blog post (admin only)"""
