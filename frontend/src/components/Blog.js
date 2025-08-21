@@ -88,96 +88,114 @@ const Blog = ({ onNavigate }) => {
           </motion.button>
         </motion.div>
 
-        {/* SEARCH AND FILTER SECTION */}
-        <motion.div variants={itemVariants} className="floating-card p-6">
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-            {/* SEARCH BAR */}
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search blog posts..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 neumorphic-inset bg-neutral-50/50 dark:bg-neutral-700/50 rounded-xl border-0 text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none"
-              />
-            </div>
-
-            {/* CATEGORY FILTER */}
-            <div className="flex items-center space-x-2">
-              <Filter className="w-5 h-5 text-neutral-400" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="neumorphic-inset bg-neutral-50/50 dark:bg-neutral-700/50 rounded-xl border-0 text-neutral-800 dark:text-white py-3 px-4 focus:outline-none"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>
-                    {category === 'all' ? 'All Categories' : category}
-                  </option>
-                ))}
-              </select>
-            </div>
+        {/* SEARCH SECTION */}
+        <motion.div variants={itemVariants}>
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search blog posts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
+            />
           </div>
         </motion.div>
+
+        {/* Error Message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"
+          >
+            {error}
+          </motion.div>
+        )}
 
         {/* BLOG POSTS GRID */}
-        <motion.div variants={itemVariants}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.map((post, index) => (
-              <motion.div
-                key={post.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className="floating-card p-4 group cursor-pointer"
-                onClick={() => setSelectedPost(post)}
-              >
-                <div className="relative overflow-hidden rounded-lg mb-4">
-                  <img 
-                    src={post.image} 
-                    alt={post.title} 
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" 
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1 bg-primary-500 text-white text-xs font-medium rounded-full">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="flex space-x-2">
-                      <button className="p-2 bg-white/90 dark:bg-neutral-800/90 rounded-full text-neutral-600 dark:text-neutral-400 hover:text-primary-600 transition-colors">
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 bg-white/90 dark:bg-neutral-800/90 rounded-full text-neutral-600 dark:text-neutral-400 hover:text-primary-600 transition-colors">
-                        <Edit className="w-4 h-4" />
-                      </button>
+        {loading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading blog posts...</p>
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <Video className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">No Blog Posts Yet</h3>
+            <p className="text-gray-500">Check back later for new content!</p>
+          </div>
+        ) : (
+          <motion.div variants={itemVariants}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPosts.map((post) => (
+                <motion.div
+                  key={post.id}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all cursor-pointer group"
+                  onClick={() => setSelectedPost(post)}
+                >
+                  {/* YouTube Video Preview */}
+                  {post.youtube_url ? (
+                    <div className="aspect-video bg-gray-100 relative overflow-hidden">
+                      <YouTube
+                        videoId={extractYouTubeId(post.youtube_url)}
+                        opts={{
+                          width: '100%',
+                          height: '100%',
+                          playerVars: {
+                            autoplay: 0,
+                            modestbranding: 1,
+                          },
+                        }}
+                        className="w-full h-full"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="bg-white/90 p-2 rounded-full">
+                            <ExternalLink className="w-5 h-5 text-gray-700" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="aspect-video bg-gradient-to-br from-orange-100 to-green-100 flex items-center justify-center">
+                      <Youtube className="w-12 h-12 text-gray-400" />
+                    </div>
+                  )}
+
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        post.published ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                      }`}>
+                        {post.published ? 'Published' : 'Draft'}
+                      </span>
+                    </div>
+
+                    <h3 className="font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {post.summary || post.content.substring(0, 100) + '...'}
+                    </p>
+                    
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center space-x-1">
+                        <User className="w-3 h-3" />
+                        <span>{post.author}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-center text-xs text-neutral-500 dark:text-neutral-400 mb-2">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  <span>{post.date}</span>
-                  <span className="mx-2">•</span>
-                  <User className="w-3 h-3 mr-1" />
-                  <span>{post.author}</span>
-                </div>
-
-                <h3 className="font-semibold text-lg text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3 line-clamp-3">
-                  {post.summary}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-primary-600 dark:text-primary-400 text-sm font-medium group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
-                    Read More →
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* CREATE POST MODAL */}
         <AnimatePresence>
