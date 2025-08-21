@@ -27,6 +27,7 @@ const Register = ({ onNavigate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [currentStep, setCurrentStep] = useState(1);
+  const [showQRCode, setShowQRCode] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
