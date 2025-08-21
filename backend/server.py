@@ -259,6 +259,14 @@ async def get_members():
     members = await supabase_service.get_members()
     return [MemberRegistration(**member) for member in members]
 
+@api_router.get("/members/{member_id}", response_model=MemberRegistration)
+async def get_member(member_id: str):
+    member = await supabase_service.get_member_by_id(member_id)
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    return MemberRegistration(**member)
+
 @api_router.get("/members/{member_id}/qr-code", response_model=QRCodeResponse)
 async def get_member_qr_code(member_id: str):
     """Generate QR code for member verification"""
