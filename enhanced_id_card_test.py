@@ -13,7 +13,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://event-reg-flow.preview.emergentagent.com/api"
+BACKEND_URL = "https://bugtracker-5.preview.emergentagent.com/api"
 
 # Global variables for test data
 test_member_id = None
