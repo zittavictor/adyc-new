@@ -15,7 +15,7 @@ import time
 import os
 
 # Configuration
-BACKEND_URL = "https://supabase-url-setup.preview.emergentagent.com/api"
+BACKEND_URL = "https://serverless-members.preview.emergentagent.com/api"
 
 # Provided credentials from review request
 EXPECTED_CLOUDINARY_CLOUD_NAME = "dfr4kj6bh"

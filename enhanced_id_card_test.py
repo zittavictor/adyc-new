@@ -13,7 +13,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://supabase-url-setup.preview.emergentagent.com/api"
+BACKEND_URL = "https://serverless-members.preview.emergentagent.com/api"
 
 # Global variables for test data
 test_member_id = None

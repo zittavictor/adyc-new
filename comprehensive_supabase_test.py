@@ -14,7 +14,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://supabase-url-setup.preview.emergentagent.com/api"
+BACKEND_URL = "https://serverless-members.preview.emergentagent.com/api"
 
 def create_test_passport_image():
     """Create a simple base64 encoded test image"""
