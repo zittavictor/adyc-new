@@ -335,6 +335,15 @@ const Register = ({ onNavigate }) => {
             </motion.div>
           </motion.div>
         </div>
+        
+        {/* QR Code Modal */}
+        {showQRCode && registrationData && (
+          <QRCodeDisplay
+            memberId={registrationData.member_id}
+            memberName={registrationData.full_name}
+            onClose={() => setShowQRCode(false)}
+          />
+        )}
       </Layout>
     );
   }
