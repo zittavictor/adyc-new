@@ -1,0 +1,36 @@
+{
+  "name": "adyc-vercel-deployment",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && yarn start",
+    "build": "cd frontend && yarn build",
+    "start": "cd frontend && yarn start",
+    "lint": "cd frontend && yarn lint",
+    "type-check": "tsc --noEmit",
+    "install-all": "yarn install && cd frontend && yarn install"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.11.24",
+    "@types/nodemailer": "^6.4.19",
+    "@vercel/node": "^3.2.17",
+    "bcryptjs": "^2.4.3",
+    "canvas": "^2.11.2",
+    "cloudinary": "^1.41.3",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.15",
+    "pdfkit": "^0.15.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.33.5",
+    "typescript": "^5.3.3",
+    "uuid": "^9.0.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.5",
+    "@types/uuid": "^9.0.8"
+  }
+}
