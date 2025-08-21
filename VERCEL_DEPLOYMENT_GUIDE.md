@@ -374,9 +374,9 @@ GET    /api/admin/blog/posts          - Get all posts (admin)
 PUT    /api/admin/blog/posts/{id}     - Update blog post
 DELETE /api/admin/blog/posts/{id}     - Delete blog post
 POST   /api/setup/admin               - Setup admin user
-POST   /api/upload-photo              - Upload member photo
-POST   /api/send-test-email           - Send test email
-POST   /api/send-admin-notification   - Send admin notification
+POST   /api/upload_photo              - Upload member photo
+POST   /api/send_test_email           - Send test email
+POST   /api/send_admin_notification   - Send admin notification
 ```
 
 ### 2. Frontend Routes
