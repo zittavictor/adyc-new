@@ -209,7 +209,8 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
         
         # Replace base64 passport with Cloudinary URL
         member_dict['passport'] = photo_result['url']
-        member_dict['photo_public_id'] = photo_result['public_id']
+        # Temporarily comment out photo_public_id due to missing column
+        # member_dict['photo_public_id'] = photo_result['public_id']
         
         # Create member using Supabase service (it handles member_id generation and email checking)
         result = await supabase_service.create_member(member_dict)
