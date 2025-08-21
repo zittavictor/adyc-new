@@ -300,19 +300,36 @@ class SanityService:
     
     def _format_blog_post(self, sanity_doc: Dict[str, Any]) -> Dict[str, Any]:
         """Format Sanity document to match our API response format"""
+        if not sanity_doc:
+            # Return a default structure if document is None
+            return {
+                'id': str(uuid.uuid4()),
+                'title': 'Unknown Title',
+                'content': 'Unknown Content',
+                'summary': None,
+                'author': 'Unknown Author',
+                'author_email': 'unknown@adyc.org',
+                'youtube_url': None,
+                'published': False,
+                'published_at': None,
+                'created_at': datetime.utcnow().isoformat(),
+                'updated_at': datetime.utcnow().isoformat(),
+                'slug': None
+            }
+            
         return {
-            'id': sanity_doc.get('_id'),
-            'title': sanity_doc.get('title'),
-            'content': sanity_doc.get('content'),
+            'id': sanity_doc.get('_id') or str(uuid.uuid4()),
+            'title': sanity_doc.get('title') or 'Unknown Title',
+            'content': sanity_doc.get('content') or 'Unknown Content',
             'summary': sanity_doc.get('summary'),
-            'author': sanity_doc.get('author'),
-            'author_email': sanity_doc.get('authorEmail'),
+            'author': sanity_doc.get('author') or 'Unknown Author',
+            'author_email': sanity_doc.get('authorEmail') or 'unknown@adyc.org',
             'youtube_url': sanity_doc.get('youtubeUrl'),
             'published': sanity_doc.get('published', False),
             'published_at': sanity_doc.get('publishedAt'),
-            'created_at': sanity_doc.get('createdAt'),
-            'updated_at': sanity_doc.get('updatedAt'),
-            'slug': sanity_doc.get('slug', {}).get('current')
+            'created_at': sanity_doc.get('createdAt') or datetime.utcnow().isoformat(),
+            'updated_at': sanity_doc.get('updatedAt') or datetime.utcnow().isoformat(),
+            'slug': sanity_doc.get('slug', {}).get('current') if isinstance(sanity_doc.get('slug'), dict) else None
         }
     
     def _generate_slug(self, title: str) -> str:
