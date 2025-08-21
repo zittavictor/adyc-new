@@ -1,43 +1,30 @@
-# Backend Python files (not needed for Vercel deployment)
+# Ignore non-deployment folders/files to keep Vercel upload lean
+# Keep api/, lib/, frontend/, package.json, tsconfig.json, vercel.json
+
+# Backend Python implementation (not used on Vercel)
 backend/
-backend/**
+**/*.py
 
-# Test files
-test_*.py
-*_test.py
+# Local tests and scripts
 tests/
+scripts/
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-
-# Environment files with secrets (use Vercel environment variables instead)
+# Local env and build artifacts
 .env
-.env.local
-.env.*.local
+**/.env
+frontend/build/
 
-# Node modules (handled by Vercel)
-node_modules/
-
-# Build artifacts
-dist/
-build/
-
-# IDE files
+# Git and editor
+.git/
+.emergent/
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS files
-.DS_Store
-Thumbs.db
+# Node modules (Vercel installs dependencies itself)
+node_modules/
+frontend/node_modules/
 
-# Logs
-*.log
-logs/
-
-# Temporary files
-tmp/
-temp/
+# Misc
+Dockerfile
+.dockerignore
+.eslintcache
