@@ -223,14 +223,14 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
                     base64_image=input.passport,
                     member_id=result['member_id']
                 )
-                # Update member record with correct photo URL and public_id
+                # Update member record with correct photo URL (temporarily skip photo_public_id)
                 await supabase_service.update_member_photo(
                     result['member_id'], 
                     final_photo_result['url'],
                     final_photo_result['public_id']
                 )
                 result['passport'] = final_photo_result['url']
-                result['photo_public_id'] = final_photo_result['public_id']
+                # result['photo_public_id'] = final_photo_result['public_id']
                 
                 # Clean up temporary photo
                 await cloudinary_service.delete_member_photo(photo_result['public_id'])
