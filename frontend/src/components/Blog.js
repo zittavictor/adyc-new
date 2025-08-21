@@ -41,35 +41,9 @@ const Blog = ({ onNavigate }) => {
     post.content.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleCreatePost = (e) => {
-    e.preventDefault();
-    const newBlogPost = {
-      id: blogPosts.length + 1,
-      ...newPost,
-      date: new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      }),
-      author: 'ADYC Admin',
-      slug: newPost.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''),
-      image: newPost.image || 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/d1lwxqiv_ENCLUSI_001.jpg'
-    };
-    
-    setBlogPosts([newBlogPost, ...blogPosts]);
-    setNewPost({ title: '', summary: '', content: '', category: 'Leadership', image: null });
-    setShowCreateForm(false);
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setNewPost({ ...newPost, image: e.target.result });
-      };
-      reader.readAsDataURL(file);
-    }
+  const openAdminPanel = () => {
+    // In a real app, this would check admin permissions and redirect
+    window.open('/admin-blog', '_blank');
   };
 
   const containerVariants = {
