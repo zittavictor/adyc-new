@@ -156,7 +156,7 @@ const QRCodeDisplay = ({ memberId, memberName, onClose }) => {
         {/* QR Code */}
         <div className="flex justify-center mb-6">
           <div className="bg-white p-4 rounded-xl border-2 border-gray-100 shadow-lg">
-            <QRCode
+            <QRCodeSVG
               value={qrData?.verification_url || ''}
               size={200}
               fgColor="#FF6600" // ADYC orange
