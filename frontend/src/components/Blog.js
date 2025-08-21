@@ -70,21 +70,21 @@ const Blog = ({ onNavigate }) => {
         {/* HEADER SECTION */}
         <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-green-600 bg-clip-text text-transparent mb-2">
               ADYC Blog
             </h1>
-            <p className="text-neutral-600 dark:text-neutral-400">
+            <p className="text-gray-600">
               Stay updated with our latest news, events, and insights
             </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowCreateForm(true)}
-            className="neumorphic-button bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center space-x-2 mobile-button"
+            onClick={openAdminPanel}
+            className="bg-gradient-to-r from-orange-600 to-green-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center space-x-2"
           >
             <Plus className="w-5 h-5" />
-            <span>Create Post</span>
+            <span>Admin Panel</span>
           </motion.button>
         </motion.div>
 
