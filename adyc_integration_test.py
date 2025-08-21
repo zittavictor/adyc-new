@@ -15,7 +15,7 @@ import time
 import os
 
 # Configuration
-BACKEND_URL = "https://urlmonitor.preview.emergentagent.com/api"
+BACKEND_URL = "https://fast-node-deploy.preview.emergentagent.com/api"
 
 # Provided credentials from review request
 EXPECTED_CLOUDINARY_CLOUD_NAME = "dfr4kj6bh"
