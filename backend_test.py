@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Enhanced Backend API Testing for ADYC Platform - Security & Admin Features
-Tests the enhanced ID card security, admin system, blog management, and activity logging.
+ADYC Backend Integration Testing - Cloudinary & Sanity CMS Focus
+Tests the ADYC backend with specific focus on Cloudinary and Sanity CMS integrations
+using the provided credentials from the review request.
 """
 
 import requests
@@ -11,9 +12,19 @@ import uuid
 from datetime import datetime
 import re
 import time
+import os
 
 # Configuration
 BACKEND_URL = "https://urlmonitor.preview.emergentagent.com/api"
+
+# Provided credentials from review request
+EXPECTED_CLOUDINARY_CLOUD_NAME = "dfr4kj6bh"
+EXPECTED_CLOUDINARY_API_KEY = "921535715327263"
+EXPECTED_CLOUDINARY_API_SECRET = "cOJwLoDwqyc1SGJFdDVdvjM-T6o"
+
+EXPECTED_SANITY_PROJECT_ID = "dqcc4bw6"
+EXPECTED_SANITY_DATASET = "production"
+EXPECTED_SANITY_TOKEN = "skGyHgbT4vd1HzbQ5Zni1mS0QQIpMAVSpsU6ctv5gg03oqLIVt9r0aYSnjuXLIGlw9Nq0CfVRrVL4xGnnYtS7cdsvtyCkGnhLrG7xofzHQnKbkdjt8cspzWVXhdw7iuzFsyPf73czNZajSb3Gx9Lgj9Kg7AyaGEx3q7pLreQ2il4F97DFp12"
 
 # Global variables for test data
 admin_token = None
