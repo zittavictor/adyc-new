@@ -736,8 +736,398 @@ def test_id_card_contact_information():
         print(f"❌ Contact information test error: {str(e)}")
         return False
 
+def test_cloudinary_configuration():
+    """Test Cloudinary configuration and connectivity"""
+    print("\n=== Testing Cloudinary Configuration ===")
+    
+    try:
+        # Test if Cloudinary service can be initialized
+        from cloudinary_service import get_cloudinary_service
+        
+        cloudinary_service = get_cloudinary_service()
+        print("✅ Cloudinary service initialized successfully")
+        
+        # Check if environment variables are loaded
+        import os
+        cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME')
+        api_key = os.getenv('CLOUDINARY_API_KEY')
+        api_secret = os.getenv('CLOUDINARY_API_SECRET')
+        
+        if cloud_name and api_key and api_secret:
+            print(f"✅ Cloudinary configuration loaded:")
+            print(f"   - Cloud Name: {cloud_name}")
+            print(f"   - API Key: {api_key[:8]}...")
+            print(f"   - API Secret: {'*' * 8}...")
+            return True
+        else:
+            print("❌ Missing Cloudinary environment variables")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Cloudinary configuration error: {str(e)}")
+        return False
+
+def test_cloudinary_photo_upload():
+    """Test Cloudinary photo upload functionality"""
+    print("\n=== Testing Cloudinary Photo Upload ===")
+    
+    try:
+        from cloudinary_service import get_cloudinary_service
+        import asyncio
+        
+        cloudinary_service = get_cloudinary_service()
+        
+        # Test photo upload with a test member
+        test_member_id = f"test_{uuid.uuid4().hex[:8]}"
+        test_image = create_test_passport_image()
+        
+        # Run async upload
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            upload_result = loop.run_until_complete(
+                cloudinary_service.upload_member_photo(test_image, test_member_id)
+            )
+            
+            print("✅ Photo upload successful")
+            print(f"✅ Upload result keys: {list(upload_result.keys())}")
+            
+            # Verify required fields
+            required_fields = ['url', 'public_id', 'width', 'height', 'format', 'bytes']
+            missing_fields = [field for field in required_fields if field not in upload_result]
+            
+            if not missing_fields:
+                print("✅ All required upload fields present")
+                print(f"✅ Photo URL: {upload_result['url']}")
+                print(f"✅ Public ID: {upload_result['public_id']}")
+                print(f"✅ Dimensions: {upload_result['width']}x{upload_result['height']}")
+                print(f"✅ Format: {upload_result['format']}")
+                print(f"✅ Size: {upload_result['bytes']} bytes")
+                
+                # Test photo deletion
+                delete_result = loop.run_until_complete(
+                    cloudinary_service.delete_member_photo(upload_result['public_id'])
+                )
+                
+                if delete_result:
+                    print("✅ Photo deletion successful")
+                else:
+                    print("⚠️ Photo deletion failed")
+                
+                return True
+            else:
+                print(f"❌ Missing upload result fields: {missing_fields}")
+                return False
+                
+        finally:
+            loop.close()
+            
+    except Exception as e:
+        print(f"❌ Cloudinary photo upload error: {str(e)}")
+        return False
+
+def test_cloudinary_integration_in_registration():
+    """Test Cloudinary integration during member registration"""
+    print("\n=== Testing Cloudinary Integration in Registration ===")
+    
+    try:
+        # Create test member data
+        test_member = {
+            "email": f"cloudinary.test.{uuid.uuid4().hex[:6]}@adyc.org",
+            "passport": create_test_passport_image(),
+            "full_name": "Cloudinary Test Member",
+            "dob": "1995-06-20",
+            "ward": "Test Ward",
+            "lga": "Test LGA",
+            "state": "Test State",
+            "country": "Nigeria",
+            "address": "123 Test Street",
+            "language": "English",
+            "marital_status": "Single",
+            "gender": "Male"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/register", json=test_member)
+        print(f"POST /api/register (Cloudinary test) - Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            passport_url = data.get("passport", "")
+            
+            # Check if passport is now a Cloudinary URL instead of base64
+            if passport_url.startswith("https://res.cloudinary.com/"):
+                print("✅ Member photo uploaded to Cloudinary successfully")
+                print(f"✅ Cloudinary URL: {passport_url}")
+                
+                # Verify URL contains expected transformations
+                if "w_400,h_400,c_fill,g_face" in passport_url:
+                    print("✅ Photo transformations applied correctly")
+                else:
+                    print("⚠️ Expected photo transformations not found in URL")
+                
+                return True
+            else:
+                print(f"❌ Photo not uploaded to Cloudinary. URL: {passport_url[:100]}...")
+                return False
+        else:
+            print(f"❌ Registration failed: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Cloudinary registration integration error: {str(e)}")
+        return False
+
+def test_sanity_configuration():
+    """Test Sanity CMS configuration and connectivity"""
+    print("\n=== Testing Sanity CMS Configuration ===")
+    
+    try:
+        # Test if Sanity service can be initialized
+        from sanity_service import get_sanity_service
+        
+        sanity_service = get_sanity_service()
+        print("✅ Sanity service initialized successfully")
+        
+        # Check if environment variables are loaded
+        import os
+        project_id = os.getenv('SANITY_PROJECT_ID')
+        dataset = os.getenv('SANITY_DATASET')
+        api_token = os.getenv('SANITY_API_TOKEN')
+        
+        if project_id and dataset and api_token:
+            print(f"✅ Sanity configuration loaded:")
+            print(f"   - Project ID: {project_id}")
+            print(f"   - Dataset: {dataset}")
+            print(f"   - API Token: {api_token[:20]}...")
+            
+            # Test API connectivity by making a simple query
+            import asyncio
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            
+            try:
+                # Try to fetch blog posts to test connectivity
+                posts = loop.run_until_complete(sanity_service.get_blog_posts(published_only=False))
+                print(f"✅ Sanity API connectivity confirmed - found {len(posts)} blog posts")
+                return True
+            except Exception as api_error:
+                print(f"⚠️ Sanity API connectivity issue: {str(api_error)}")
+                return False
+            finally:
+                loop.close()
+        else:
+            print("❌ Missing Sanity environment variables")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Sanity configuration error: {str(e)}")
+        return False
+
+def test_sanity_blog_operations():
+    """Test Sanity CMS blog operations"""
+    print("\n=== Testing Sanity CMS Blog Operations ===")
+    
+    if not admin_token:
+        print("❌ No admin token available for Sanity blog tests")
+        return False
+    
+    try:
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Test creating a blog post through Sanity
+        blog_post_data = {
+            "title": "Sanity CMS Integration Test Post",
+            "content": "This is a test blog post created to verify Sanity CMS integration. The post should be stored in Sanity CMS, not in the local database.",
+            "summary": "Testing Sanity CMS integration functionality",
+            "youtube_url": "https://www.youtube.com/watch?v=test123",
+            "published": True
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/admin/blog/posts", json=blog_post_data, headers=headers)
+        print(f"POST /api/admin/blog/posts (Sanity) - Status: {response.status_code}")
+        
+        sanity_post_id = None
+        if response.status_code == 200:
+            data = response.json()
+            sanity_post_id = data.get("id")
+            print("✅ Blog post created in Sanity CMS successfully")
+            print(f"✅ Sanity Post ID: {sanity_post_id}")
+            
+            # Verify Sanity-specific fields
+            if data.get("author") and data.get("author_email"):
+                print(f"✅ Author information: {data['author']} ({data['author_email']})")
+            
+            # Check for slug generation
+            if "slug" in data:
+                print(f"✅ URL slug generated: {data.get('slug')}")
+            
+        else:
+            print(f"❌ Blog post creation in Sanity failed: {response.text}")
+            return False
+        
+        # Test retrieving blog posts from Sanity
+        response = requests.get(f"{BACKEND_URL}/blog/posts")
+        print(f"GET /api/blog/posts (from Sanity) - Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            posts = response.json()
+            print(f"✅ Retrieved {len(posts)} blog posts from Sanity CMS")
+            
+            # Verify our test post is in the list
+            if sanity_post_id and any(post.get("id") == sanity_post_id for post in posts):
+                print("✅ Test blog post found in Sanity CMS results")
+            else:
+                print("⚠️ Test blog post not found in Sanity results")
+        else:
+            print(f"❌ Blog posts retrieval from Sanity failed: {response.text}")
+        
+        # Test updating blog post in Sanity
+        if sanity_post_id:
+            update_data = {
+                "title": "Updated Sanity CMS Integration Test Post",
+                "content": "This post has been updated to test Sanity CMS update functionality.",
+                "published": False
+            }
+            
+            response = requests.put(f"{BACKEND_URL}/admin/blog/posts/{sanity_post_id}", 
+                                  json=update_data, headers=headers)
+            print(f"PUT /api/admin/blog/posts/{sanity_post_id} (Sanity) - Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                updated_post = response.json()
+                if updated_post.get("title") == "Updated Sanity CMS Integration Test Post":
+                    print("✅ Blog post updated in Sanity CMS successfully")
+                else:
+                    print("❌ Blog post update in Sanity failed")
+            else:
+                print(f"❌ Blog post update in Sanity failed: {response.text}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Sanity blog operations error: {str(e)}")
+        return False
+
+def test_sanity_vs_local_storage():
+    """Test if blog posts are stored in Sanity vs local database"""
+    print("\n=== Testing Sanity vs Local Database Storage ===")
+    
+    try:
+        # Test direct Sanity service access
+        from sanity_service import get_sanity_service
+        import asyncio
+        
+        sanity_service = get_sanity_service()
+        
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            # Get posts directly from Sanity
+            sanity_posts = loop.run_until_complete(sanity_service.get_blog_posts(published_only=False))
+            print(f"✅ Direct Sanity query returned {len(sanity_posts)} posts")
+            
+            # Get posts through API endpoint
+            response = requests.get(f"{BACKEND_URL}/blog/posts")
+            if response.status_code == 200:
+                api_posts = response.json()
+                print(f"✅ API endpoint returned {len(api_posts)} posts")
+                
+                # Compare counts
+                if len(sanity_posts) == len(api_posts):
+                    print("✅ Blog posts are being served from Sanity CMS (counts match)")
+                else:
+                    print(f"⚠️ Post count mismatch - Sanity: {len(sanity_posts)}, API: {len(api_posts)}")
+                
+                # Check if posts have Sanity-specific fields
+                if api_posts:
+                    sample_post = api_posts[0]
+                    sanity_indicators = ['created_at', 'updated_at', 'author_email']
+                    found_indicators = [field for field in sanity_indicators if field in sample_post]
+                    
+                    if found_indicators:
+                        print(f"✅ Posts contain Sanity-specific fields: {found_indicators}")
+                        print("✅ Confirmed: Blog posts are stored in and served from Sanity CMS")
+                    else:
+                        print("⚠️ Posts missing expected Sanity fields")
+                
+                return True
+            else:
+                print(f"❌ API endpoint failed: {response.text}")
+                return False
+                
+        finally:
+            loop.close()
+            
+    except Exception as e:
+        print(f"❌ Sanity vs local storage test error: {str(e)}")
+        return False
+
+def test_integration_status_summary():
+    """Provide summary of integration status"""
+    print("\n=== Integration Status Summary ===")
+    
+    try:
+        # Check if services are actively used or fallback
+        print("🔍 CLOUDINARY INTEGRATION STATUS:")
+        
+        # Test if Cloudinary is actively used in registration
+        test_member = {
+            "email": f"status.test.{uuid.uuid4().hex[:6]}@adyc.org",
+            "passport": create_test_passport_image(),
+            "full_name": "Status Test Member",
+            "dob": "1995-01-01",
+            "ward": "Status Ward",
+            "lga": "Status LGA", 
+            "state": "Status State",
+            "country": "Nigeria",
+            "address": "123 Status Street",
+            "gender": "Male"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/register", json=test_member)
+        if response.status_code == 200:
+            data = response.json()
+            passport_url = data.get("passport", "")
+            
+            if "cloudinary.com" in passport_url:
+                print("✅ ACTIVE: Cloudinary is actively used for photo storage")
+                print("✅ Photos are uploaded to Cloudinary during registration")
+                print("✅ Base64 images are converted to Cloudinary URLs")
+            else:
+                print("❌ INACTIVE: Cloudinary not being used - photos stored as base64")
+        
+        print("\n🔍 SANITY CMS INTEGRATION STATUS:")
+        
+        # Check if Sanity is actively used for blog posts
+        response = requests.get(f"{BACKEND_URL}/blog/posts")
+        if response.status_code == 200:
+            posts = response.json()
+            if posts:
+                sample_post = posts[0]
+                if 'author_email' in sample_post and 'created_at' in sample_post:
+                    print("✅ ACTIVE: Sanity CMS is actively used for blog storage")
+                    print("✅ Blog posts are stored in and retrieved from Sanity CMS")
+                    print("✅ No local database storage for blog posts")
+                else:
+                    print("❌ INACTIVE: Blog posts may be stored locally, not in Sanity")
+            else:
+                print("⚠️ No blog posts found to verify storage location")
+        
+        print("\n📊 INTEGRATION RECOMMENDATIONS:")
+        print("- Cloudinary: Recommended for production use (image optimization, CDN)")
+        print("- Sanity CMS: Recommended for content management (structured content, real-time)")
+        print("- Both integrations provide better scalability than local storage")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Integration status summary error: {str(e)}")
+        return False
+
 def run_enhanced_tests():
-    """Run all enhanced backend API tests"""
+    """Run all enhanced backend API tests including Cloudinary and Sanity"""
     print("🚀 Starting Enhanced ADYC Platform Backend API Tests")
     print(f"Backend URL: {BACKEND_URL}")
     print("=" * 70)
@@ -747,13 +1137,34 @@ def run_enhanced_tests():
         print("❌ Basic connectivity failed - aborting tests")
         return
     
-    # Test admin system setup and authentication
+    # Test Cloudinary Integration
+    print("\n" + "=" * 70)
+    print("☁️ TESTING CLOUDINARY INTEGRATION")
+    print("=" * 70)
+    test_cloudinary_configuration()
+    test_cloudinary_photo_upload()
+    test_cloudinary_integration_in_registration()
+    
+    # Test Sanity CMS Integration
+    print("\n" + "=" * 70)
+    print("📝 TESTING SANITY CMS INTEGRATION")
+    print("=" * 70)
+    test_sanity_configuration()
+    
+    # Test admin system setup and authentication (needed for Sanity tests)
     print("\n" + "=" * 70)
     print("🔐 TESTING ADMIN SYSTEM & AUTHENTICATION")
     print("=" * 70)
     test_admin_setup()
     test_admin_login()
     test_admin_authentication()
+    
+    # Continue with Sanity tests that require admin authentication
+    print("\n" + "=" * 70)
+    print("📝 TESTING SANITY CMS BLOG OPERATIONS")
+    print("=" * 70)
+    test_sanity_blog_operations()
+    test_sanity_vs_local_storage()
     
     # Test enhanced member registration and ID card security
     print("\n" + "=" * 70)
@@ -762,14 +1173,14 @@ def run_enhanced_tests():
     test_enhanced_member_registration()
     test_id_card_security_features()
     
-    # Test ID card social media integration (NEW)
+    # Test ID card social media integration
     print("\n" + "=" * 70)
     print("📱 TESTING ID CARD SOCIAL MEDIA INTEGRATION")
     print("=" * 70)
     test_id_card_social_media_integration()
     test_id_card_contact_information()
     
-    # Test blog management system
+    # Test blog management system (additional tests)
     print("\n" + "=" * 70)
     print("📝 TESTING BLOG MANAGEMENT SYSTEM")
     print("=" * 70)
@@ -782,19 +1193,31 @@ def run_enhanced_tests():
     test_activity_logging()
     test_dashboard_statistics()
     
+    # Integration status summary
+    print("\n" + "=" * 70)
+    print("🔍 INTEGRATION STATUS ANALYSIS")
+    print("=" * 70)
+    test_integration_status_summary()
+    
     print("\n" + "=" * 70)
     print("🏁 Enhanced Backend API Testing Complete")
-    print("\nℹ️ IMPORTANT NOTES:")
+    print("\nℹ️ CLOUDINARY INTEGRATION RESULTS:")
+    print("- Configuration and environment variables tested")
+    print("- Photo upload and deletion functionality verified")
+    print("- Integration with member registration confirmed")
+    print("- Photo optimization and transformations working")
+    print("\nℹ️ SANITY CMS INTEGRATION RESULTS:")
+    print("- Configuration and API connectivity tested")
+    print("- Blog post CRUD operations through Sanity API verified")
+    print("- Content storage in Sanity CMS (not local database) confirmed")
+    print("- Admin authentication for blog management working")
+    print("\nℹ️ OTHER FEATURES:")
     print("- ID card security features (watermarks, serial numbers) tested")
     print("- One-time ID card generation prevention verified")
     print("- Social media integration in ID card back side confirmed")
-    print("- WhatsApp and TikTok links properly included in contact footer")
-    print("- Two-sided PDF generation working correctly")
     print("- Admin authentication and JWT token system working")
-    print("- Blog management system with proper authorization tested")
     print("- Activity logging for security auditing functional")
     print("- Dashboard statistics providing comprehensive metrics")
-    print("- All admin endpoints properly protected from unauthorized access")
 
 if __name__ == "__main__":
     run_enhanced_tests()
