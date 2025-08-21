@@ -11,6 +11,9 @@ import uuid
 from datetime import datetime, timedelta
 from email_service import get_email_service
 from supabase_service import get_supabase_service
+from cloudinary_service import get_cloudinary_service
+from sanity_service import get_sanity_service
+from qr_service import get_qr_service
 import jwt
 from passlib.context import CryptContext
 
