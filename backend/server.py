@@ -259,13 +259,69 @@ async def get_members():
     members = await supabase_service.get_members()
     return [MemberRegistration(**member) for member in members]
 
-@api_router.get("/members/{member_id}", response_model=MemberRegistration)
-async def get_member(member_id: str):
+@api_router.get("/members/{member_id}/qr-code", response_model=QRCodeResponse)
+async def get_member_qr_code(member_id: str):
+    """Generate QR code for member verification"""
     member = await supabase_service.get_member_by_id(member_id)
     if not member:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Member not found")
-    return MemberRegistration(**member)
+    
+    try:
+        qr_data = qr_service.generate_member_qr(
+            member_id=member_id,
+            member_name=member.get('full_name')
+        )
+        
+        return QRCodeResponse(**qr_data)
+        
+    except Exception as e:
+        logger.error(f"Error generating QR code for member {member_id}: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Error generating QR code")
+
+@api_router.post("/upload-photo", response_model=PhotoUploadResponse)
+async def upload_member_photo(member_id: str, base64_image: str):
+    """Upload member photo to Cloudinary"""
+    try:
+        photo_result = await cloudinary_service.upload_member_photo(
+            base64_image=base64_image,
+            member_id=member_id
+        )
+        
+        return PhotoUploadResponse(**photo_result)
+        
+    except Exception as e:
+        logger.error(f"Error uploading photo for member {member_id}: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Error uploading photo")
+
+@api_router.get("/verify/{member_id}")
+async def verify_member(member_id: str):
+    """Verify member for QR code scanning (public endpoint)"""
+    member = await supabase_service.get_member_by_id(member_id)
+    if not member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    # Log verification activity
+    await supabase_service.log_activity(
+        user_email=member.get('email'),
+        action='MEMBER_VERIFICATION',
+        resource_type='member',
+        resource_id=member_id,
+        details={'verification_method': 'qr_scan'}
+    )
+    
+    # Return limited member info for verification
+    return {
+        'member_id': member_id,
+        'full_name': member.get('full_name'),
+        'email': member.get('email'),
+        'photo_url': member.get('passport'),
+        'registration_date': member.get('registration_date'),
+        'verified': True
+    }
 
 @api_router.get("/members/{member_id}/id-card")
 async def download_id_card(member_id: str):
