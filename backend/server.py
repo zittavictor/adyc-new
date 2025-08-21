@@ -200,8 +200,42 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
     member_dict = input.dict()
     
     try:
+        # First, upload photo to Cloudinary
+        member_id_temp = f"temp_{uuid.uuid4().hex[:8]}"
+        photo_result = await cloudinary_service.upload_member_photo(
+            base64_image=member_dict['passport'],
+            member_id=member_id_temp
+        )
+        
+        # Replace base64 passport with Cloudinary URL
+        member_dict['passport'] = photo_result['url']
+        member_dict['photo_public_id'] = photo_result['public_id']
+        
         # Create member using Supabase service (it handles member_id generation and email checking)
         result = await supabase_service.create_member(member_dict)
+        
+        # Update Cloudinary photo with actual member_id
+        if result.get('member_id'):
+            try:
+                # Upload with correct member_id
+                final_photo_result = await cloudinary_service.upload_member_photo(
+                    base64_image=input.passport,
+                    member_id=result['member_id']
+                )
+                # Update member record with correct photo URL and public_id
+                await supabase_service.update_member_photo(
+                    result['member_id'], 
+                    final_photo_result['url'],
+                    final_photo_result['public_id']
+                )
+                result['passport'] = final_photo_result['url']
+                result['photo_public_id'] = final_photo_result['public_id']
+                
+                # Clean up temporary photo
+                await cloudinary_service.delete_member_photo(photo_result['public_id'])
+            except Exception as e:
+                logger.warning(f"Error updating photo with actual member_id: {e}")
+        
         member_obj = MemberRegistration(**result)
         
         # Send registration email with ID card PDF in background
@@ -215,6 +249,10 @@ async def register_member(input: MemberRegistrationCreate, background_tasks: Bac
     except ValueError as e:
         from fastapi import HTTPException
         raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(f"Error in member registration: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Registration failed")
 
 @api_router.get("/members", response_model=List[MemberRegistration])
 async def get_members():
