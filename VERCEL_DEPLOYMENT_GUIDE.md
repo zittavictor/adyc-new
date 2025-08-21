@@ -361,8 +361,8 @@ GET    /api/status                    - Get status checks
 POST   /api/register                  - Member registration
 GET    /api/members                   - Get all members
 GET    /api/members/{id}              - Get specific member
-GET    /api/members/{id}/id-card      - Download ID card PDF
-GET    /api/members/{id}/qr-code      - Get member QR code
+GET    /api/members/{id}/id_card      - Download ID card PDF
+GET    /api/members/{id}/qr_code      - Get member QR code
 GET    /api/verify/{id}               - Verify member
 GET    /api/blog/posts                - Public blog posts
 POST   /api/admin/login               - Admin login
