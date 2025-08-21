@@ -108,7 +108,7 @@ class BlogPost(BaseModel):
     summary: Optional[str] = None
     author: str
     author_email: EmailStr
-    image_url: Optional[str] = None
+    youtube_url: Optional[str] = None  # YouTube video URL
     published: bool = False
     created_at: datetime
     updated_at: datetime
@@ -117,14 +117,14 @@ class BlogPostCreate(BaseModel):
     title: str
     content: str
     summary: Optional[str] = None
-    image_url: Optional[str] = None
+    youtube_url: Optional[str] = None  # YouTube video URL
     published: bool = False
 
 class BlogPostUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
     summary: Optional[str] = None
-    image_url: Optional[str] = None
+    youtube_url: Optional[str] = None  # YouTube video URL
     published: Optional[bool] = None
 
 # Security Functions
