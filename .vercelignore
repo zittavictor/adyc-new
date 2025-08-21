@@ -1,0 +1,43 @@
+# Backend Python files (not needed for Vercel deployment)
+backend/
+backend/**
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files with secrets (use Vercel environment variables instead)
+.env
+.env.local
+.env.*.local
+
+# Node modules (handled by Vercel)
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
