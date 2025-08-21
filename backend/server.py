@@ -443,11 +443,11 @@ async def get_admin_me(current_admin: dict = Depends(get_current_admin_user)):
     """Get current admin user info"""
     return AdminUser(**current_admin)
 
-# BLOG POST ENDPOINTS
+# BLOG POST ENDPOINTS (Using Sanity)
 @api_router.get("/blog/posts", response_model=List[BlogPost])
 async def get_blog_posts(published_only: bool = True):
-    """Get blog posts (public endpoint)"""
-    posts = await supabase_service.get_blog_posts(published_only)
+    """Get blog posts from Sanity (public endpoint)"""
+    posts = await sanity_service.get_blog_posts(published_only)
     return [BlogPost(**post) for post in posts]
 
 @api_router.post("/admin/blog/posts", response_model=BlogPost)
@@ -455,18 +455,18 @@ async def create_blog_post(
     post_data: BlogPostCreate, 
     current_admin: dict = Depends(get_current_admin_user)
 ):
-    """Create a new blog post (admin only)"""
+    """Create a new blog post in Sanity (admin only)"""
     post_dict = post_data.dict()
     post_dict['author'] = current_admin['username']
     post_dict['author_email'] = current_admin['email']
     
-    result = await supabase_service.create_blog_post(post_dict)
+    result = await sanity_service.create_blog_post(post_dict)
     return BlogPost(**result)
 
 @api_router.get("/admin/blog/posts", response_model=List[BlogPost])
 async def get_admin_blog_posts(current_admin: dict = Depends(get_current_admin_user)):
-    """Get all blog posts including drafts (admin only)"""
-    posts = await supabase_service.get_blog_posts(published_only=False)
+    """Get all blog posts including drafts from Sanity (admin only)"""
+    posts = await sanity_service.get_blog_posts(published_only=False)
     return [BlogPost(**post) for post in posts]
 
 @api_router.put("/admin/blog/posts/{post_id}", response_model=BlogPost)
@@ -475,8 +475,8 @@ async def update_blog_post(
     post_data: BlogPostUpdate,
     current_admin: dict = Depends(get_current_admin_user)
 ):
-    """Update a blog post (admin only)"""
-    result = await supabase_service.update_blog_post(post_id, post_data.dict(exclude_unset=True))
+    """Update a blog post in Sanity (admin only)"""
+    result = await sanity_service.update_blog_post(post_id, post_data.dict(exclude_unset=True))
     if not result:
         raise HTTPException(status_code=404, detail="Blog post not found")
     return BlogPost(**result)
@@ -486,8 +486,8 @@ async def delete_blog_post(
     post_id: str, 
     current_admin: dict = Depends(get_current_admin_user)
 ):
-    """Delete a blog post (admin only)"""
-    success = await supabase_service.delete_blog_post(post_id)
+    """Delete a blog post from Sanity (admin only)"""
+    success = await sanity_service.delete_blog_post(post_id)
     if not success:
         raise HTTPException(status_code=404, detail="Blog post not found")
     return {"message": "Blog post deleted successfully"}
