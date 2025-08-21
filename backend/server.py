@@ -24,6 +24,11 @@ load_dotenv(ROOT_DIR / '.env')
 # Supabase connection
 supabase_service = get_supabase_service()
 
+# Initialize other services
+cloudinary_service = get_cloudinary_service()
+sanity_service = get_sanity_service()
+qr_service = get_qr_service()
+
 # Security setup
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
