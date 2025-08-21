@@ -19,6 +19,8 @@ const Blog = ({ onNavigate }) => {
     category: 'general'
   });
 
+  const categories = ['all', 'general', 'events', 'news', 'updates'];
+
   useEffect(() => {
     fetchBlogPosts();
   }, []);
