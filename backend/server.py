@@ -127,6 +127,22 @@ class BlogPostUpdate(BaseModel):
     youtube_url: Optional[str] = None  # YouTube video URL
     published: Optional[bool] = None
 
+# Photo Upload Models
+class PhotoUploadResponse(BaseModel):
+    url: str
+    public_id: str
+    width: Optional[int] = None
+    height: Optional[int] = None
+    format: Optional[str] = None
+    bytes: Optional[int] = None
+
+# QR Code Models
+class QRCodeResponse(BaseModel):
+    qr_code_base64: str
+    verification_url: str
+    member_id: str
+    qr_type: str
+
 # Security Functions
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
