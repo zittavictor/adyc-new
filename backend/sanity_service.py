@@ -83,7 +83,13 @@ class SanityService:
             result = response.json()
             
             if result.get('results') and len(result['results']) > 0:
-                created_doc = result['results'][0]['document']
+                created_doc = result['results'][0].get('document')
+                if not created_doc:
+                    # Handle case where document key doesn't exist
+                    logger.warning(f"No document in Sanity result: {result}")
+                    # Try to use the result directly or create a fallback
+                    created_doc = result['results'][0] if result['results'][0] else sanity_doc
+                
                 logger.info(f"Successfully created blog post in Sanity: {doc_id}")
                 return self._format_blog_post(created_doc)
             else:
