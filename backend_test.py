@@ -13,7 +13,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://logo-resize-home.preview.emergentagent.com/api"
+BACKEND_URL = "https://event-reg-flow.preview.emergentagent.com/api"
 
 # Global variables for test data
 admin_token = None
