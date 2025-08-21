@@ -166,11 +166,11 @@ class SupabaseService:
             raise
     
     async def update_member_photo(self, member_id: str, photo_url: str, photo_public_id: str) -> bool:
-        """Update member photo URL and public_id"""
+        """Update member photo URL (temporarily skip photo_public_id due to missing column)"""
         try:
             result = self.supabase.table('members').update({
                 'passport': photo_url,
-                'photo_public_id': photo_public_id,
+                # 'photo_public_id': photo_public_id,  # Temporarily commented out
                 'updated_at': datetime.utcnow().isoformat()
             }).eq('member_id', member_id).execute()
             
