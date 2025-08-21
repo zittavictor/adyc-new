@@ -233,9 +233,15 @@ class SanityService:
             result = response.json()
             
             if result.get('results') and len(result['results']) > 0:
-                updated_doc = result['results'][0]['document']
-                logger.info(f"Successfully updated blog post in Sanity: {post_id}")
-                return self._format_blog_post(updated_doc)
+                updated_doc = result['results'][0].get('document')
+                if not updated_doc:
+                    # Handle case where document key doesn't exist
+                    logger.warning(f"No document in Sanity update result: {result}")
+                    updated_doc = result['results'][0] if result['results'][0] else None
+                
+                if updated_doc:
+                    logger.info(f"Successfully updated blog post in Sanity: {post_id}")
+                    return self._format_blog_post(updated_doc)
             
             return None
             
