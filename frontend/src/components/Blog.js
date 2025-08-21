@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Layout from './Layout';
-import { Plus, Calendar, User, Search, Filter, Edit, Trash2, Eye } from 'lucide-react';
-import { blogPosts as initialBlogPosts } from '../data/mockData';
+import { Plus, Calendar, User, Search, Filter, Edit, Trash2, Eye, Video, Youtube, ExternalLink } from 'lucide-react';
+import YouTube from 'react-youtube';
+import axios from 'axios';
 
 const Blog = ({ onNavigate }) => {
   const [blogPosts, setBlogPosts] = useState(initialBlogPosts);
