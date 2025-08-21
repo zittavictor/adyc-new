@@ -288,6 +288,14 @@ const Register = ({ onNavigate }) => {
                 </button>
                 
                 <button
+                  onClick={() => setShowQRCode(true)}
+                  className="btn-secondary mobile-touch flex items-center space-x-3 text-lg px-8 py-4 bg-green-500 hover:bg-green-600 text-white border-green-500"
+                >
+                  <QrCode className="w-5 h-5" />
+                  <span>Get QR Code</span>
+                </button>
+                
+                <button
                   onClick={() => onNavigate('home')}
                   className="btn-secondary mobile-touch text-lg px-8 py-4"
                 >
