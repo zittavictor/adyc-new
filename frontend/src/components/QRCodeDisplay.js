@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
+import QRCodeLib from 'qrcode';
 import { Download, Smartphone, QrCode, CheckCircle, ExternalLink } from 'lucide-react';
 import axios from 'axios';
 
