@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Layout from './Layout';
-import { Camera, Download, CheckCircle, User, MapPin, Calendar, Globe, Mail, Loader2, UserCheck, Shield, Award } from 'lucide-react';
+import { Camera, Download, CheckCircle, User, MapPin, Calendar, Globe, Mail, Loader2, UserCheck, Shield, Award, QrCode } from 'lucide-react';
 import jsPDF from 'jspdf';
 import axios from 'axios';
+import QRCodeDisplay from './QRCodeDisplay';
 
 const Register = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
