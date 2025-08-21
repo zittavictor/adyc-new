@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class QRCodeService:
     def __init__(self):
-        self.frontend_url = os.getenv('REACT_APP_FRONTEND_URL', 'https://fast-node-deploy.preview.emergentagent.com')
+        self.frontend_url = os.getenv('REACT_APP_FRONTEND_URL', 'https://supabase-url-setup.preview.emergentagent.com')
         
     def generate_member_qr(self, member_id: str, member_name: str = None) -> Dict[str, Any]:
         """

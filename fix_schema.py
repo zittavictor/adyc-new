@@ -54,7 +54,7 @@ def test_member_registration_without_photo_public_id():
     import json
     import uuid
     
-    BACKEND_URL = "https://fast-node-deploy.preview.emergentagent.com/api"
+    BACKEND_URL = "https://supabase-url-setup.preview.emergentagent.com/api"
     
     def create_test_passport_image():
         return "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
