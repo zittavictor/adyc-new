@@ -11,6 +11,13 @@ const Blog = ({ onNavigate }) => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState('');
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newPost, setNewPost] = useState({
+    title: '',
+    content: '',
+    summary: '',
+    category: 'general'
+  });
 
   useEffect(() => {
     fetchBlogPosts();
