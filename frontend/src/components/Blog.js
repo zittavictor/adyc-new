@@ -6,20 +6,35 @@ import YouTube from 'react-youtube';
 import axios from 'axios';
 
 const Blog = ({ onNavigate }) => {
-  const [blogPosts, setBlogPosts] = useState(initialBlogPosts);
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [newPost, setNewPost] = useState({
-    title: '',
-    summary: '',
-    content: '',
-    category: 'Leadership',
-    image: null
-  });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState('');
 
-  const categories = ['all', 'Leadership', 'Community', 'Unity', 'Inclusivity', 'Events'];
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
+  const fetchBlogPosts = async () => {
+    try {
+      setLoading(true);
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await axios.get(`${backendUrl}/api/blog/posts`);
+      setBlogPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      setError('Failed to fetch blog posts');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const extractYouTubeId = (url) => {
+    if (!url) return null;
+    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+    return match ? match[1] : null;
+  };
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
