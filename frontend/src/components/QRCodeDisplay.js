@@ -50,7 +50,6 @@ const QRCodeDisplay = ({ memberId, memberName, onClose }) => {
     const qrSize = 300;
     
     // Create QR code using qrcode library
-    const QRCodeLib = require('qrcode');
     QRCodeLib.toCanvas(qrCanvas, qrData.verification_url, {
       width: qrSize,
       color: {
