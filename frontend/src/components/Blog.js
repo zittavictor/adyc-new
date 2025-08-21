@@ -53,6 +53,28 @@ const Blog = ({ onNavigate }) => {
     window.open('/admin-blog', '_blank');
   };
 
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+    try {
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/blog/posts`, newPost);
+      setBlogPosts([...blogPosts, response.data]);
+      setNewPost({ title: '', content: '', summary: '', category: 'general' });
+      setShowCreateForm(false);
+    } catch (error) {
+      console.error('Error creating post:', error);
+      setError('Failed to create blog post');
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // In a real app, you would upload the file to a server
+      console.log('Image file selected:', file.name);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
