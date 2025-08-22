@@ -109,7 +109,7 @@ export default async function handler(
 
     // Get all members
     if (req.method === 'GET' && !memberId) {
-      const members = await supabaseService.getAllMembers();
+      const members = await supabaseService.getMembers();
       res.status(200).json({
         success: true,
         data: members,
