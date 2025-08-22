@@ -5,6 +5,9 @@
 backend/
 **/*.py
 
+# API backup files (not for deployment)
+api/backup/
+
 # Local tests and scripts
 tests/
 scripts/
