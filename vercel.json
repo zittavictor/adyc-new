@@ -4,6 +4,17 @@
   "outputDirectory": "frontend/build",
   "installCommand": "yarn install && cd frontend && yarn install",
   "framework": "create-react-app",
+  "functions": {
+    "api/admin/index.ts": {
+      "maxDuration": 30
+    },
+    "api/members/index.ts": {
+      "maxDuration": 30
+    },
+    "api/utils/index.ts": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
