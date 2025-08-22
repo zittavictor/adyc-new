@@ -158,19 +158,19 @@ class EmailService:
                     c.setStrokeColor(colors.HexColor('#f97316'))
                     c.setLineWidth(1.5)
                     c.rect(photo_x-1, photo_y-1, photo_width+2, photo_height+2, fill=0, stroke=1)
-                    return  # Photo successfully added
                     
         except Exception as e:
             logger.warning(f"Error processing member photo: {e}")
             
-        # Fallback photo placeholder
-        photo_x = card_width - 16*mm - 4*mm
-        photo_y = card_height - 20*mm - 4*mm
-        c.setFillColor(colors.HexColor('#e5e7eb'))
-        c.rect(photo_x, photo_y, 16*mm, 20*mm, fill=1)
-        c.setFillColor(colors.HexColor('#6b7280'))
-        c.setFont("Helvetica", 6)
-        c.drawString(photo_x+5*mm, photo_y+9*mm, "PHOTO")
+        # If no photo was successfully processed, show placeholder
+        if not passport_data or not photo_stream:
+            photo_x = card_width - 16*mm - 4*mm
+            photo_y = card_height - 20*mm - 4*mm
+            c.setFillColor(colors.HexColor('#e5e7eb'))
+            c.rect(photo_x, photo_y, 16*mm, 20*mm, fill=1)
+            c.setFillColor(colors.HexColor('#6b7280'))
+            c.setFont("Helvetica", 6)
+            c.drawString(photo_x+5*mm, photo_y+9*mm, "PHOTO")
         
         # Member information - Specific layout as requested
         info_start_y = card_height - 26*mm
