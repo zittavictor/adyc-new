@@ -130,11 +130,12 @@ export default async function handler(
       const emailService = new EmailService();
       
       // Create a test member data for email testing
-      const testMemberData = {
+      const testMemberData: MemberRegistration = {
         id: 'test-id',
         member_id: 'TEST-2025-123456',
         full_name: 'Test Member',
         email: validation.data.test_email,
+        passport: 'https://example.com/test-photo.jpg', // Add required passport field
         dob: '1990-01-01',
         gender: 'male' as const,
         state: 'Lagos',
