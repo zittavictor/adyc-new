@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Home, BookOpen, Users, UserPlus, Info, Phone, Share2, Search, Menu, X } from 'lucide-react';
+import { Home, BookOpen, Users, UserPlus, Info, Phone, Share2, Search, Menu, X, Shield } from 'lucide-react';
 import FloatingBackgroundElements from './FloatingBackgroundElements';
 
 const navigation = [
