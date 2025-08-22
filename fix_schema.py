@@ -54,7 +54,7 @@ def test_member_registration_without_photo_public_id():
     import json
     import uuid
     
-    BACKEND_URL = "https://blog-view-repair.preview.emergentagent.com/api"
+    BACKEND_URL = "https://secure-id-creator.preview.emergentagent.com/api"
     
     def create_test_passport_image():
         return "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
