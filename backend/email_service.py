@@ -355,6 +355,72 @@ class EmailService:
         c.setFont("Helvetica", 5)
         serial_number = member_data.get('id_card_serial_number', 'SN-UNKNOWN')
         c.drawString(qr_x, qr_y-3*mm, f"Serial: {serial_number}")
+    
+    def _download_and_optimize_photo(self, cloudinary_url: str):
+        """Download photo from Cloudinary URL and optimize it for ID card use"""
+        import requests
+        from PIL import Image
+        import io
+        
+        try:
+            # Download the image from Cloudinary
+            response = requests.get(cloudinary_url, timeout=10)
+            response.raise_for_status()
+            
+            # Optimize the downloaded image
+            return self._optimize_photo_from_bytes(response.content)
+            
+        except Exception as e:
+            logger.error(f"Error downloading photo from Cloudinary: {e}")
+            raise
+    
+    def _optimize_photo_from_bytes(self, image_bytes: bytes):
+        """Optimize photo bytes for ID card use with WebP conversion"""
+        from PIL import Image
+        import io
+        
+        try:
+            # Open the image
+            img = Image.open(io.BytesIO(image_bytes))
+            
+            # Convert to RGB if necessary (WebP requires RGB)
+            if img.mode not in ('RGB', 'RGBA'):
+                img = img.convert('RGB')
+            
+            # Calculate optimal size for ID card (maintain aspect ratio)
+            # ID card photo should be roughly 16mm x 20mm at 300 DPI
+            target_width = int(16 * 300 / 25.4)  # ~189 pixels
+            target_height = int(20 * 300 / 25.4)  # ~236 pixels
+            
+            # Resize while maintaining aspect ratio
+            img.thumbnail((target_width, target_height), Image.Resampling.LANCZOS)
+            
+            # Create a white background if image is smaller
+            if img.size[0] < target_width or img.size[1] < target_height:
+                background = Image.new('RGB', (target_width, target_height), 'white')
+                # Center the image on the background
+                x = (target_width - img.size[0]) // 2
+                y = (target_height - img.size[1]) // 2
+                background.paste(img, (x, y))
+                img = background
+            
+            # Convert to WebP for optimal quality and size
+            output = io.BytesIO()
+            img.save(output, format='WebP', quality=85, optimize=True)
+            output.seek(0)
+            
+            # Since ReportLab needs the image in a format it can handle,
+            # convert back to JPEG for ReportLab compatibility
+            img_webp = Image.open(output)
+            final_output = io.BytesIO()
+            img_webp.convert('RGB').save(final_output, format='JPEG', quality=90, optimize=True)
+            final_output.seek(0)
+            
+            return final_output
+            
+        except Exception as e:
+            logger.error(f"Error optimizing photo: {e}")
+            raise
 
     def send_registration_email(self, member_data: Dict[str, Any]) -> bool:
         """Send registration confirmation email with ID card PDF attachment"""
