@@ -40,7 +40,7 @@ class AuthService {
 
   verifyToken(token: string): { username: string } | null {
     try {
-      const payload = jwt.verify(token, this.secretKey, { algorithms: [this.algorithm] }) as any;
+      const payload = jwt.verify(token, this.secretKey, { algorithms: [this.algorithm as jwt.Algorithm] }) as any;
       
       if (!payload.sub) {
         return null;
