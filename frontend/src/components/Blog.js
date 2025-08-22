@@ -280,6 +280,22 @@ const Blog = ({ onNavigate }) => {
 
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                      YouTube Video URL (Optional)
+                    </label>
+                    <input
+                      type="url"
+                      value={newPost.youtube_url}
+                      onChange={(e) => setNewPost({ ...newPost, youtube_url: e.target.value })}
+                      className="w-full neumorphic-input px-4 py-3 rounded-lg text-neutral-800 dark:text-white bg-neutral-50 dark:bg-neutral-700/50"
+                      placeholder="https://www.youtube.com/watch?v=..."
+                    />
+                    <p className="text-xs text-neutral-500 mt-1">
+                      Add a YouTube video URL to embed it in your blog post
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                       Featured Image
                     </label>
                     <input
