@@ -46,8 +46,7 @@ class QRCodeService {
 
       const qrCodeBase64 = await QRCode.toDataURL(eventUrl, {
         errorCorrectionLevel: 'M',
-        type: 'image/png',
-        quality: 0.92,
+        type: 'png',
         margin: 1,
         color: {
           dark: '#2E8B57', // ADYC green
