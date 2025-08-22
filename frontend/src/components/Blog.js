@@ -16,7 +16,8 @@ const Blog = ({ onNavigate }) => {
     title: '',
     content: '',
     summary: '',
-    category: 'general'
+    category: 'general',
+    youtube_url: ''
   });
 
   const categories = ['all', 'general', 'events', 'news', 'updates'];
