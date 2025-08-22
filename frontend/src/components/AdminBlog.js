@@ -8,6 +8,8 @@ import YouTube from 'react-youtube';
 import axios from 'axios';
 
 const AdminBlog = ({ onNavigate }) => {
+  const { isAuthenticated, adminUser, logout, getAuthHeaders } = useAuth();
+  const [showLogin, setShowLogin] = useState(!isAuthenticated);
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -22,10 +24,6 @@ const AdminBlog = ({ onNavigate }) => {
     youtube_url: '',
     published: false
   });
-
-  // Mock admin authentication (in real app, this would come from context/auth)
-  const [isAdmin] = useState(true);
-  const [adminToken] = useState('mock-admin-token');
 
   useEffect(() => {
     fetchBlogPosts();
