@@ -13,7 +13,7 @@ import re
 import time
 
 # Configuration
-BACKEND_URL = "https://route-collision-fix.preview.emergentagent.com/api"
+BACKEND_URL = "https://blog-view-repair.preview.emergentagent.com/api"
 
 # Global variables for test data
 test_member_id = None
