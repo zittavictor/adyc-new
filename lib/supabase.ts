@@ -145,6 +145,20 @@ class SupabaseService {
     return !!data?.length;
   }
 
+  async updateMemberIdCardStatus(memberId: string, generated: boolean) {
+    const { data, error } = await this.supabase
+      .from('members')
+      .update({
+        id_card_generated: generated,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', memberId)
+      .select();
+
+    if (error) throw new Error(`Error updating member ID card status: ${error.message}`);
+    return !!data?.length;
+  }
+
   // ADMIN USERS
   async createAdminUser(adminData: Partial<AdminUser>) {
     const data = {
