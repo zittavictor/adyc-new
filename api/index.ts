@@ -16,22 +16,28 @@ export default async function handler(
     return;
   }
 
-  if (req.method === 'GET') {
-    const response: ApiResponse = {
-      success: true,
-      message: 'ADYC API is running on Vercel',
-      data: {
-        version: '2.0.0',
-        environment: 'production',
-        timestamp: new Date().toISOString()
-      }
-    };
-
-    res.status(200).json(response);
-  } else {
+  if (req.method !== 'GET') {
     res.status(405).json({
       success: false,
       error: 'Method not allowed'
-    });
+    } as ApiResponse);
+    return;
   }
+
+  // Root API endpoint - health check
+  res.status(200).json({
+    success: true,
+    data: {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      endpoints: {
+        admin: '/api/admin',
+        members: '/api/members', 
+        blog: '/api/blog',
+        utils: '/api/utils'
+      }
+    },
+    message: 'ADYC API is operational'
+  } as ApiResponse);
 }
