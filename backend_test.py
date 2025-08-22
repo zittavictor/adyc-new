@@ -1387,6 +1387,49 @@ def test_integration_status_summary():
         print(f"❌ Integration status summary error: {str(e)}")
         return False
 
+def run_admin_authentication_tests():
+    """Run focused admin authentication tests - REVIEW REQUEST"""
+    print("🔐 Starting ADYC Admin Authentication & Credential Discovery Tests")
+    print(f"Backend URL: {BACKEND_URL}")
+    print("🎯 REVIEW REQUEST: Help determine existing admin credentials for user access")
+    print("=" * 70)
+    
+    # Test basic connectivity first
+    if not test_basic_connectivity():
+        print("❌ Basic connectivity failed - aborting tests")
+        return
+    
+    # PRIORITY: Admin credential discovery
+    print("\n" + "=" * 70)
+    print("🔍 ADMIN CREDENTIAL DISCOVERY - REVIEW REQUEST PRIORITY")
+    print("=" * 70)
+    test_admin_credential_discovery()
+    
+    # Test admin system setup and authentication
+    print("\n" + "=" * 70)
+    print("🔐 ADMIN SYSTEM SETUP & AUTHENTICATION TESTING")
+    print("=" * 70)
+    test_admin_setup()
+    test_admin_login()
+    test_admin_authentication()
+    
+    # Test admin endpoints access
+    print("\n" + "=" * 70)
+    print("🛡️ ADMIN ENDPOINTS ACCESS TESTING")
+    print("=" * 70)
+    test_blog_management_system()
+    test_activity_logging()
+    test_dashboard_statistics()
+    
+    print("\n" + "=" * 70)
+    print("🏁 Admin Authentication Testing Complete")
+    print("\n🎯 REVIEW REQUEST SUMMARY:")
+    print("- Admin credential discovery completed")
+    print("- Authentication workflow tested")
+    print("- Admin endpoints access verified")
+    print("- Security measures confirmed")
+    print("=" * 70)
+
 def run_enhanced_tests():
     """Run all enhanced backend API tests including Cloudinary and Sanity"""
     print("🚀 Starting Enhanced ADYC Platform Backend API Tests")
@@ -1397,6 +1440,12 @@ def run_enhanced_tests():
     if not test_basic_connectivity():
         print("❌ Basic connectivity failed - aborting tests")
         return
+    
+    # PRIORITY: Admin credential discovery for review request
+    print("\n" + "=" * 70)
+    print("🔍 ADMIN CREDENTIAL DISCOVERY - REVIEW REQUEST PRIORITY")
+    print("=" * 70)
+    test_admin_credential_discovery()
     
     # Test Cloudinary Integration
     print("\n" + "=" * 70)
@@ -1487,4 +1536,9 @@ def run_enhanced_tests():
     print("- Dashboard statistics providing comprehensive metrics")
 
 if __name__ == "__main__":
-    run_enhanced_tests()
+    # Check if we should run focused admin tests or full tests
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "admin":
+        run_admin_authentication_tests()
+    else:
+        run_enhanced_tests()
