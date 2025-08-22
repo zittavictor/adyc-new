@@ -62,7 +62,7 @@ const Blog = ({ onNavigate }) => {
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
       const response = await axios.post(`${backendUrl}/api/blog/posts`, newPost);
       setBlogPosts([...blogPosts, response.data]);
-      setNewPost({ title: '', content: '', summary: '', category: 'general' });
+      setNewPost({ title: '', content: '', summary: '', category: 'general', youtube_url: '' });
       setShowCreateForm(false);
     } catch (error) {
       console.error('Error creating post:', error);
