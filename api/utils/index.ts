@@ -2,7 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import SupabaseService from '../../lib/supabase';
 import EmailService from '../../lib/email';
 import AuthService from '../../lib/auth';
-import { ApiResponse } from '../../types';
+import { ApiResponse, MemberRegistration } from '../../types';
 import { z } from 'zod';
 
 const setupAdminSchema = z.object({
