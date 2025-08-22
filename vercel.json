@@ -5,17 +5,17 @@
   "framework": "create-react-app",
   "functions": {
     "api/**/*.ts": {
-      "runtime": "@vercel/node@3"
+      "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
       "source": "/((?!api).*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ],
   "headers": [
