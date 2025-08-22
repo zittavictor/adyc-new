@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Migrate from MongoDB to Supabase and implement comprehensive UI/UX improvements: remove dark mode, add floating backgrounds, redesign ID card security, implement admin blog system, improve mobile responsiveness, add hover animations, secure environment variables."
+user_problem_statement: "Fix ID card image display issue and optimize for WebP delivery: Generate ID cards dynamically from user data without storing in database, optimize as WebP for clarity and low size, deliver directly as downloadable file with crisp text and lightweight photos."
 
 backend:
   - task: "Migrate database from MongoDB to Supabase"
