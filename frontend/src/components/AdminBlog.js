@@ -163,7 +163,11 @@ const AdminBlog = ({ onNavigate }) => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   };
 
-  if (!isAdmin) {
+  if (showLogin) {
+    return <AdminLogin onLogin={handleLogin} onCancel={() => onNavigate('home')} />;
+  }
+
+  if (!isAuthenticated) {
     return (
       <Layout currentPage="blog" onNavigate={onNavigate}>
         <div className="container mx-auto px-4 py-8 text-center">
