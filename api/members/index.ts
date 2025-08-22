@@ -77,6 +77,7 @@ export default async function handler(
         ...memberData,
         id: uuidv4(),
         member_id,
+        passport: memberData.photo_url || '', // Add required passport field
         id_card_serial_number: serial_number,
         registration_date: new Date().toISOString(),
         id_card_generated: false
