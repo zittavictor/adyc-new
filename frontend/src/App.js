@@ -29,8 +29,6 @@ function App() {
         return <Home onNavigate={handleNavigation} />;
       case 'blog':
         return <Blog onNavigate={handleNavigation} />;
-      case 'admin-blog':
-        return <AdminBlog onNavigate={handleNavigation} />;
       case 'executives':
         return <Executives onNavigate={handleNavigation} />;
       case 'register':
