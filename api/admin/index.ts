@@ -165,11 +165,11 @@ export default async function handler(
           return;
         }
 
-        const postData = {
+        const postData: BlogPostCreate & { author: string; author_email: string } = {
           ...validation.data,
           author: adminUser.username,
-          authorEmail: adminUser.email
-        } as BlogPostCreate;
+          author_email: adminUser.email
+        };
 
         const createdPost = await sanityService.createBlogPost(postData);
 
