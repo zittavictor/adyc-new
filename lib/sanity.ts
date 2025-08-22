@@ -127,7 +127,7 @@ class SanityService {
         throw new Error(`Sanity API error: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const result: any = await response.json();
       const post = result.result;
 
       return post ? this.formatBlogPost(post) : null;
