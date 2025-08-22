@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import { Toaster } from './components/ui/toaster';
+import { AuthProvider } from './contexts/AuthContext';
 import SplashScreen from './components/SplashScreen';
 import Home from './components/Home';
 import Blog from './components/Blog';
@@ -8,6 +9,7 @@ import Register from './components/Register';
 import Executives from './components/Executives';
 import About from './components/About';
 import Contact from './components/Contact';
+import AdminBlog from './components/AdminBlog';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
