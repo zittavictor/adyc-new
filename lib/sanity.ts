@@ -199,7 +199,7 @@ class SanityService {
         throw new Error(`Sanity API error: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const result: any = await response.json();
       return result.results && result.results.length > 0;
     } catch (error) {
       console.error('Error deleting blog post:', error);
