@@ -162,8 +162,7 @@ export default async function handler(
       const pdfBuffer = await emailService.generateIdCardPDF(member);
 
       // Update member to mark ID card as generated
-      // Since updateMemberField might not exist, we'll use a direct update
-      await supabaseService.updateMember(member.id, { id_card_generated: true });
+      await supabaseService.updateMemberIdCardStatus(member.id, true);
 
       // Log activity
       await supabaseService.logActivity(
