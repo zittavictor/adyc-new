@@ -1280,6 +1280,12 @@ def run_enhanced_tests():
     test_sanity_blog_operations()
     test_sanity_vs_local_storage()
     
+    # Test YouTube URL Integration - REVIEW REQUEST FOCUS
+    print("\n" + "=" * 70)
+    print("🎥 TESTING YOUTUBE URL INTEGRATION - REVIEW REQUEST")
+    print("=" * 70)
+    test_youtube_url_integration()
+    
     # Test enhanced member registration and ID card security
     print("\n" + "=" * 70)
     print("🆔 TESTING ID CARD SECURITY & ENHANCED REGISTRATION")
