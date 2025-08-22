@@ -166,7 +166,7 @@ class SanityService {
         throw new Error(`Sanity API error: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const result: any = await response.json();
 
       if (result.results && result.results.length > 0) {
         const updatedDoc = result.results[0].document || result.results[0];
