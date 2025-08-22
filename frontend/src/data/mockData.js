@@ -65,8 +65,8 @@ export const executiveMembers = [
   {
     id: 4,
     name: 'Hon Abdullahi MB Sadiq',
-    role: 'Founder & Strategic Advisor',
-    description: 'Founder of ADYC and strategic planning expert guiding the organization\'s vision and mission.',
+    role: 'National Leader & Founder',
+    description: 'Founder of ADYC planning expert guiding the organization\'s vision and mission.',
     image: 'https://customer-assets.emergentagent.com/job_supa-refresh/artifacts/3qid41iy_IMG-20250809-WA0018_1.jpg',
     social: {
       facebook: '#',
