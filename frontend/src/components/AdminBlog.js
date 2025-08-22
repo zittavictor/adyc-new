@@ -116,9 +116,7 @@ const AdminBlog = ({ onNavigate }) => {
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
       
       await axios.delete(`${backendUrl}/api/admin/blog/posts/${postId}`, {
-        headers: {
-          'Authorization': `Bearer ${adminToken}`
-        }
+        headers: getAuthHeaders()
       });
       
       setBlogPosts(blogPosts.filter(post => post.id !== postId));
