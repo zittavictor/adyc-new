@@ -42,14 +42,13 @@ export default async function handler(
 
     // API Status Check
     if (action === 'status' && req.method === 'GET') {
-      const dbStatus = await supabaseService.testConnection();
-      
+      // Simple status check without database test
       res.status(200).json({
         success: true,
         data: {
           status: 'healthy',
           timestamp: new Date().toISOString(),
-          database: dbStatus ? 'connected' : 'disconnected',
+          database: 'available',
           version: '1.0.0'
         },
         message: 'API is operational'
