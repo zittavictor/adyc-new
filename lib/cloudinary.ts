@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import sharp from 'sharp';
 import { PhotoUploadResponse } from '../types';
 
 class CloudinaryService {
@@ -23,31 +22,17 @@ class CloudinaryService {
         base64Image = base64Image.split(',')[1];
       }
 
-      // Decode base64 to buffer
-      const imageBuffer = Buffer.from(base64Image, 'base64');
-
-      // Optimize image with Sharp
-      const optimizedBuffer = await sharp(imageBuffer)
-        .resize(400, 400, {
-          fit: 'cover',
-          position: 'center'
-        })
-        .jpeg({
-          quality: 85,
-          progressive: true
-        })
-        .toBuffer();
-
-      // Upload to Cloudinary
+      // Upload directly to Cloudinary with transformations
       const result = await new Promise<any>((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
+        cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${base64Image}`,
           {
             public_id: `adyc/members/${memberId}`,
             folder: 'adyc/members',
             resource_type: 'image',
             transformation: [
               { width: 400, height: 400, crop: 'fill', gravity: 'face' },
-              { quality: 'auto' },
+              { quality: 'auto:good' },
               { format: 'jpg' }
             ],
             tags: ['member_photo', 'adyc'],
@@ -57,7 +42,7 @@ class CloudinaryService {
             if (error) reject(error);
             else resolve(result);
           }
-        ).end(optimizedBuffer);
+        );
       });
 
       return {
