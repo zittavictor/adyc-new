@@ -58,7 +58,7 @@ export default async function handler(
       const memberData = validation.data;
       
       // Check for existing email
-      const existingMember = await supabaseService.getMemberByEmail(memberData.email);
+      const existingMember = await supabaseService.getMemberById(memberData.email);
       if (existingMember) {
         res.status(409).json({
           success: false,
