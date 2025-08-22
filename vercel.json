@@ -1,13 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "yarn build",
+  "buildCommand": "cd frontend && yarn build",
   "outputDirectory": "frontend/build",
+  "installCommand": "yarn install && cd frontend && yarn install",
   "framework": "create-react-app",
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
