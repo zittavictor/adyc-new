@@ -27,6 +27,7 @@
     "node_modules",
     "frontend",
     "backend",
-    "dist"
+    "dist",
+    "api/backup"
   ]
 }
