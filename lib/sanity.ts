@@ -144,7 +144,7 @@ class SanityService {
       };
 
       if (updateData.published === true) {
-        patchData.publishedAt = new Date().toISOString();
+        (patchData as any).published_at = new Date().toISOString();
       }
 
       const mutation = {
