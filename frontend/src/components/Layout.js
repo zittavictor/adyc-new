@@ -9,8 +9,7 @@ const navigation = [
   { id: 'executives', name: 'Executives', icon: Users },
   { id: 'register', name: 'Register', icon: UserPlus },
   { id: 'about', name: 'About ADYC', icon: Info },
-  { id: 'contact', name: 'Contact Us', icon: Phone },
-  { id: 'admin-blog', name: 'Admin Panel', icon: Shield }
+  { id: 'contact', name: 'Contact Us', icon: Phone }
 ];
 
 const Layout = ({ children, currentPage = 'home', onNavigate }) => {
