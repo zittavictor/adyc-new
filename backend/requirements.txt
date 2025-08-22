@@ -32,3 +32,4 @@ cloudinary>=1.36.0
 qrcode>=7.4.2
 gotrue>=2.12.4
 supabase-auth>=2.12.3
+httpx>=0.28.1
