@@ -92,9 +92,7 @@ const AdminBlog = ({ onNavigate }) => {
         `${backendUrl}/api/admin/blog/posts/${editingPost.id}`, 
         newPost,
         {
-          headers: {
-            'Authorization': `Bearer ${adminToken}`
-          }
+          headers: getAuthHeaders()
         }
       );
       
