@@ -30,7 +30,7 @@ class AuthService {
       exp: Math.floor(Date.now() / 1000) + (this.tokenExpiration * 60)
     };
 
-    const accessToken = jwt.sign(payload, this.secretKey, { algorithm: this.algorithm });
+    const accessToken = jwt.sign(payload, this.secretKey, { algorithm: this.algorithm as jwt.Algorithm });
 
     return {
       access_token: accessToken,
