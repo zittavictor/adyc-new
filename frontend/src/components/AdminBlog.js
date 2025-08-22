@@ -26,8 +26,22 @@ const AdminBlog = ({ onNavigate }) => {
   });
 
   useEffect(() => {
+    if (isAuthenticated) {
+      fetchBlogPosts();
+      setShowLogin(false);
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (token) => {
+    setShowLogin(false);
     fetchBlogPosts();
-  }, []);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setShowLogin(true);
+    setBlogPosts([]);
+  };
 
   const fetchBlogPosts = async () => {
     try {
