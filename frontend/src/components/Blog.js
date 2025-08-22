@@ -359,44 +359,97 @@ const Blog = ({ onNavigate }) => {
                 className="bg-white dark:bg-neutral-800 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img 
-                  src={selectedPost.image} 
-                  alt={selectedPost.title} 
-                  className="w-full h-64 object-cover rounded-lg mb-6" 
-                />
+                {/* YouTube Video Section */}
+                {selectedPost.youtube_url ? (
+                  <div className="mb-6">
+                    <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden mb-4">
+                      <YouTube
+                        videoId={extractYouTubeId(selectedPost.youtube_url)}
+                        opts={{
+                          width: '100%',
+                          height: '100%',
+                          playerVars: {
+                            autoplay: 0,
+                            modestbranding: 1,
+                          },
+                        }}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    {/* Direct YouTube Link Button */}
+                    <motion.a
+                      href={selectedPost.youtube_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-lg hover:shadow-xl"
+                    >
+                      <Youtube className="w-5 h-5" />
+                      <span>Watch on YouTube</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </motion.a>
+                  </div>
+                ) : (
+                  selectedPost.image && (
+                    <img 
+                      src={selectedPost.image} 
+                      alt={selectedPost.title} 
+                      className="w-full h-64 object-cover rounded-lg mb-6" 
+                    />
+                  )
+                )}
                 
                 <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mb-4">
                   <Calendar className="w-4 h-4 mr-2" />
-                  <span>{selectedPost.date}</span>
+                  <span>{selectedPost.created_at ? new Date(selectedPost.created_at).toLocaleDateString() : 'Unknown'}</span>
                   <span className="mx-3">•</span>
                   <User className="w-4 h-4 mr-2" />
                   <span>{selectedPost.author}</span>
                   <span className="mx-3">•</span>
-                  <span className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-xs">
-                    {selectedPost.category}
+                  <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs">
+                    {selectedPost.category || 'general'}
                   </span>
                 </div>
 
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
+                <h1 className="text-3xl font-bold text-black mb-4">
                   {selectedPost.title}
                 </h1>
                 
-                <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6 italic">
-                  {selectedPost.summary}
-                </p>
+                {selectedPost.summary && (
+                  <p className="text-lg text-gray-600 mb-6 italic">
+                    {selectedPost.summary}
+                  </p>
+                )}
                 
-                <div className="prose dark:prose-invert max-w-none">
-                  <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                <div className="prose max-w-none">
+                  <p className="text-black leading-relaxed whitespace-pre-wrap">
                     {selectedPost.content}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+                <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    {selectedPost.youtube_url && (
+                      <motion.a
+                        href={selectedPost.youtube_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all text-sm"
+                      >
+                        <Youtube className="w-4 h-4" />
+                        <span>YouTube</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </motion.a>
+                    )}
+                  </div>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedPost(null)}
-                    className="neumorphic-button bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-semibold py-3 px-6 rounded-xl mobile-button"
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-all"
                   >
                     Close
                   </motion.button>
