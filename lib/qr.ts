@@ -16,7 +16,7 @@ class QRCodeService {
       // Generate QR code as base64 image
       const qrCodeBase64 = await QRCode.toDataURL(verificationUrl, {
         errorCorrectionLevel: 'H',
-        type: 'png',
+        type: 'image/png',
         margin: 1,
         color: {
           dark: '#FF6600', // ADYC orange
