@@ -67,11 +67,8 @@ const AdminBlog = ({ onNavigate }) => {
     try {
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
       
-      // In real app, this would use proper admin authentication
       const response = await axios.post(`${backendUrl}/api/admin/blog/posts`, newPost, {
-        headers: {
-          'Authorization': `Bearer ${adminToken}`
-        }
+        headers: getAuthHeaders()
       });
       
       setBlogPosts([response.data, ...blogPosts]);
