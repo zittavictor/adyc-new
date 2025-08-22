@@ -11,6 +11,9 @@
     "api/members/index.ts": {
       "maxDuration": 30
     },
+    "api/blog/index.ts": {
+      "maxDuration": 30
+    },
     "api/utils/index.ts": {
       "maxDuration": 30
     }
