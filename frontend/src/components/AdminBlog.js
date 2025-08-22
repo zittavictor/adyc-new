@@ -48,9 +48,9 @@ const AdminBlog = ({ onNavigate }) => {
       setLoading(true);
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
       
-      // Fetch public blog posts for now (in real app, admin would use admin endpoint)
-      const response = await axios.get(`${backendUrl}/api/blog/posts`, {
-        params: { published_only: false } // Get all posts for admin
+      // Use admin endpoint with real authentication
+      const response = await axios.get(`${backendUrl}/api/admin/blog/posts`, {
+        headers: getAuthHeaders()
       });
       
       setBlogPosts(response.data);
