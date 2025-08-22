@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Layout from './Layout';
-import { Plus, Calendar, User, Search, Edit, Trash2, Eye, Video, Youtube, Save, X } from 'lucide-react';
+import AdminLogin from './AdminLogin';
+import { useAuth } from '../contexts/AuthContext';
+import { Plus, Calendar, User, Search, Edit, Trash2, Eye, Video, Youtube, Save, X, LogOut } from 'lucide-react';
 import YouTube from 'react-youtube';
 import axios from 'axios';
 
