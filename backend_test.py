@@ -52,6 +52,153 @@ def test_basic_connectivity():
         print(f"❌ Backend connectivity error: {str(e)}")
         return False
 
+def test_admin_credential_discovery():
+    """Test admin credential discovery - REVIEW REQUEST FOCUS"""
+    print("\n=== Testing Admin Credential Discovery ===")
+    print("🎯 REVIEW REQUEST: Discovering existing admin credentials or setup requirements")
+    
+    try:
+        # Test 1: Try common admin usernames with common passwords
+        print("\n📋 Test 1: Testing common admin credentials")
+        common_credentials = [
+            {"username": "adyc_admin", "password": "SecurePassword123"},
+            {"username": "adyc_admin", "password": "admin123"},
+            {"username": "adyc_admin", "password": "password123"},
+            {"username": "admin", "password": "admin123"},
+            {"username": "admin", "password": "password123"},
+            {"username": "administrator", "password": "admin123"},
+            {"username": "administrator", "password": "password123"},
+        ]
+        
+        successful_login = None
+        for creds in common_credentials:
+            response = requests.post(f"{BACKEND_URL}/admin/login", json=creds)
+            print(f"   Trying {creds['username']}:{creds['password']} - Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "access_token" in data:
+                    successful_login = creds
+                    print(f"✅ FOUND WORKING CREDENTIALS: {creds['username']}:{creds['password']}")
+                    print(f"✅ JWT Token received: {data['access_token'][:20]}...")
+                    break
+            elif response.status_code == 401:
+                print(f"   ❌ Invalid credentials for {creds['username']}")
+            else:
+                print(f"   ⚠️ Unexpected response: {response.text}")
+        
+        if not successful_login:
+            print("❌ No working credentials found from common combinations")
+        
+        # Test 2: Use admin setup endpoint to discover existing admin info
+        print("\n📋 Test 2: Using setup endpoint to discover existing admin information")
+        
+        # Try to create admin with setup key - this will reveal if admin exists
+        setup_attempts = [
+            {"username": "adyc_admin", "email": "admin@adyc.org", "password": "TestPassword123"},
+            {"username": "admin", "email": "admin@adyc.org", "password": "TestPassword123"},
+            {"username": "administrator", "email": "admin@adyc.org", "password": "TestPassword123"},
+        ]
+        
+        existing_admin_found = False
+        for setup_data in setup_attempts:
+            setup_data["setup_key"] = "adyc-setup-2025-secure"
+            
+            response = requests.post(f"{BACKEND_URL}/setup/admin", params=setup_data)
+            print(f"   Setup attempt for {setup_data['username']} - Status: {response.status_code}")
+            
+            if response.status_code == 400:
+                data = response.json()
+                if "Admin user already exists" in data.get("detail", ""):
+                    print(f"✅ EXISTING ADMIN DISCOVERED: Username '{setup_data['username']}' already exists")
+                    existing_admin_found = True
+                    
+                    # Now try to login with this username and common passwords
+                    print(f"   🔍 Trying to login with discovered username: {setup_data['username']}")
+                    for password in ["SecurePassword123", "admin123", "password123", "ADYC2025!", "adyc123"]:
+                        login_attempt = {"username": setup_data['username'], "password": password}
+                        login_response = requests.post(f"{BACKEND_URL}/admin/login", json=login_attempt)
+                        
+                        if login_response.status_code == 200:
+                            login_data = login_response.json()
+                            if "access_token" in login_data:
+                                print(f"✅ SUCCESSFUL LOGIN FOUND: {setup_data['username']}:{password}")
+                                successful_login = login_attempt
+                                global admin_token
+                                admin_token = login_data["access_token"]
+                                break
+                        else:
+                            print(f"      ❌ Failed: {setup_data['username']}:{password}")
+                    break
+                else:
+                    print(f"   ❌ Unexpected error: {data}")
+            elif response.status_code == 200:
+                data = response.json()
+                print(f"✅ NEW ADMIN CREATED: {setup_data['username']} - {data.get('message', '')}")
+                # Try to login with the credentials we just created
+                login_attempt = {"username": setup_data['username'], "password": setup_data['password']}
+                login_response = requests.post(f"{BACKEND_URL}/admin/login", json=login_attempt)
+                if login_response.status_code == 200:
+                    login_data = login_response.json()
+                    successful_login = login_attempt
+                    admin_token = login_data["access_token"]
+                    print(f"✅ LOGIN SUCCESSFUL WITH NEW ADMIN: {setup_data['username']}:{setup_data['password']}")
+                break
+            elif response.status_code == 403:
+                data = response.json()
+                if "Invalid setup key" in data.get("detail", ""):
+                    print(f"   ❌ Setup key rejected (expected)")
+                else:
+                    print(f"   ❌ Unexpected forbidden error: {data}")
+            else:
+                print(f"   ⚠️ Unexpected setup response: {response.text}")
+        
+        # Test 3: Test with wrong setup key to confirm security
+        print("\n📋 Test 3: Testing setup key security")
+        wrong_setup_data = {
+            "username": "test_admin",
+            "email": "test@adyc.org",
+            "password": "TestPassword123", 
+            "setup_key": "wrong-key"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/setup/admin", params=wrong_setup_data)
+        print(f"   Setup with wrong key - Status: {response.status_code}")
+        
+        if response.status_code == 403:
+            data = response.json()
+            if "Invalid setup key" in data.get("detail", ""):
+                print("✅ Invalid setup key properly rejected")
+            else:
+                print(f"❌ Unexpected error message: {data}")
+        else:
+            print(f"❌ Wrong setup key not properly handled: {response.text}")
+        
+        # Summary for user
+        print("\n🎯 ADMIN CREDENTIAL DISCOVERY SUMMARY:")
+        if successful_login:
+            print(f"✅ WORKING ADMIN CREDENTIALS FOUND:")
+            print(f"   Username: {successful_login['username']}")
+            print(f"   Password: {successful_login['password']}")
+            print(f"   🔑 Use these credentials to access the admin panel")
+        else:
+            print("❌ NO WORKING ADMIN CREDENTIALS FOUND")
+            print("   📝 RECOMMENDED ACTIONS:")
+            print("   1. Use the setup endpoint to create an admin account:")
+            print("      POST /api/setup/admin")
+            print("      Parameters: username, email, password, setup_key='adyc-setup-2025-secure'")
+            print("   2. Try these common usernames: adyc_admin, admin, administrator")
+            print("   3. Contact system administrator for existing credentials")
+        
+        if existing_admin_found:
+            print("   ℹ️ Admin user exists but password unknown - may need password reset")
+        
+        return successful_login is not None
+        
+    except Exception as e:
+        print(f"❌ Admin credential discovery error: {str(e)}")
+        return False
+
 def test_admin_setup():
     """Test admin user creation using setup endpoint"""
     print("\n=== Testing Admin Setup System ===")
