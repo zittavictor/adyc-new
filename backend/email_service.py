@@ -131,32 +131,46 @@ class EmailService:
         
         # Member photo
         try:
-            if member_data.get('passport'):
-                # Decode base64 image
-                image_data = base64.b64decode(member_data['passport'].split(',')[1])
-                image_stream = io.BytesIO(image_data)
-                img = ImageReader(image_stream)
+            passport_data = member_data.get('passport')
+            if passport_data:
+                photo_stream = None
                 
-                photo_width = 16*mm
-                photo_height = 20*mm
-                photo_x = card_width - photo_width - 4*mm
-                photo_y = card_height - photo_height - 4*mm
+                # Handle both Cloudinary URLs and base64 data
+                if passport_data.startswith('http'):
+                    # It's a Cloudinary URL - download and optimize
+                    photo_stream = self._download_and_optimize_photo(passport_data)
+                elif ',' in passport_data:
+                    # It's base64 data - decode it
+                    image_data = base64.b64decode(passport_data.split(',')[1])
+                    photo_stream = self._optimize_photo_from_bytes(image_data)
                 
-                c.drawImage(img, photo_x, photo_y, width=photo_width, height=photo_height, preserveAspectRatio=True, mask='auto')
-                
-                # Photo frame with security border
-                c.setStrokeColor(colors.HexColor('#f97316'))
-                c.setLineWidth(1.5)
-                c.rect(photo_x-1, photo_y-1, photo_width+2, photo_height+2, fill=0, stroke=1)
+                if photo_stream:
+                    img = ImageReader(photo_stream)
+                    
+                    photo_width = 16*mm
+                    photo_height = 20*mm
+                    photo_x = card_width - photo_width - 4*mm
+                    photo_y = card_height - photo_height - 4*mm
+                    
+                    c.drawImage(img, photo_x, photo_y, width=photo_width, height=photo_height, preserveAspectRatio=True, mask='auto')
+                    
+                    # Photo frame with security border
+                    c.setStrokeColor(colors.HexColor('#f97316'))
+                    c.setLineWidth(1.5)
+                    c.rect(photo_x-1, photo_y-1, photo_width+2, photo_height+2, fill=0, stroke=1)
+                    return  # Photo successfully added
+                    
         except Exception as e:
-            # Fallback photo placeholder
-            photo_x = card_width - 16*mm - 4*mm
-            photo_y = card_height - 20*mm - 4*mm
-            c.setFillColor(colors.HexColor('#e5e7eb'))
-            c.rect(photo_x, photo_y, 16*mm, 20*mm, fill=1)
-            c.setFillColor(colors.HexColor('#6b7280'))
-            c.setFont("Helvetica", 6)
-            c.drawString(photo_x+5*mm, photo_y+9*mm, "PHOTO")
+            logger.warning(f"Error processing member photo: {e}")
+            
+        # Fallback photo placeholder
+        photo_x = card_width - 16*mm - 4*mm
+        photo_y = card_height - 20*mm - 4*mm
+        c.setFillColor(colors.HexColor('#e5e7eb'))
+        c.rect(photo_x, photo_y, 16*mm, 20*mm, fill=1)
+        c.setFillColor(colors.HexColor('#6b7280'))
+        c.setFont("Helvetica", 6)
+        c.drawString(photo_x+5*mm, photo_y+9*mm, "PHOTO")
         
         # Member information - Specific layout as requested
         info_start_y = card_height - 26*mm
