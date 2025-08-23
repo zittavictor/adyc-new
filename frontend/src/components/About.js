@@ -330,20 +330,19 @@ const About = ({ onNavigate }) => {
               <div className="max-w-4xl mx-auto">
                 <blockquote className="text-center">
                   <p className="body-large text-secondary italic mb-8 leading-relaxed">
-                    "ADYC is poised to become the most impactful youth political congress in Nigeria, 
-                    unifying various platforms from all geopolitical zones. We are confident that our 
-                    collective strength and structured approach will be an invaluable asset to Nigeria's 
-                    democratic development, driving mutual success and contributing significantly to the 
-                    betterment of our beloved nation."
+                    "The ADYC is a strategic alliance of progressive young people,
+            determined to engineer a proactive approach to inclusive leadership through a structured system of engagement
+            and active participation of young people across political divides,
+            delivering a collective development to our communities and country at large."
                   </p>
                   <footer className="text-center">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 shadow-accent mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
-                      MHD
+                      AMBS
                     </div>
                     <cite className="text-primary font-bold text-lg">
-                      Murtala Haliru Dantoro
+                      Hon Abdullahi MB Sadiq
                     </cite>
-                    <div className="text-accent font-semibold">Director General, ADYC</div>
+                    <div className="text-accent font-semibold">ADYC National Leader/Founder</div>
                   </footer>
                 </blockquote>
               </div>
