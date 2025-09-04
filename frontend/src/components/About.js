@@ -153,7 +153,7 @@ const About = ({ onNavigate }) => {
           <motion.section variants={itemVariants}>
             <div className="text-center mb-16">
               <h2 className="heading-primary text-primary mb-6">
-                Strategic <span className="text-accent">Benefits</span> of ADYC
+                Strategic <span className="body-large font-normal text-secondary">Benefits</span> of ADYC
               </h2>
               <p className="body-large text-secondary max-w-2xl mx-auto">
                 Discover how ADYC is transforming Nigeria's political landscape through strategic youth engagement and democratic participation.
