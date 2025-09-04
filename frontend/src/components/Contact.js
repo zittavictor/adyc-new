@@ -90,7 +90,7 @@ const Contact = ({ onNavigate }) => {
               <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-strong border border-orange-500/20">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden shadow-moderate">
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg" 
+                    src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png" 
                     alt="ADYC Logo" 
                     className="w-full h-full object-cover"
                   />
