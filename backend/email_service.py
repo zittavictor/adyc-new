@@ -110,7 +110,7 @@ class EmailService:
             # ADYC Logo
             logo_size = 14*mm
             c.drawImage(
-                "https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg",
+                "https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png",
                 4*mm, card_height-18*mm, 
                 width=logo_size, height=logo_size,
                 preserveAspectRatio=True, mask='auto'
@@ -440,7 +440,7 @@ class EmailService:
                 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                     <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                         <div style="text-align: center; margin-bottom: 30px;">
-                            <img src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqccelzo_ADYC%20LOGO%202-1.jpg" 
+                            <img src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png" 
                                  alt="ADYC Logo" style="width: 100px; height: 100px; margin-bottom: 20px;">
                             <h1 style="color: #f97316; margin: 0;">Welcome to ADYC!</h1>
                             <p style="font-size: 18px; color: #22c55e; font-weight: bold;">African Democratic Youth Congress</p>
@@ -552,7 +552,7 @@ class EmailService:
                 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                     <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                         <div style="text-align: center; margin-bottom: 30px;">
-                            <img src="https://customer-assets.emergentagent.com/job_c6e56cf6-bfc9-4e7f-baab-fad031a53cd0/artifacts/wqczelzo_ADYC%20LOGO%202-1.jpg" 
+                            <img src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png" 
                                  alt="ADYC Logo" style="width: 80px; height: 80px; margin-bottom: 15px;">
                             <h1 style="color: #f97316; margin: 0;">New Member Registration</h1>
                             <p style="font-size: 16px; color: #22c55e; font-weight: bold;">African Democratic Youth Congress</p>
