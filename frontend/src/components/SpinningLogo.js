@@ -109,7 +109,7 @@ const SpinningLogo = ({ className, size = 80 }) => {
           }}
         >
           <img 
-            src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
+            src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png"
             alt="ADYC Logo" 
             className="w-full h-full object-contain p-2 rounded-full"
             onError={(e) => {
