@@ -56,7 +56,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
                   onClick={() => onNavigate('home')}
                 >
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
+                    src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png"
                     alt="ADYC Logo" 
                     className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-xl shadow-moderate"
                   />
@@ -142,7 +142,7 @@ const Layout = ({ children, currentPage = 'home', onNavigate }) => {
               <div className="flex items-center justify-between h-16 sm:h-18 px-4 sm:px-6 border-b border-slate-200">
                 <div className="flex items-center space-x-3">
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/3feq369o_ADYC%20LOGO%202-1.jpg"
+                    src="https://customer-assets.emergentagent.com/job_a7d4cce0-5f6d-4a96-91ac-874ffa2967f3/artifacts/etvajhhm_ChatGPT%20Image%20Sep%204%2C%202025%2C%2008_59_21%20AM.png"
                     alt="ADYC Logo" 
                     className="w-10 h-10 object-contain rounded-lg"
                   />
