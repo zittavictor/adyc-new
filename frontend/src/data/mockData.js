@@ -41,7 +41,7 @@ export const executiveMembers = [
     name: 'Hon Murtala Dantoro',
     role: 'Director General ADYC',
     description: 'Coordinates community outreach and strategic initiatives across all six geopolitical zones.',
-    image: 'https://customer-assets.emergentagent.com/job_08188fa5-14cb-4a99-bccc-7b97522397cf/artifacts/gowo8xm6_WhatsApp%20Image%202025-08-04%20at%2021.43.29_54d3bbdc.jpg',
+    image: 'https://customer-assets.emergentagent.com/job_c3b115f2-e6e2-44a8-97ab-49419e9e0a5f/artifacts/7x25f9e3_WhatsApp%20Image%202025-09-11%20at%2012.33.19_bb4fd79c.jpg',
     social: {
       facebook: '#',
       twitter: '#',
