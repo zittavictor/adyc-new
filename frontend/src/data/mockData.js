@@ -52,7 +52,7 @@ export const executiveMembers = [
   {
     id: 3,
     name: 'Hon Rukayya',
-    role: 'Director of Communications',
+    role: 'National Coordinator',
     description: 'Handles communications, media relations, and public outreach for ADYC initiatives.',
     image: 'https://customer-assets.emergentagent.com/job_supa-refresh/artifacts/7t4f8l65_IMG-20250809-WA0017.jpg',
     social: {
