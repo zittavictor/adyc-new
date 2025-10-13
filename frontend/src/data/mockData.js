@@ -37,19 +37,6 @@ export const blogPosts = [
 
 export const executiveMembers = [
   {
-    id: 1,
-    name: 'Hon Murtala Dantoro',
-    role: 'Director General ADYC',
-    description: 'Coordinates community outreach and strategic initiatives across all six geopolitical zones.',
-    image: 'https://customer-assets.emergentagent.com/job_card-gen-debug/artifacts/r6ywxyeq_WhatsApp%20Image%202025-09-11%20at%2012.33.19_bb4fd79c.jpg',
-    social: {
-      facebook: '#',
-      twitter: '#',
-      linkedin: '#'
-    },
-    bio: 'A dedicated leader with extensive experience in youth mobilization and community development across Nigeria.'
-  },
-  {
     id: 3,
     name: 'Hon. Ruqayya Lamido Dodo',
     role: 'DG/National coordinator',
