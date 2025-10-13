@@ -51,10 +51,10 @@ export const executiveMembers = [
   },
   {
     id: 3,
-    name: 'Hon Rukayya',
-    role: 'National Coordinator',
+    name: 'Hon. Ruqayya Lamido Dodo',
+    role: 'DG/National coordinator',
     description: 'Handles communications, media relations, and public outreach for ADYC initiatives.',
-    image: 'https://customer-assets.emergentagent.com/job_supa-refresh/artifacts/7t4f8l65_IMG-20250809-WA0017.jpg',
+    image: 'https://customer-assets.emergentagent.com/job_leadership-change/artifacts/acta73wc_WhatsApp%20Image%202025-10-13%20at%2009.25.48_f1c38c60.jpg',
     social: {
       facebook: '#',
       twitter: '#',
